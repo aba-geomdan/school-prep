@@ -1796,7 +1796,7 @@ const CLINICAL_DESCRIPTIONS = {
       '준비 단계에서 부분 신체 촉구가 필요하였습니다',
       '시각 자료 및 시범 제공 시 단편적 수행이 관찰되었습니다',
       '활동 시작 신호에 대한 반응에 안내가 요구되었습니다',
-      '현재 단계에서는 옆에서 함께 진행해드리는 안내가 필요한 시점이며, 회기를 통해 자발 수행의 영역을 점진적으로 넓혀가고 있습니다',
+      '준비 단계마다 옆에서 함께 진행해드리는 안내가 필요하나, 자발 수행 시도가 점진적으로 늘어가고 있습니다',
       '준비 동작 하나하나를 함께 익혀가는 발달 시점에 있으며, 작은 시도들이 회기마다 누적되고 있습니다',
     ],
   },
@@ -1815,7 +1815,7 @@ const CLINICAL_DESCRIPTIONS = {
       '활동 참여에 부분 신체 촉구가 필요하였습니다',
       '주의 집중 시간 5분 미만, 활동 중도 이탈이 관찰되었습니다',
       '강화제 제시 후 단편적 참여가 확인되었습니다',
-      '현재는 짧은 활동에서부터 함께 참여 경험을 쌓아가는 시기이며, 회기마다 집중 가능한 시간이 조금씩 늘어나고 있습니다',
+      '짧은 활동에서부터 함께 참여 경험을 쌓아가는 시기이며, 회기마다 집중 가능한 시간이 조금씩 늘어나고 있습니다',
       '자발적 활동 참여를 학습해가는 초기 단계로, 흥미를 기반으로 한 짧은 단위 활동에서 의미 있는 시도들이 관찰되고 있습니다',
     ],
   },
@@ -1835,7 +1835,7 @@ const CLINICAL_DESCRIPTIONS = {
       '지시 후 무반응 또는 활동 회피가 관찰되었습니다',
       '부분 신체 촉구 후 1~2회 시도가 확인되었습니다',
       '지시를 듣고 따르는 행동을 익혀가는 초기 단계로, 시각 단서와 함께 제공할 때 시도가 점차 늘어나고 있습니다',
-      '현재는 한 단계 지시부터 천천히 익혀가는 시점이며, 익숙한 지시부터 차근차근 안정시켜 나가고 있습니다',
+      '한 단계 지시부터 천천히 익혀가고 있으며, 익숙한 지시부터 차근차근 안정시켜 나가고 있습니다',
     ],
   },
   ruleUnderstanding: {
@@ -1854,7 +1854,7 @@ const CLINICAL_DESCRIPTIONS = {
       '규칙 위반에 대한 자발 수정은 관찰되지 않았습니다',
       '시각 카드 및 모델링이 일관되게 요구되었습니다',
       '학급 규칙을 익혀가는 초기 단계로, 시각 카드와 일관된 반복 안내를 통해 규칙에 대한 인식이 점차 형성되고 있습니다',
-      '현재는 가족과 교사 모두 같은 규칙을 일관되게 보여주는 모델링이 가장 큰 도움이 되는 발달 시점입니다',
+      '교사·또래의 일관된 모델링을 통해 학급 규칙을 익혀가고 있습니다',
     ],
   },
   selfRegulation: {
@@ -1873,7 +1873,7 @@ const CLINICAL_DESCRIPTIONS = {
       '진정에 교사의 일관된 중재가 요구되었습니다',
       '회복 시간이 길게 소요되었으며 대체 행동 학습이 필요한 단계로 확인되었습니다',
       '감정 조절 전략을 익혀가는 초기 단계로, 진정될 때 함께 깊은 숨을 쉬는 등의 기초적인 전략부터 일관되게 안내드리고 있습니다',
-      '현재는 정서가 격해진 후 회복 과정을 함께해드리는 시기이며, 회기를 통해 자기 진정의 첫 시도들이 천천히 나타나고 있습니다',
+      '정서가 격해진 후 회복 과정을 함께해드리는 시기이며, 회기를 통해 자기 진정의 첫 시도들이 천천히 나타나고 있습니다',
     ],
   },
   waiting: {
@@ -1891,7 +1891,7 @@ const CLINICAL_DESCRIPTIONS = {
       '대기 상황에서 자리 이탈 또는 문제 행동이 빈번하게 관찰되었습니다',
       '강화 지연에 어려움을 보였으며 즉시 강화가 요구되었습니다',
       '대기 행동 학습 초기 단계로 단계적 접근이 필요하였습니다',
-      '대기 행동은 가장 발달적으로 천천히 형성되는 영역으로, 현재는 짧은 단위(30초~1분)부터 시각 타이머와 함께 익혀가는 단계입니다',
+      '짧은 단위(30초~1분)부터 시각 타이머와 함께 대기 행동을 익혀가고 있습니다',
       '대기 시간 자체에 적응해가는 초기 단계로, 즉시 강화와 함께 점진적으로 대기 가능 시간을 늘려가고 있습니다',
     ],
   },
@@ -1911,7 +1911,7 @@ const CLINICAL_DESCRIPTIONS = {
       '자발 인사 시도는 관찰되지 않았습니다',
       '시선 맞춤 단계부터 단계적 학습이 필요한 상태로 확인되었습니다',
       '인사 행동을 학습해가는 초기 단계로, 일관된 모델링과 즉각적 반응을 통해 비언어적 인사부터 천천히 형성해가고 있습니다',
-      '현재는 시선 맞춤과 미소 같은 비언어적 인사 신호부터 익혀가는 시점이며, 의미 있는 첫 시도들이 회기마다 관찰되고 있습니다',
+      '시선 맞춤과 미소 같은 비언어적 인사 신호부터 익혀가는 시점이며, 의미 있는 첫 시도들이 회기마다 관찰되고 있습니다',
     ],
   },
   taskCompletion: {
@@ -1930,7 +1930,7 @@ const CLINICAL_DESCRIPTIONS = {
       '완수를 위해 지속적 촉구가 요구되었습니다',
       '시작-중간-끝 일과표를 통한 단계별 학습이 필요한 상태로 확인되었습니다',
       '활동을 끝까지 마치는 경험을 쌓아가는 초기 단계로, 짧고 명확한 단위 활동부터 완료 경험을 누적해가고 있습니다',
-      '현재는 「시작-끝」이 명확히 보이는 활동에서부터 완수 경험을 익혀가는 시기이며, 작은 성공의 누적이 다음 단계로의 기반이 되고 있습니다',
+      '「시작-끝」이 명확히 보이는 활동에서부터 완수 경험을 익혀가는 시기이며, 작은 성공의 누적이 다음 단계로의 기반이 되고 있습니다',
     ],
   },
 };
@@ -2140,7 +2140,7 @@ const buildNextGoals = (scores, periodLabel, childName) => {
   lines.push('');
   goals.forEach(({ dom, goal }) => {
     lines.push(`◆ [${dom.label}]`);
-    lines.push(`  ${periodLabel} 동안 ${targetName}님은 ${goal}.`);
+    lines.push(`  ${periodLabel} 동안 아동은 ${goal}.`);
   });
 
   return replaceChildPronoun(lines.join('\n'), childName);
@@ -2194,6 +2194,99 @@ const CLINICAL_HOME_GUIDANCE = {
     '활동 완료 시 구체적 인정을 제공할 것을 권고드립니다',
     '긴 과제는 작은 단위로 나누어 한 단위 끝낼 때마다 짧은 휴식·격려를 배치하실 것을 권고드립니다',
     '아동이 좋아하는 활동을 마지막 보상으로 배치하여 「먼저 이것, 그 다음 좋아하는 활동」 구조를 자연스럽게 익히게 하실 것을 권고드립니다',
+  ],
+};
+
+/* DOMAIN_STRENGTHS — 영역별 현재 시점의 강점 표현 (보호자 친화 구어체)
+   buildMidQuarterComment·buildFinalSummary에서 초기→현재 변화 대비 묘사용으로 사용.
+   사용 시 정규식으로 "~해요/했어요/이에요" → "~합니다/하였습니다/입니다" 격식체로 변환됨. */
+const DOMAIN_STRENGTHS = {
+  preparation: [
+    '책가방 정리부터 자리 착석까지 자발적으로 이어가는 모습이 관찰돼요',
+    '준비 단계의 흐름을 스스로 만들어가는 모습이 자리 잡았어요',
+    '시각 단서 없이도 활동 준비를 마무리하는 빈도가 늘었어요',
+  ],
+  participation: [
+    '활동에 자발적으로 참여하며 집중 시간이 점차 길어졌어요',
+    '제시되는 활동에 능동적으로 반응하는 모습이 일관되게 나타나요',
+    '구조화된 활동 안에서 안정적으로 참여하는 흐름이 자리 잡았어요',
+  ],
+  followInstruction: [
+    '지시를 듣고 적절히 반응하는 능력이 안정되었어요',
+    '간단한 지시는 거의 즉시 수행하는 모습을 보여요',
+    '단계가 있는 지시도 시각 단서와 함께 정확히 따라가요',
+  ],
+  ruleUnderstanding: [
+    '학급 규칙을 자발적으로 따르는 모습이 자리 잡혔어요',
+    '약속을 기억하고 행동에 반영하는 빈도가 늘었어요',
+    '규칙 위반 상황에서 스스로 수정하려는 시도가 나타나요',
+  ],
+  selfRegulation: [
+    '감정이 흔들릴 때도 진정하려는 모습을 보여줘요',
+    '대체 행동을 시도하는 빈도가 점차 늘어났어요',
+    '예측 가능한 일과 안에서 안정적인 정서 상태를 유지해요',
+  ],
+  waiting: [
+    '차분히 대기하는 시간이 길어졌어요',
+    '기다림 상황에서 안정적으로 자리를 지키는 모습을 보여요',
+    '시각 타이머와 함께 대기 행동을 자발적으로 수행해요',
+  ],
+  spontaneousGreeting: [
+    '먼저 인사를 시도하는 빈도가 늘었어요',
+    '시선 맞춤과 인사를 함께 보이는 경우가 많아졌어요',
+    '익숙한 대상에게 자발적으로 인사를 건네는 모습이 나타나요',
+  ],
+  taskCompletion: [
+    '활동을 끝까지 마무리하는 습관이 자리 잡혔어요',
+    '시작한 활동을 책임감 있게 완수하는 빈도가 늘었어요',
+    '시각적 일과표가 제시되면 정리 행동까지 자발적으로 이어가요',
+  ],
+};
+
+/* DOMAIN_RECOMMENDATIONS — 종결보고서의 "지원 필요 영역" 학교 환경 권고 표현 풀
+   buildFinalSummary에서 needsHelp 영역마다 한 표현을 선택하여
+   "OO 영역(현재 N점)은 ~" 형태의 문장으로 결합한다.
+   사용 시 toFormal()이 구어체 → 격식체로 변환. */
+const DOMAIN_RECOMMENDATIONS = {
+  preparation: [
+    '등교 직후 첫 5분간 시각적 준비 단계 카드(가방-자리-도구-착석)와 함께 짧은 또래 모델링이 제공되면 안정적인 정착에 도움이 됩니다',
+    '학기 초에는 책가방 정리·자리 착석 흐름을 보호자와 함께 등교 전 예행 연습하시면 학교에서의 시작이 한결 수월해집니다',
+    '준비 행동에 부분 촉구가 필요할 수 있어, 담임교사께 짧은 단계 카드를 미리 안내드리면 일관된 지원이 가능합니다',
+  ],
+  participation: [
+    '수업 도입부에 짧은 예고(다음 활동·예상 시간)와 흥미 유발 요소가 함께 제공되면 능동적 참여가 점차 늘어납니다',
+    '비선호 활동 직전에 짧은 선호 활동을 배치하는 「선호→비선호」 순서를 가정에서도 활용하시면 도움이 됩니다',
+    '수업 중 짧은 휴식 신호(예: 책상 위 카드)를 미리 약속해두면 집중 유지가 더 안정적으로 이어집니다',
+  ],
+  followInstruction: [
+    '학기 초에는 1단계 지시부터 짧고 명확하게 제공하고, 2단계 지시는 시각 카드와 함께 안내하시면 정확도가 올라갑니다',
+    '지시할 때는 아동의 이름을 먼저 부르고 시선이 맞춰진 뒤 짧은 문장으로 전달하시면 반응이 빨라집니다',
+    '복합 지시(2단계 이상)는 한 번에 듣고 처리하기 어려울 수 있어 단계를 나누어 말씀해주시면 도움이 됩니다',
+  ],
+  ruleUnderstanding: [
+    '학급 규칙은 시각 카드와 짧은 문장으로 함께 안내하시고, 새로운 상황(체육·이동·특별실) 직전에 짧게 재안내해주시면 효과적입니다',
+    '규칙 위반 시 즉시 짧은 단서(카드·신호)로 안내한 뒤 수정 행동을 강화하는 패턴을 일관되게 유지하시면 빠르게 정착합니다',
+    '집과 학교 규칙에 가능한 공통점을 만들어 가족 모두 같은 방식으로 안내하시면 규칙 일반화가 가속됩니다',
+  ],
+  selfRegulation: [
+    '피곤하거나 예상치 못한 변경 상황에서는 사전 예고와 짧은 진정 공간(교실 모서리·보건실 한쪽)이 회복에 큰 도움이 됩니다',
+    '감정 카드(좋아요/속상해요/도와주세요)를 책상 위에 두시고 자발 사용을 강화하는 루틴을 가정에서도 활용해주세요',
+    '강한 정서 반응 후에는 「진정 → 짧은 명명 → 대체 행동」 순서를 가족이 모델링하시면 자기 조절 학습이 자연스럽게 이어집니다',
+  ],
+  waiting: [
+    '대기 상황에서는 시각 타이머(짧은 시간부터)와 함께 작은 손 자극(연필·작은 책)이 동시에 제공되면 안정적으로 기다립니다',
+    '줄서기·발표 순서 같은 일상 대기 상황을 가정에서도 자주 만들어 「30초 → 1분 → 3분」 단계적으로 늘려주시면 도움이 됩니다',
+    '대기 후 즉시 강화(짧은 칭찬·작은 선택권)를 제공하는 패턴을 학교와 가정이 같은 방향으로 유지해주시면 효과적입니다',
+  ],
+  spontaneousGreeting: [
+    '새로운 사람과의 첫 만남에서 인사가 늦을 수 있으나 시간이 지나면 자발적으로 시도하므로, 초기에 「반응을 기다려주시는 시간」이 도움이 됩니다',
+    '가족이 먼저 따뜻하게 인사하시는 모델링을 일상에서 자연스럽게 제공하시면 모방을 통한 학습이 가속됩니다',
+    '학기 초 담임교사·등하원 도우미 등 자주 만나는 분들과의 짧은 인사 루틴을 미리 약속해두시면 안정적으로 자리 잡습니다',
+  ],
+  taskCompletion: [
+    '시작-끝이 명확히 보이는 짧은 활동(5~10분)부터 완수 경험을 누적하시고, 마지막 단계 완료 직후 즉시 강화를 제공해주시면 효과적입니다',
+    '시각적 일과표(체크리스트·스티커판)를 책상·집 학습 공간에 동시에 두시면 환경 일반화가 자연스럽게 이어집니다',
+    '어려운 부분이 있을 때 도움을 요청하는 신호(손들기·카드 보이기)를 미리 약속해두시면 중도 이탈이 줄어듭니다',
   ],
 };
 
@@ -2567,11 +2660,16 @@ const buildMidQuarterComment = (monthlyData, childName) => {
     let desc = pool && pool.length > 0 ? pickStable(pool, seed) : '';
     desc = toPresentTense(desc);
 
-    /* 변화 추세 표시 */
+    /* 변화 추세 표시 (절대값 + 변화량 종합 판단) */
     let trend = '';
-    if (diff >= 1.0) trend = ' · 뚜렷한 향상';
-    else if (diff >= 0.5) trend = ' · 점진적 향상';
+    if (last >= 4.0 && diff >= 1.0) trend = ' · 안정화 도달';
+    else if (last >= 4.0) trend = ' · 안정 유지';
+    else if (diff >= 1.0 && last >= 2.8) trend = ' · 뚜렷한 향상';
+    else if (diff >= 1.0) trend = ' · 향상 진행 중';
+    else if (diff >= 0.5 && last >= 2.8) trend = ' · 점진적 향상';
+    else if (diff >= 0.5) trend = ' · 향상 진행 중';
     else if (diff <= -0.5) trend = ' · 변동 관찰';
+    else if (last <= 2.0) trend = ' · 지속 지원 필요';
     else trend = ' · 안정 유지';
 
     /* 영역별 상세 보정: 모순 방지 + 구체적 양상 추가 */
@@ -2665,6 +2763,11 @@ const buildMidQuarterComment = (monthlyData, childName) => {
         .replace(/필요합니다$|필요한 상태로 확인됩니다$/, '필요하던')
         .replace(/않습니다$|않았습니다$/, '않던')
         .replace(/없습니다$|없었습니다$/, '없던')
+        .replace(/단계입니다$/, '단계이던')
+        .replace(/시점입니다$/, '시점이던')
+        .replace(/상태입니다$/, '상태이던')
+        .replace(/시기입니다$/, '시기이던')
+        .replace(/(\S+)입니다$/, '$1이던')
         .replace(/습니다$/, '던');
       const strengthPool = DOMAIN_STRENGTHS[dom.key];
       const seedF = (dom.key?.length || 0) + 8;
@@ -2690,9 +2793,28 @@ const buildMidQuarterComment = (monthlyData, childName) => {
         .replace(/예요$/, '입니다')
         .replace(/이에요$/, '입니다')
         .replace(/줘요$/, '줍니다')
+        .replace(/보여요$/, '보입니다')
+        .replace(/나타나요$/, '나타납니다')
+        .replace(/잡혔어요$/, '잡혔습니다')
+        .replace(/(\S+)있어요$/, '$1있습니다')
+        .replace(/(\S+)느려요$/, '$1느립니다')
+        .replace(/(\S+)러요$/, '$1릅니다')
+        .replace(/길어요$/, '깁니다')
+        .replace(/늘어요$/, '늘어납니다')
+        .replace(/늘었어요$/, '늘었습니다')
+        .replace(/길어졌어요$/, '길어졌습니다')
+        .replace(/많아져요$/, '많아집니다')
+        .replace(/많아졌어요$/, '많아졌습니다')
+        .replace(/이어가요$/, '이어갑니다')
+        .replace(/이어가는 모습이 관찰돼요$/, '이어가는 모습이 관찰됩니다')
+        .replace(/따라가요$/, '따라갑니다')
+        .replace(/(\S+)가요$/, '$1갑니다')
+        .replace(/(\S+)돼요$/, '$1됩니다')
+        .replace(/지켜요$/, '지킵니다')
+        .replace(/지내요$/, '지냅니다')
         .replace(/(\S)어요$/, '$1습니다');
       if (initDesc && strengthDesc) {
-        const connector = /(관찰되던|확인되던)$/.test(initDesc) ? ' 양상에서,' : ' 모습이 관찰되었으나,';
+        const connector = /(관찰되던|확인되던|이던)$/.test(initDesc) ? ' 양상에서,' : ' 모습이 관찰되었으나,';
         contrast.push(`${dom.label} 영역은 초기에 ${initDesc}${connector} 현재는 ${strengthDesc}.`);
       } else if (strengthDesc) {
         contrast.push(`${dom.label} 영역은 현재 ${strengthDesc}.`);
@@ -2764,7 +2886,7 @@ const buildMidQuarterComment = (monthlyData, childName) => {
       (p) => `해낸 순간을 놓치지 말고 ${p}라고 말해주세요.`,
     ];
     focusForHome.forEach(({ dom }, idx) => {
-      const homePool = HOME_CONNECTIONS[dom.key];
+      const homePool = CLINICAL_HOME_GUIDANCE[dom.key];
       let tip = homePool && homePool.length > 0 ? homePool[0] : '관련 활동을 자연스럽게 함께 연습해주세요';
       if (PRAISE[dom.key]) {
         const tipBase = tip
@@ -2773,7 +2895,13 @@ const buildMidQuarterComment = (monthlyData, childName) => {
           .replace(/늘려주세요$/, '늘려주시고')
           .replace(/만들어주세요$/, '만들어주시고')
           .replace(/지켜주세요$/, '지켜주시고')
-          .replace(/연습해주세요$/, '연습해주시고');
+          .replace(/연습해주세요$/, '연습해주시고')
+          .replace(/권고드립니다$/, '권고드리며')
+          .replace(/권합니다$/, '권하며')
+          .replace(/도움됩니다$/, '도움되며')
+          .replace(/필요합니다$/, '필요하며')
+          .replace(/(\S+)드립니다$/, '$1드리며')
+          .replace(/(\S+)됩니다$/, '$1되며');
         const lead = praiseLeads[idx % praiseLeads.length];
         lines.push(`${idx + 1}. [${dom.label}] ${tipBase}, ${lead(PRAISE[dom.key])}`);
       } else {
@@ -2817,7 +2945,7 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
   const lines = [];
 
   if (results.length === 0) {
-    lines.push('※ 비교 가능한 회기 기록이 부족하여 자동 분석이 제한됩니다.');
+    lines.push('※ 비교 가능한 회기 기록이 부족하여 분석이 제한됩니다.');
     return replaceChildPronoun(lines.join('\n'), childName);
   }
 
@@ -2886,6 +3014,17 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
       /* 일부 표현의 어미 정리 */
       .replace(/잘했어요/g, '잘 수행하였습니다')
       .replace(/보였어요/g, '보였습니다')
+      .replace(/보여요/g, '보입니다')
+      .replace(/나타나요/g, '나타납니다')
+      .replace(/잡혔어요/g, '잡혔습니다')
+      .replace(/길어졌어요/g, '길어졌습니다')
+      .replace(/많아져요/g, '많아집니다')
+      .replace(/많아졌어요/g, '많아졌습니다')
+      .replace(/이어가요/g, '이어갑니다')
+      .replace(/따라가요/g, '따라갑니다')
+      .replace(/(\S+)가요\b/g, '$1갑니다')
+      .replace(/지켜요/g, '지킵니다')
+      .replace(/(\S+)혔어요/g, '$1혔습니다')
       .replace(/늘었어요/g, '늘었습니다')
       .replace(/할게요/g, '하겠습니다')
       .replace(/할거예요/g, '할 예정입니다')
@@ -2971,15 +3110,20 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
       let initDesc = initPool && initPool.length > 0 ? toFormal(pickStable(initPool, seedI)) : '';
       /* 초기 묘사를 '~던' 관형형으로 다듬어 자연스럽게 연결 */
       initDesc = initDesc
-        .replace(/되었습니다$|되었다$/, '되던')
-        .replace(/하였습니다$|하였다$/, '하던')
-        .replace(/보였습니다$|보였다$/, '보이던')
-        .replace(/관찰되었습니다$|관찰되었다$/, '관찰되던')
-        .replace(/확인되었습니다$|확인되었다$/, '확인되던')
+        .replace(/되었습니다$|되었다$|됩니다$/, '되던')
+        .replace(/하였습니다$|하였다$|합니다$/, '하던')
+        .replace(/보였습니다$|보였다$|보입니다$/, '보이던')
+        .replace(/관찰되었습니다$|관찰되었다$|관찰됩니다$/, '관찰되던')
+        .replace(/확인되었습니다$|확인되었다$|확인됩니다$/, '확인되던')
         .replace(/요구되었습니다$|요구하였습니다$|요구됩니다$/, '요구되던')
         .replace(/필요하였습니다$|필요한 상태로 확인되었습니다$|필요합니다$/, '필요하던')
-        .replace(/않았습니다$|않았다$/, '않던')
-        .replace(/없었습니다$|없었다$/, '없던')
+        .replace(/않았습니다$|않았다$|않습니다$/, '않던')
+        .replace(/없었습니다$|없었다$|없습니다$/, '없던')
+        .replace(/단계입니다$/, '단계이던')
+        .replace(/시점입니다$/, '시점이던')
+        .replace(/상태입니다$/, '상태이던')
+        .replace(/시기입니다$/, '시기이던')
+        .replace(/(\S+)입니다$/, '$1이던')
         .replace(/습니다$/, '던');
 
       const strengthPool = DOMAIN_STRENGTHS[dom.key];
@@ -2987,8 +3131,8 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
       const strengthDesc = strengthPool && strengthPool.length > 0 ? toFormal(pickStable(strengthPool, seedF)) : '';
 
       if (initDesc && strengthDesc) {
-        /* initDesc가 '관찰되던/확인되던'으로 끝나면 '모습이 관찰' 중복 → '양상에서'로 연결 */
-        const connector = /(관찰되던|확인되던)$/.test(initDesc) ? ' 양상에서,' : ' 모습이 관찰되었으나,';
+        /* initDesc가 '관찰되던/확인되던/이던'으로 끝나면 '모습이 관찰' 중복 → '양상에서'로 연결 */
+        const connector = /(관찰되던|확인되던|이던)$/.test(initDesc) ? ' 양상에서,' : ' 모습이 관찰되었으나,';
         /* 시작 표현을 영역마다 다르게 → 단조로운 'OO 영역은 초기에' 반복 완화 */
         const opener = ci === 0 ? `${dom.label} 영역은 처음에는`
           : ci === 1 ? `${dom.label} 영역도 초반에는`
@@ -3076,7 +3220,7 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
     recommendationParts.push(`${names} 영역은 입학 후 변화를 가정과 학교가 함께 살펴봐 주시면 됩니다`);
   }
   recommendationParts.push(`입학 초기 한두 달은 가정과 학교가 자주 소통하며 새 환경 적응을 함께 지켜보는 시기로 삼으시길 권합니다`);
-  recommendationParts.push(`요청 카드나 감각 도구처럼 다솔이가 익힌 자기 조절 전략은 집과 학교에서 똑같이 쓰일 때 가장 효과가 큽니다`);
+  recommendationParts.push(`요청 카드나 감각 도구처럼 아동이 익힌 자기 조절 전략은 집과 학교에서 똑같이 쓰일 때 가장 효과가 큽니다`);
 
   lines.push(`학교생활로 넘어가실 때 몇 가지만 마음에 담아두셔도 좋겠습니다. ${recommendationParts.join('. ')}.`);
   lines.push('');
@@ -3085,7 +3229,7 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
   const homeFocus = [...needsHelp, ...steadyGrowth].slice(0, 3);
   const homeLines = [];
   homeFocus.forEach(({ dom }) => {
-    const homePool = HOME_CONNECTIONS[dom.key];
+    const homePool = CLINICAL_HOME_GUIDANCE[dom.key];
     if (homePool && homePool.length > 0) {
       const seed = (dom.key?.length || 0) + 5;
       homeLines.push(`${dom.label} 영역은 ${toFormal(pickStable(homePool, seed))}.`);
@@ -3097,7 +3241,7 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
   }
 
   /* 8. 격려 마무리 - 다정한 구어체 */
-  lines.push('여섯 달 동안 다솔이는 정말 많이 자랐습니다. 이 변화가 학교에서도 이어지려면 결국 곁에 있는 어른들이 같은 방향을 봐주는 것이 가장 큰 힘이 됩니다. 그동안 믿고 맡겨주셔서 감사했고, 새 출발을 앞둔 다솔이를 저희도 끝까지 응원하겠습니다.');
+  lines.push('여섯 달 동안 아동은 정말 많이 자랐습니다. 이 변화가 학교에서도 이어지려면 결국 곁에 있는 어른들이 같은 방향을 봐주는 것이 가장 큰 힘이 됩니다. 그동안 믿고 맡겨주셔서 감사했고, 새 출발을 앞둔 아동을 저희도 끝까지 응원하겠습니다.');
 
   return replaceChildPronoun(lines.join('\n'), childName);
 };
@@ -3203,13 +3347,13 @@ const buildTransitionReport = (scores, childName, opts = {}) => {
   });
 
   if (classified.strength.length + classified.support.length + classified.intensive.length === 0) {
-    return '※ 평가 점수가 입력되지 않아 자동 분석이 제한됩니다. 종결보고서에서 영역별 점수를 먼저 입력하거나 「첫 회기 vs 마지막 회기 자동 비교」를 실행해주세요.';
+    return '※ 평가 점수가 입력되지 않아 분석이 제한됩니다. 종결보고서에서 영역별 점수를 먼저 입력하거나 「첫 회기 vs 마지막 회기 비교」를 실행해주세요.';
   }
 
   const lines = [];
 
   /* 1. 도입 - 평가 개요 */
-  lines.push(`본 평가는 ${childName || '아동'}님의 ${gradeLabel} 진학을 앞두고 학교 환경에서 예상되는 적응 양상을 정리하기 위한 자료입니다. 학교 준비반에서 누적된 회기 데이터를 바탕으로 영역별 강점, 일상적 지원이 필요한 영역, 입학 초기 집중 지원이 권장되는 영역을 구분하여 안내드립니다.`);
+  lines.push(`본 평가는 아동의 ${gradeLabel} 진학을 앞두고 학교 환경에서 예상되는 적응 양상을 정리하기 위한 자료입니다. 학교 준비반에서 누적된 회기 데이터를 바탕으로 영역별 강점, 일상적 지원이 필요한 영역, 입학 초기 집중 지원이 권장되는 영역을 구분하여 안내드립니다.`);
   lines.push('');
 
   /* 2. 학교 적응 강점 영역 */
@@ -3280,7 +3424,7 @@ const buildTransitionReport = (scores, childName, opts = {}) => {
   return replaceChildPronoun(lines.join('\n'), childName);
 };
 
-export default function App() {
+function App() {
   /* 탭 상태 */
   const [activeTab, setActiveTab] = useState('children'); // children | curriculum | parent | session | mid | final | transition | archive
 
@@ -3411,6 +3555,7 @@ export default function App() {
         message,
         defaultValue,
         placeholder: opts.placeholder || '',
+        isPassword: !!opts.isPassword,
         confirmLabel: opts.confirmLabel || '확인',
         cancelLabel: opts.cancelLabel || '취소',
         onResult: (result) => { setModalState(null); resolve(result); },
@@ -3672,8 +3817,10 @@ export default function App() {
       setLoginError('아이디와 비밀번호를 모두 입력해주세요');
       return false;
     }
-    /* 관리자 계정 확인 */
-    if (trimmedId === ADMIN_ACCOUNT.id && trimmedPw === ADMIN_ACCOUNT.password) {
+    /* 관리자 계정 확인 — localStorage에 변경된 비번이 있으면 우선 사용 */
+    const customAdminPw = safeGetItem('schoolPrepAdminPassword_v1');
+    const adminPw = customAdminPw || ADMIN_ACCOUNT.password;
+    if (trimmedId === ADMIN_ACCOUNT.id && trimmedPw === adminPw) {
       const user = { id: ADMIN_ACCOUNT.id, name: ADMIN_ACCOUNT.name, role: 'admin' };
       setCurrentUser(user);
       safeSetItem('schoolPrepCurrentUser_v1', JSON.stringify(user));
@@ -3708,6 +3855,62 @@ export default function App() {
     try { localStorage.removeItem('schoolPrepCurrentUser_v1'); } catch (e) {}
     try { localStorage.removeItem('schoolPrepCurrentUser_v1_backup'); } catch (e) {}
     showToast('로그아웃되었습니다');
+  };
+
+  /* 관리자 비밀번호 변경 — localStorage에 새 비번 저장 (코드 수정 없이 변경 가능)
+     초기값(ADMIN_ACCOUNT.password)으로 되돌리려면 localStorage 항목 삭제 */
+  const handleChangeAdminPassword = async () => {
+    const currentPw = await showPrompt(
+      '현재 비밀번호를 입력해주세요',
+      '',
+      { title: '관리자 비밀번호 변경 (1/2)', placeholder: '현재 비밀번호', isPassword: true }
+    );
+    if (currentPw === null) return;
+    const customAdminPw = safeGetItem('schoolPrepAdminPassword_v1');
+    const actualPw = customAdminPw || ADMIN_ACCOUNT.password;
+    if (currentPw !== actualPw) {
+      showToast('현재 비밀번호가 일치하지 않습니다');
+      return;
+    }
+    const newPw = await showPrompt(
+      '새 비밀번호를 입력해주세요 (4자 이상 권장)',
+      '',
+      { title: '관리자 비밀번호 변경 (2/2)', placeholder: '새 비밀번호', isPassword: true }
+    );
+    if (newPw === null) return;
+    const trimmed = (newPw || '').trim();
+    if (trimmed.length < 4) {
+      showToast('비밀번호는 4자 이상이어야 합니다');
+      return;
+    }
+    const ok = safeSetItem('schoolPrepAdminPassword_v1', trimmed);
+    if (ok) {
+      showToast('✓ 관리자 비밀번호가 변경되었습니다');
+    } else {
+      showToast('⚠ 비밀번호 저장 중 오류가 발생했습니다');
+    }
+  };
+
+  /* 치료사 비밀번호 재설정 — 관리자가 임의 비번으로 변경
+     therapists 배열의 해당 항목 password 필드를 직접 갱신 */
+  const handleResetTherapistPassword = async (therapistId) => {
+    const t = therapists.find((x) => x.id === therapistId);
+    if (!t) return;
+    const newPw = await showPrompt(
+      `「${t.name}」 치료사의 새 비밀번호를 입력해주세요 (4자 이상 권장)`,
+      '',
+      { title: '치료사 비밀번호 재설정', placeholder: '새 비밀번호', isPassword: true }
+    );
+    if (newPw === null) return;
+    const trimmed = (newPw || '').trim();
+    if (trimmed.length < 4) {
+      showToast('비밀번호는 4자 이상이어야 합니다');
+      return;
+    }
+    const next = therapists.map((x) => x.id === therapistId ? { ...x, password: trimmed } : x);
+    setTherapists(next);
+    safeSetItem('schoolPrepTherapists_v1', JSON.stringify(next));
+    showToast(`✓ ${t.name} 치료사 비밀번호가 재설정되었습니다 (새 비밀번호: ${trimmed})`);
   };
 
   /* 치료사 추가 (관리자만) */
@@ -4657,7 +4860,7 @@ export default function App() {
     /* 컬럼 라벨 정보를 토스트로 안내 */
     const labelText = targetLabels.join(', ');
     const scopeText = scope === 'all' ? '전체' : '최근 3개 회기 기록';
-    showToast(`${child.name} · ${scopeText} (${labelText}) 자동 채움 완료`);
+    showToast(`${child.name} · ${scopeText} (${labelText}) 기록에서 채움 완료`);
   };
 
   /* 종결보고서 자동 채움: 첫 회기 vs 마지막 회기 */
@@ -4791,7 +4994,7 @@ export default function App() {
     if (autoSummary) setFinalSummary(autoSummary);
 
     const extInfo = extended > 0 ? `, 연장 ${extended}회기` : '';
-    showToast(`${child.name} · 종합 평가 자동 생성 완료 (총 ${totalAttempted}회기${extInfo})`);
+    showToast(`${child.name} · 종합 평가 생성 완료 (총 ${totalAttempted}회기${extInfo})`);
   };
 
   /* ─── 자동 계산: 기간 평균 (N개월 동적) ─── */
@@ -4855,7 +5058,7 @@ export default function App() {
       };
     });
     setSessionComments(newComments);
-    showToast('✓ 회기별 총평이 자동 생성되었습니다 (활동 중심 · 가정 연계 · 다음 목표 포함)');
+    showToast('✓ 회기별 총평이 생성되었습니다 (활동 중심 · 가정 연계 · 다음 목표 포함)');
   };
 
   const autoGenerateMid = () => {
@@ -4894,7 +5097,7 @@ export default function App() {
     const finalTxt = goalsText ? `${txt}\n\n${goalsText}` : txt;
 
     setMidComment(finalTxt);
-    showToast('분기 총평 및 다음 8주 목표가 자동 생성되었습니다');
+    showToast('분기 총평 및 다음 8주 목표가 생성되었습니다');
   };
 
   const autoGenerateFinal = () => {
@@ -5022,7 +5225,7 @@ export default function App() {
     const finalTxt = goalsText ? `${txt}\n\n${goalsText}` : txt;
 
     setFinalSummary(finalTxt);
-    showToast('✓ 종합 평가 및 다음 단계 권장 목표가 자동 생성되었습니다');
+    showToast('✓ 종합 평가 및 다음 단계 권장 목표가 생성되었습니다');
   };
 
   /* 자동 생성 - 학교 전이(Transition) 평가
@@ -5082,7 +5285,7 @@ export default function App() {
     const finalTxt = goalsText ? `${txt}\n\n${goalsText}` : txt;
 
     setTransitionSummary(finalTxt);
-    showToast('✓ 학교 전이 평가 및 학교 인계용 목표가 자동 생성되었습니다 (출력 전 반드시 검토해주세요)');
+    showToast('✓ 학교 전이 평가 및 학교 인계용 목표가 생성되었습니다 (출력 전 반드시 검토해주세요)');
   };
 
   /* ─── 보관함 저장/복원/삭제 ─── */
@@ -5607,13 +5810,18 @@ ${body}
           </div>
         </div>
 
-        {/* 사용자 정보 + 로그아웃 */}
+        {/* 사용자 정보 + 비밀번호 변경 + 로그아웃 */}
         <div className="user-info">
           <span className={`user-role-badge ${currentUser.role}`}>
             {currentUser.role === 'admin' ? '🔑 관리자' : '👤 치료사'}
           </span>
           <span className="user-name">{currentUser.name}</span>
           <span className="user-id">({currentUser.id})</span>
+          {currentUser.role === 'admin' && (
+            <button className="btn btn-ghost btn-sm" onClick={handleChangeAdminPassword} title="관리자 비밀번호 변경">
+              🔒 비번 변경
+            </button>
+          )}
           <button className="btn btn-ghost btn-sm" onClick={handleLogout}>
             로그아웃
           </button>
@@ -5678,6 +5886,7 @@ ${body}
             onAddTherapist={addTherapist}
             onUpdateTherapist={updateTherapist}
             onDeleteTherapist={deleteTherapist}
+            onResetTherapistPassword={handleResetTherapistPassword}
             children={children}
             childRecords={childRecords}
             onUpdateChild={updateChild}
@@ -5767,7 +5976,7 @@ ${body}
           />
         )}
 
-        {activeTab === 'curriculum' && <CurriculumView />}
+        {activeTab === 'curriculum' && <CurriculumView onPrint={() => handlePrint('커리큘럼')} />}
 
         {activeTab === 'parent' && (
           <ParentGuideView
@@ -5944,8 +6153,8 @@ function SessionEvalView({
       <div className="linkage-banner no-print">
         <div className="linkage-icon">🔗</div>
         <div className="linkage-text">
-          <strong>중재 기간 자동 추적</strong>
-          <p>「🔗 아동 DB에 저장」을 누르면 현재 시점이 자동으로 기록되어 중간·종결보고서에서 호출됩니다. 회기별 일자(YYYY-MM-DD)를 입력하면 더 정확합니다.</p>
+          <strong>중재 기간 추적</strong>
+          <p>「🔗 아동 DB에 저장」을 누르면 현재 시점이 기록되어 중간·종결보고서에서 호출됩니다. 회기별 일자(YYYY-MM-DD)를 입력하면 더 정확합니다.</p>
         </div>
       </div>
 
@@ -5953,7 +6162,7 @@ function SessionEvalView({
       <div className="action-bar no-print">
         <h2 className="view-title">회기별 아동 관찰 및 평가서</h2>
         <div className="action-buttons">
-          <button className="btn btn-ghost" onClick={onAutoGenerate}>✦ 자동 총평 생성</button>
+          <button className="btn btn-ghost" onClick={onAutoGenerate}>✦ 총평 생성</button>
           <button className="btn btn-link-action" onClick={onSaveToChildDB} title="이 회기 데이터를 아동별 DB에 저장하여 중간·종결과 연계">🔗 아동 DB에 저장</button>
           <button className="btn btn-secondary" onClick={onSave}>💾 보관함 저장</button>
           <button className="btn btn-primary" onClick={onPrint}>📄 바로 PDF 저장</button>
@@ -5985,12 +6194,12 @@ function SessionEvalView({
               <td><input className="cell-input" value={info.evalDate} onChange={(e) => setInfo({ ...info, evalDate: e.target.value })} placeholder="예: 2026.03 ~ 2026.04" /></td>
             </tr>
             <tr>
-              <td className="th">평가 기간<br /><small style={{ color: '#8a8275', fontWeight: 400, fontSize: 10 }}>(자동)</small></td>
+              <td className="th">평가 기간</td>
               <td colSpan="5">
                 <input className="cell-input cell-half" type="date" value={info.evalStart} onChange={(e) => setInfo({ ...info, evalStart: e.target.value })} title="저장 시 자동 입력 (덮어쓰기 가능)" />
                 <span className="dash">~</span>
                 <input className="cell-input cell-half" type="date" value={info.evalEnd} onChange={(e) => setInfo({ ...info, evalEnd: e.target.value })} title="저장 시 자동 입력 (덮어쓰기 가능)" />
-                <span style={{ fontSize: 11, color: '#8a8275', marginLeft: 8 }}>· 회기 일자에서 자동</span>
+                <span className="no-print" style={{ fontSize: 11, color: '#8a8275', marginLeft: 8 }}>· 회기 일자에서 계산</span>
               </td>
             </tr>
           </tbody>
@@ -6027,7 +6236,7 @@ function SessionEvalView({
               ))}
             </tr>
             <tr>
-              <td className="th">회기 일자<br /><small style={{ color: '#8a8275', fontWeight: 400, fontSize: 10 }}>(자동 계산)</small></td>
+              <td className="th">회기 일자</td>
               {idxs.map((i) => {
                 const isAuto = info.sessionDates[i] && activeChild?.startDate;
                 return (
@@ -6398,11 +6607,11 @@ function MidReportView({
 
   return (
     <div className="view-wrap">
-      {/* 연계 자동 채움 패널 - 활성 아동 자동 사용 */}
+      {/* 연계 채움 패널 - 활성 아동 사용 */}
       <div className="linkage-panel no-print">
         <div className="linkage-panel-title">
           <span className="linkage-icon-sm">🔗</span>
-          저장된 회기별 평가서에서 자동 채움
+          저장된 회기별 평가서에서 채움
         </div>
         <div className="linkage-panel-body">
           {activeChild ? (
@@ -6419,7 +6628,7 @@ function MidReportView({
                 onClick={() => onAutoFillFromChild(activeChild.id, 'recent3')}
                 disabled={childRecordCount === 0}
               >
-                최근 3개월 자동 채움 →
+                최근 3개월 채움 →
               </button>
               <button
                 className="btn btn-link-action"
@@ -6427,7 +6636,7 @@ function MidReportView({
                 disabled={childRecordCount === 0}
                 title="36회기 연장 등 4개월 이상 진행된 경우 사용"
               >
-                전체 기간 자동 채움 (연장 시) →
+                전체 기간 채움 (연장 시) →
               </button>
               {childRecordCount === 0 && (
                 <span className="linkage-hint">먼저 「회기별 평가서」 → 「🔗 아동 DB에 저장」으로 회기 기록을 누적해주세요</span>
@@ -6435,7 +6644,7 @@ function MidReportView({
             </>
           ) : (
             <span className="linkage-hint">
-              「👤 아동 관리」 탭에서 아동을 선택한 뒤 자동 채움을 사용할 수 있습니다.
+              「👤 아동 관리」 탭에서 아동을 선택한 뒤 채움 기능을 사용할 수 있습니다.
             </span>
           )}
         </div>
@@ -6444,7 +6653,7 @@ function MidReportView({
       <div className="action-bar no-print">
         <h2 className="view-title">학교 준비반 중간보고서</h2>
         <div className="action-buttons">
-          <button className="btn btn-ghost" onClick={onAutoGenerate}>✦ 기간 총평 자동생성</button>
+          <button className="btn btn-ghost" onClick={onAutoGenerate}>✦ 기간 총평 생성</button>
           <button className="btn btn-secondary" onClick={onSave}>💾 보관함 저장</button>
           <button className="btn btn-primary" onClick={onPrint}>📄 바로 PDF 저장</button>
         </div>
@@ -6465,7 +6674,7 @@ function MidReportView({
                 <input className="cell-input cell-half" type="date" value={info.evalStart} onChange={(e) => setInfo({ ...info, evalStart: e.target.value })} title="자동 채움 시 첫 회기 일자로 자동 입력" />
                 <span className="dash">~</span>
                 <input className="cell-input cell-half" type="date" value={info.evalEnd} onChange={(e) => setInfo({ ...info, evalEnd: e.target.value })} title="자동 채움 시 마지막 회기 일자로 자동 입력" />
-                <span className="no-print" style={{ fontSize: 10, color: '#8a8275', marginLeft: 8 }}>· 위 자동 채움 사용 시 자동 입력</span>
+                <span className="no-print" style={{ fontSize: 10, color: '#8a8275', marginLeft: 8 }}>· 회기 기록에서 채워집니다</span>
               </td>
             </tr>
           </tbody>
@@ -6485,7 +6694,7 @@ function MidReportView({
         {months.length === 0 ? (
           <div className="empty-state-inline">
             <p>아직 월별 데이터가 없습니다.</p>
-            <p className="empty-sub">위의 「자동 채움」을 사용하거나, 「+ 월 추가」 버튼으로 직접 추가하세요.</p>
+            <p className="empty-sub">위의 「채움」 버튼을 사용하거나, 「+ 월 추가」 버튼으로 직접 추가하세요.</p>
           </div>
         ) : (
           <div className={`eval-table-wrap ${months.length > 4 ? 'scroll-x' : ''}`}>
@@ -6577,7 +6786,7 @@ function MidReportView({
             className="big-textarea comment-box-inner"
             value={midComment}
             onChange={(e) => setMidComment(e.target.value)}
-            placeholder="평가 기간 동안의 변화, 강점, 개선 영역, 다음 기간 방향성을 기록하세요. 좌측 상단 ✦ 자동생성 버튼을 활용할 수 있습니다."
+            placeholder="평가 기간 동안의 변화, 강점, 개선 영역, 다음 기간 방향성을 기록하세요. 좌측 상단 ✦ 생성 버튼을 활용할 수 있습니다."
             rows={14}
           />
           <div className="print-mirror" aria-hidden="true">{midComment}</div>
@@ -6642,7 +6851,7 @@ function FinalReportView({
       <div className="linkage-panel no-print">
         <div className="linkage-panel-title">
           <span className="linkage-icon-sm">🔗</span>
-          저장된 회기별 평가서에서 초기/최종 자동 비교
+          저장된 회기별 평가서에서 초기/최종 비교
         </div>
         <div className="linkage-panel-body">
           {activeChild ? (
@@ -6659,7 +6868,7 @@ function FinalReportView({
                 onClick={() => onAutoFillFromChild(activeChild.id)}
                 disabled={childRecordCount === 0}
               >
-                첫 회기 vs 마지막 회기 자동 비교 →
+                첫 회기 vs 마지막 회기 비교 →
               </button>
               {childRecordCount === 0 && (
                 <span className="linkage-hint">먼저 「회기별 평가서」 → 「🔗 아동 DB에 저장」으로 회기 기록을 누적해주세요</span>
@@ -6667,7 +6876,7 @@ function FinalReportView({
             </>
           ) : (
             <span className="linkage-hint">
-              「👤 아동 관리」 탭에서 아동을 선택한 뒤 자동 비교를 사용할 수 있습니다.
+              「👤 아동 관리」 탭에서 아동을 선택한 뒤 초기/최종 비교를 사용할 수 있습니다.
             </span>
           )}
         </div>
@@ -6676,7 +6885,7 @@ function FinalReportView({
       <div className="action-bar no-print">
         <h2 className="view-title">학교 준비반 종결보고서</h2>
         <div className="action-buttons">
-          <button className="btn btn-ghost" onClick={onAutoGenerate}>✦ 종합 평가 자동생성</button>
+          <button className="btn btn-ghost" onClick={onAutoGenerate}>✦ 종합 평가 생성</button>
           <button className="btn btn-secondary" onClick={onSave}>💾 보관함 저장</button>
           <button className="btn btn-primary" onClick={onPrint}>📄 바로 PDF 저장</button>
         </div>
@@ -6691,10 +6900,10 @@ function FinalReportView({
               <td className="th" colSpan="2"></td>
               <td className="th">중재 기간</td>
               <td colSpan="3">
-                <input className="cell-input cell-half" type="date" value={info.evalStart} onChange={(e) => setInfo({ ...info, evalStart: e.target.value })} title="자동 채움 시 첫 회기 일자로 자동 입력" />
+                <input className="cell-input cell-half" type="date" value={info.evalStart} onChange={(e) => setInfo({ ...info, evalStart: e.target.value })} title="첫 회기 일자로 입력 (덮어쓰기 가능)" />
                 <span className="dash">~</span>
-                <input className="cell-input cell-half" type="date" value={info.evalEnd} onChange={(e) => setInfo({ ...info, evalEnd: e.target.value })} title="자동 채움 시 마지막 회기 일자(종결일)로 자동 입력" />
-                <span className="no-print" style={{ fontSize: 10, color: '#8a8275', marginLeft: 8 }}>· 위 자동 채움 사용 시 자동 입력</span>
+                <input className="cell-input cell-half" type="date" value={info.evalEnd} onChange={(e) => setInfo({ ...info, evalEnd: e.target.value })} title="마지막 회기 일자(종결일)로 입력 (덮어쓰기 가능)" />
+                <span className="no-print" style={{ fontSize: 10, color: '#8a8275', marginLeft: 8 }}>· 회기 기록에서 채워집니다</span>
               </td>
             </tr>
             <tr>
@@ -6853,7 +7062,7 @@ function FinalReportView({
             className="big-textarea comment-box-inner tall-h"
             value={finalSummary}
             onChange={(e) => setFinalSummary(e.target.value)}
-            placeholder="전반적 변화 양상, 학교 입학 후 적응 권고사항을 기록하세요. 상단 ✦ 자동생성 버튼을 활용할 수 있습니다."
+            placeholder="전반적 변화 양상, 학교 입학 후 적응 권고사항을 기록하세요. 상단 ✦ 생성 버튼을 활용할 수 있습니다."
             rows={18}
           />
           <div className="print-mirror" aria-hidden="true">{finalSummary}</div>
@@ -7150,7 +7359,7 @@ function ChildManagementView({
                 />
               </label>
               <label className="child-form-field">
-                <span className="field-label">중재 시작일<small style={{color:'#8a8275', fontWeight: 400, marginLeft: 6}}>(첫 회기 저장 시 자동)</small></span>
+                <span className="field-label">중재 시작일<small style={{color:'#8a8275', fontWeight: 400, marginLeft: 6}}>(첫 회기 저장 시 기록)</small></span>
                 <input
                   className="field-input"
                   type="date"
@@ -7405,11 +7614,11 @@ function TransitionReportView({
               {activeChild.nickname && activeChild.nickname !== activeChild.name && (
                 <span className="linkage-nickname"> ({activeChild.nickname})</span>
               )}
-              <span className="linkage-record-count">· 종결보고서 점수 또는 최근 회기 평균에서 자동 분석</span>
+              <span className="linkage-record-count">· 종결보고서 점수 또는 최근 회기 평균에서 분석</span>
             </span>
           ) : (
             <span className="linkage-hint">
-              「👤 아동 관리」 탭에서 아동을 선택한 뒤 자동 생성을 사용할 수 있습니다.
+              「👤 아동 관리」 탭에서 아동을 선택한 뒤 생성 기능을 사용할 수 있습니다.
             </span>
           )}
         </div>
@@ -7418,7 +7627,7 @@ function TransitionReportView({
       <div className="action-bar no-print">
         <h2 className="view-title">학교 전이 평가</h2>
         <div className="action-buttons">
-          <button className="btn btn-ghost" onClick={onAutoGenerate}>✦ 전이 평가 자동생성</button>
+          <button className="btn btn-ghost" onClick={onAutoGenerate}>✦ 전이 평가 생성</button>
           <button className="btn btn-secondary" onClick={onSave}>💾 보관함 저장</button>
           <button className="btn btn-primary" onClick={onPrint}>📄 바로 PDF 저장</button>
         </div>
@@ -7474,7 +7683,7 @@ function TransitionReportView({
                   <input type="checkbox" checked={transitionInfo.hasSpecialEducator}
                     onChange={(e) => updateTI('hasSpecialEducator', e.target.checked)} />
                   진학 예정 학교에 특수교사 또는 통합지원 인력이 배치되어 있다
-                  <small style={{color:'#8a8275',marginLeft:6}}>(자동 생성 시 권장사항 분기)</small>
+                  <small style={{color:'#8a8275',marginLeft:6}}>(보고서 권장사항 분기에 사용)</small>
                 </label>
               </td>
             </tr>
@@ -7487,7 +7696,7 @@ function TransitionReportView({
             className="big-textarea comment-box-inner"
             value={transitionSummary}
             onChange={(e) => setTransitionSummary(e.target.value)}
-            placeholder={`상단 「✦ 전이 평가 자동생성」 버튼을 누르면 종결보고서의 영역별 점수(또는 최근 회기 평균)를 바탕으로 다음 항목이 자동 작성됩니다:
+            placeholder={`상단 「✦ 전이 평가 생성」 버튼을 누르면 종결보고서의 영역별 점수(또는 최근 회기 평균)를 바탕으로 다음 항목이 작성됩니다:
 
 ▣ 학교 환경에서 예상되는 강점
 ▣ 일상적 지원이 권장되는 영역
@@ -7827,19 +8036,20 @@ function ParentGuideView({ info, setInfo, onPrint, onBundlePrint, onSave, active
                 {currentSession?.date ? (
                   <span className="auto-date-display">
                     <strong>{currentSession.date}</strong>
-                    <span className="weekday-badge">{currentSession.weekday}요일</span>
-                    <span className="auto-date-meta">
-                      ({activeChild?.name} · 중재 시작 {activeChild?.startDate}부터 주 1회 자동 계산)
-                    </span>
-                    <button
-                      type="button"
-                      className="btn-link-action btn-sm no-print"
-                      onClick={async () => {
-                        const newDate = await showPrompt(
-                          `${sessionNo}회기 날짜를 직접 지정하시겠습니까?\n(예: 2026-04-15)\n비워두고 확인 = 자동 계산으로 되돌리기`,
-                          currentSession.date,
-                          { title: '회기 날짜 변경', placeholder: 'YYYY-MM-DD' }
-                        );
+                    <span className="auto-date-extras no-print">
+                      <span className="weekday-badge">{currentSession.weekday}요일</span>
+                      <span className="auto-date-meta">
+                        ({activeChild?.name} · 중재 시작 {activeChild?.startDate}부터 주 1회 계산)
+                      </span>
+                      <button
+                        type="button"
+                        className="btn-link-action btn-sm"
+                        onClick={async () => {
+                          const newDate = await showPrompt(
+                            `${sessionNo}회기 날짜를 직접 지정하시겠습니까?\n(예: 2026-04-15)\n비워두고 확인 = 기본 계산으로 되돌리기`,
+                            currentSession.date,
+                            { title: '회기 날짜 변경', placeholder: 'YYYY-MM-DD' }
+                          );
                         if (newDate === null) return;
                         if (!onUpdateChild || !activeChild) return;
                         const overrides = { ...(activeChild.manualOverrides || {}) };
@@ -7873,6 +8083,7 @@ function ParentGuideView({ info, setInfo, onPrint, onBundlePrint, onSave, active
                       }}
                       title="이 회기를 건너뛰기 (휴일·결석)"
                     >⏭ 건너뛰기</button>
+                    </span>
                   </span>
                 ) : currentSession?.type === 'postponed' ? (
                   <span style={{ color: '#F5A524', fontWeight: 600 }}>
@@ -7983,7 +8194,7 @@ function ParentGuideView({ info, setInfo, onPrint, onBundlePrint, onSave, active
 /* ════════════════════════════════════════════════
    커리큘럼 View (36회기 안내)
    ════════════════════════════════════════════════ */
-function CurriculumView() {
+function CurriculumView({ onPrint }) {
   const totalSessions = CURRICULUM.length;  // 36
   /* 범위 선택 state */
   const [startSession, setStartSession] = useState(1);
@@ -8025,6 +8236,9 @@ function CurriculumView() {
     <div className="view-wrap">
       <div className="action-bar no-print">
         <h2 className="view-title">친구야, 학교 가자! · 36회기 커리큘럼</h2>
+        <div className="action-buttons">
+          <button className="btn btn-primary" onClick={onPrint}>📄 바로 PDF 저장</button>
+        </div>
       </div>
 
       {/* 범위 선택 (화면 전용) */}
@@ -8094,13 +8308,9 @@ function CurriculumView() {
             <span className="range-current">현재 선택: <strong>{rangeLabel}</strong> · {filteredCurriculum.length}개 회기</span>
           </div>
         </div>
-
-        <div className="range-print-hint">
-          📄 인쇄: Ctrl+P (Windows) 또는 Cmd+P (Mac)을 누르면 선택한 범위만 인쇄됩니다
-        </div>
       </div>
 
-      <div className="report-paper curriculum-paper">
+      <div id="printable-report" className="report-paper curriculum-paper">
         <ReportTitle subtitle={`친구야, 학교 가자! 회기별 활동 안내 (${rangeLabel})`} />
 
         <div className="curriculum-intro">
@@ -8394,7 +8604,7 @@ function ArchiveView({ archive, onLoad, onDelete, children, childRecords, onDele
           {archive.length === 0 ? (
             <div className="child-db-empty">
               저장된 보고서가 없습니다.<br />
-              각 보고서 화면에서 [보관함 저장] 또는 [인쇄/PDF] 시 자동으로 저장됩니다.
+              각 보고서 화면에서 「💾 보관함 저장」 버튼을 누르면 이곳에 보관됩니다.
             </div>
           ) : filteredArchive.length === 0 ? (
             <div className="child-db-empty">
@@ -8694,7 +8904,7 @@ function AppModal({ state }) {
         {state.type === 'prompt' && (
           <input
             className="modal-input"
-            type="text"
+            type={state.isPassword ? 'password' : 'text'}
             value={promptValue}
             onChange={(e) => setPromptValue(e.target.value)}
             placeholder={state.placeholder || ''}
@@ -8850,8 +9060,8 @@ function LoginGuideModal({ onClose }) {
 
         <div className="guide-modal-body">
           <p className="guide-lead">
-            회기별 평가만 입력하면 중간보고서·종결보고서·보호자 안내문이
-            자동으로 생성됩니다. ABA 기반 임상 표현으로 작성되어 그대로 사용 가능합니다.
+            회기별 평가만 입력하면 중간보고서·종결보고서·보호자 안내문까지
+            한 번에 작성됩니다. ABA 기반 임상 표현으로 작성되어 그대로 사용 가능합니다.
           </p>
 
           <div className="guide-section">
@@ -8861,14 +9071,14 @@ function LoginGuideModal({ onClose }) {
                 <div className="guide-feature-icon">📋</div>
                 <div className="guide-feature-text">
                   <strong>회기별 평가서</strong>
-                  <span>8영역 5점 척도 · 자동 총평 · 가정 연계 제안</span>
+                  <span>8영역 5점 척도 · 회기별 총평 · 가정 연계 제안</span>
                 </div>
               </div>
               <div className="guide-feature">
                 <div className="guide-feature-icon">📊</div>
                 <div className="guide-feature-text">
                   <strong>중간보고서</strong>
-                  <span>월별 점수 변화 · 레이더 차트 · 기간 총평 자동 생성</span>
+                  <span>월별 점수 변화 · 레이더 차트 · 기간 총평 + IEP 목표</span>
                 </div>
               </div>
               <div className="guide-feature">
@@ -8981,7 +9191,7 @@ function LoginGuideModal({ onClose }) {
 /* ════════════════════════════════════════════════
    AdminView - 관리자 전용 화면 (치료사 계정 관리 + 전체 통계)
    ════════════════════════════════════════════════ */
-function AdminView({ therapists, onAddTherapist, onUpdateTherapist, onDeleteTherapist, children, childRecords, onUpdateChild, currentUser, showConfirm, showAlert }) {
+function AdminView({ therapists, onAddTherapist, onUpdateTherapist, onDeleteTherapist, onResetTherapistPassword, children, childRecords, onUpdateChild, currentUser, showConfirm, showAlert }) {
   const [showAddForm, setShowAddForm] = useState(false);
   const [editId, setEditId] = useState('');
   const [form, setForm] = useState({ id: '', password: '', name: '' });
@@ -9134,6 +9344,7 @@ function AdminView({ therapists, onAddTherapist, onUpdateTherapist, onDeleteTher
                 </div>
                 <div className="therapist-actions">
                   <button className="btn btn-ghost btn-sm" onClick={() => handleEdit(t)}>수정</button>
+                  <button className="btn btn-ghost btn-sm" onClick={() => onResetTherapistPassword(t.id)} title="치료사 비밀번호 재설정">🔒 비번</button>
                   <button className="btn btn-ghost btn-sm danger" onClick={() => handleDelete(t)}>삭제</button>
                 </div>
               </div>
@@ -10993,4 +11204,133 @@ function getGlobalCSS() {
       .archive-grid { grid-template-columns: 1fr; }
     }
   `;
+}
+
+
+/* ════════════════════════════════════════════════
+   ErrorBoundary — 예기치 못한 오류 발생 시 안전망
+   ════════════════════════════════════════════════
+   React 클래스 컴포넌트(공식 제약: ErrorBoundary는 Hook으로 만들 수 없음).
+   App 렌더링 중 어떤 컴포넌트가 throw하더라도 흰 화면이 되지 않고
+   복구 안내 + 백업 다운로드 + 새로고침 옵션을 제공한다.
+   localStorage 데이터는 유지되므로 새로고침으로 대부분 복구된다. */
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, info) {
+    /* 운영 환경에서도 콘솔에는 남겨 디버깅에 도움 */
+    try { console.error('App ErrorBoundary caught:', error, info); } catch (e) {}
+  }
+  handleRefresh = () => {
+    try { window.location.reload(); } catch (e) {}
+  };
+  handleBackup = () => {
+    /* App 내부의 exportBackup 함수에 접근 불가하므로 localStorage 직접 덤프 */
+    try {
+      const dump = {
+        schoolPrepChildren_v1: localStorage.getItem('schoolPrepChildren_v1'),
+        schoolPrepChildRecords_v1: localStorage.getItem('schoolPrepChildRecords_v1'),
+        schoolPrepArchive_v1: localStorage.getItem('schoolPrepArchive_v1'),
+        schoolPrepTherapists_v1: localStorage.getItem('schoolPrepTherapists_v1'),
+        schoolPrepInfo_v1: localStorage.getItem('schoolPrepInfo_v1'),
+        savedAt: new Date().toISOString(),
+        recoveryBackup: true,
+      };
+      const blob = new Blob([JSON.stringify(dump, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `검단ABA_긴급백업_${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (e) {
+      alert('백업 파일 생성 중 오류가 발생했습니다. 페이지를 새로고침하고 정상 동작 후 다시 시도해주세요.');
+    }
+  };
+  render() {
+    if (this.state.hasError) {
+      const errMsg = this.state.error?.message || '알 수 없는 오류';
+      return (
+        <div style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 20,
+          background: '#fef7e3',
+          fontFamily: "'Noto Sans KR', sans-serif",
+        }}>
+          <div style={{
+            maxWidth: 540,
+            width: '100%',
+            background: '#fff',
+            borderRadius: 16,
+            padding: '36px 32px',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
+            border: '1px solid #e5dfd0',
+          }}>
+            <div style={{ fontSize: 40, marginBottom: 12, textAlign: 'center' }}>⚠️</div>
+            <h1 style={{
+              fontSize: 20, fontWeight: 700, color: '#c2410c',
+              textAlign: 'center', margin: '0 0 16px',
+              fontFamily: "'Gowun Batang', serif",
+            }}>예기치 못한 오류가 발생했습니다</h1>
+            <p style={{
+              fontSize: 14, color: '#5a544a', lineHeight: 1.7,
+              textAlign: 'center', margin: '0 0 24px',
+            }}>
+              작업 중이던 데이터는 <b>브라우저에 안전하게 저장되어 있습니다</b>.<br/>
+              아래 <b>「💾 긴급 백업 받기」</b>로 파일을 받아두신 뒤,<br/>
+              <b>「🔄 페이지 새로고침」</b>으로 복구하시면 대부분 정상 동작합니다.
+            </p>
+            <div style={{
+              background: '#faf6ee', border: '1px solid #e5dfd0', borderRadius: 8,
+              padding: '10px 14px', marginBottom: 22,
+              fontSize: 11.5, color: '#8a7e6a', lineHeight: 1.6,
+              fontFamily: 'monospace',
+              wordBreak: 'break-all',
+            }}>
+              <div style={{ fontSize: 10, color: '#a89e8a', marginBottom: 4, fontFamily: "'Noto Sans KR', sans-serif" }}>오류 정보 (참고용):</div>
+              {errMsg}
+            </div>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
+              <button onClick={this.handleBackup} style={{
+                padding: '11px 22px', borderRadius: 8, border: '1px solid #c2410c',
+                background: '#fff', color: '#c2410c', cursor: 'pointer',
+                fontSize: 14, fontWeight: 600, fontFamily: 'inherit', flex: '1 0 200px',
+              }}>💾 긴급 백업 받기</button>
+              <button onClick={this.handleRefresh} style={{
+                padding: '11px 22px', borderRadius: 8, border: 'none',
+                background: '#c2410c', color: '#fff', cursor: 'pointer',
+                fontSize: 14, fontWeight: 600, fontFamily: 'inherit', flex: '1 0 200px',
+              }}>🔄 페이지 새로고침</button>
+            </div>
+            <div style={{
+              marginTop: 22, paddingTop: 18, borderTop: '1px solid #f0ebe0',
+              textAlign: 'center', fontSize: 10.5, color: '#8a8275', lineHeight: 1.7,
+            }}>
+              © 2026 검단ABA언어행동연구소 · 민다혜 (BCBA)
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+/* default export — App을 ErrorBoundary로 감싼 형태 */
+export default function AppWithErrorBoundary() {
+  return (
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
+  );
 }
