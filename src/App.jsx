@@ -9600,7 +9600,10 @@ function LoginView({ onLogin, loginError, setLoginError }) {
               onKeyDown={handleKeyDown}
               placeholder="아이디"
               autoFocus
-              autoComplete="username"
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck="false"
             />
           </div>
           <div className="login-field">
@@ -9612,7 +9615,10 @@ function LoginView({ onLogin, loginError, setLoginError }) {
               onChange={(e) => { setPassword(e.target.value); setLoginError(''); }}
               onKeyDown={handleKeyDown}
               placeholder="비밀번호"
-              autoComplete="current-password"
+              autoComplete="new-password"
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck="false"
             />
           </div>
 
