@@ -4292,39 +4292,67 @@ function App() {
      인증 시스템 - 로그인/로그아웃/치료사 계정 관리
      ════════════════════════════════════════════════ */
 
-  /* 로그인 시도 - 관리자 또는 치료사 계정 매칭 */
-  const handleLogin = (id, password) => {
+  /* 로그인 시도 - Supabase sp_users 테이블에서 인증 (Step 3)
+     첫 로그인 시 관리자 placeholder('__INIT__' 해시)면 입력 비번이 ADMIN_ACCOUNT.password와 일치 시 자동 활성화 */
+  const handleLogin = async (id, password) => {
     const trimmedId = (id || '').trim();
     const trimmedPw = (password || '').trim();
     if (!trimmedId || !trimmedPw) {
       setLoginError('아이디와 비밀번호를 모두 입력해주세요');
       return false;
     }
-    /* 관리자 계정 확인 — localStorage에 변경된 비번이 있으면 우선 사용 */
-    const customAdminPw = safeGetItem('schoolPrepAdminPassword_v1');
-    const adminPw = customAdminPw || ADMIN_ACCOUNT.password;
-    if (trimmedId === ADMIN_ACCOUNT.id && trimmedPw === adminPw) {
-      const user = { id: ADMIN_ACCOUNT.id, name: ADMIN_ACCOUNT.name, role: 'admin' };
-      setCurrentUser(user);
-      safeSetItem('schoolPrepCurrentUser_v1', JSON.stringify(user));
-      setInfo((prev) => ({ ...prev, therapist: user.name }));
+
+    try {
+      /* Supabase에서 사용자 조회 */
+      const user = await sbUsers.findByUsername(trimmedId);
+
+      if (!user) {
+        setLoginError('아이디 또는 비밀번호가 일치하지 않습니다');
+        return false;
+      }
+
+      if (!user.is_active) {
+        setLoginError('비활성화된 계정입니다. 관리자에게 문의하세요');
+        return false;
+      }
+
+      /* 관리자 첫 로그인 자동 활성화 — placeholder를 실제 해시로 교체 */
+      if (user.role === 'admin' && user.password_hash === '__INIT__') {
+        if (trimmedPw === ADMIN_ACCOUNT.password) {
+          /* 첫 로그인이므로 실제 해시 저장 */
+          const salt = generateSalt();
+          const hash = await hashPassword(trimmedPw, salt);
+          await supabaseFetch(`/sp_users?id=eq.${user.id}`, {
+            method: 'PATCH',
+            body: { password_hash: hash, password_salt: salt },
+          });
+          /* 통과 처리 */
+        } else {
+          setLoginError('아이디 또는 비밀번호가 일치하지 않습니다');
+          return false;
+        }
+      } else {
+        /* 일반 검증 — 입력 비번을 user.password_salt로 해시한 후 user.password_hash와 비교 */
+        const inputHash = await hashPassword(trimmedPw, user.password_salt);
+        if (inputHash !== user.password_hash) {
+          setLoginError('아이디 또는 비밀번호가 일치하지 않습니다');
+          return false;
+        }
+      }
+
+      /* 로그인 성공 */
+      const userInfo = { id: user.username, dbId: user.id, name: user.name, role: user.role };
+      setCurrentUser(userInfo);
+      safeSetItem('schoolPrepCurrentUser_v1', JSON.stringify(userInfo));
+      setInfo((prev) => ({ ...prev, therapist: userInfo.name }));
       setLoginError('');
-      showToast(`✓ ${ADMIN_ACCOUNT.name}님 환영합니다`);
+      showToast(`✓ ${userInfo.name}님 환영합니다`);
       return true;
+    } catch (err) {
+      console.error('로그인 오류:', err);
+      setLoginError('로그인 중 오류가 발생했습니다. 인터넷 연결을 확인해주세요');
+      return false;
     }
-    /* 치료사 계정 확인 */
-    const t = therapists.find((x) => x.id === trimmedId && x.password === trimmedPw);
-    if (t) {
-      const user = { id: t.id, name: t.name, role: 'therapist' };
-      setCurrentUser(user);
-      safeSetItem('schoolPrepCurrentUser_v1', JSON.stringify(user));
-      setInfo((prev) => ({ ...prev, therapist: user.name }));
-      setLoginError('');
-      showToast(`✓ ${t.name}님 환영합니다`);
-      return true;
-    }
-    setLoginError('아이디 또는 비밀번호가 일치하지 않습니다');
-    return false;
   };
 
   const handleLogout = async () => {
@@ -4349,33 +4377,38 @@ function App() {
       { title: '관리자 비밀번호 변경 (1/2)', placeholder: '현재 비밀번호', isPassword: true }
     );
     if (currentPw === null) return;
-    const customAdminPw = safeGetItem('schoolPrepAdminPassword_v1');
-    const actualPw = customAdminPw || ADMIN_ACCOUNT.password;
-    if (currentPw !== actualPw) {
-      showToast('현재 비밀번호가 일치하지 않습니다');
-      return;
-    }
-    const newPw = await showPrompt(
-      '새 비밀번호를 입력해주세요 (4자 이상 권장)',
-      '',
-      { title: '관리자 비밀번호 변경 (2/2)', placeholder: '새 비밀번호', isPassword: true }
-    );
-    if (newPw === null) return;
-    const trimmed = (newPw || '').trim();
-    if (trimmed.length < 4) {
-      showToast('비밀번호는 4자 이상이어야 합니다');
-      return;
-    }
-    const ok = safeSetItem('schoolPrepAdminPassword_v1', trimmed);
-    if (ok) {
+
+    try {
+      const user = await sbUsers.findByUsername(ADMIN_ACCOUNT.id);
+      if (!user) {
+        showToast('⚠ 관리자 계정 조회 실패');
+        return;
+      }
+      const inputHash = await hashPassword(currentPw, user.password_salt);
+      if (inputHash !== user.password_hash) {
+        showToast('현재 비밀번호가 일치하지 않습니다');
+        return;
+      }
+      const newPw = await showPrompt(
+        '새 비밀번호를 입력해주세요 (4자 이상 권장)',
+        '',
+        { title: '관리자 비밀번호 변경 (2/2)', placeholder: '새 비밀번호', isPassword: true }
+      );
+      if (newPw === null) return;
+      const trimmed = (newPw || '').trim();
+      if (trimmed.length < 4) {
+        showToast('비밀번호는 4자 이상이어야 합니다');
+        return;
+      }
+      await sbUsers.changePassword(user.id, trimmed);
       showToast('✓ 관리자 비밀번호가 변경되었습니다');
-    } else {
-      showToast('⚠ 비밀번호 저장 중 오류가 발생했습니다');
+    } catch (err) {
+      console.error('비번 변경 오류:', err);
+      showToast('⚠ 비밀번호 변경 중 오류가 발생했습니다');
     }
   };
 
-  /* 치료사 비밀번호 재설정 — 관리자가 임의 비번으로 변경
-     therapists 배열의 해당 항목 password 필드를 직접 갱신 */
+  /* 치료사 비밀번호 재설정 — Supabase sp_users 업데이트 */
   const handleResetTherapistPassword = async (therapistId) => {
     const t = therapists.find((x) => x.id === therapistId);
     if (!t) return;
@@ -4390,14 +4423,23 @@ function App() {
       showToast('비밀번호는 4자 이상이어야 합니다');
       return;
     }
-    const next = therapists.map((x) => x.id === therapistId ? { ...x, password: trimmed } : x);
-    setTherapists(next);
-    safeSetItem('schoolPrepTherapists_v1', JSON.stringify(next));
-    showToast(`✓ ${t.name} 치료사 비밀번호가 재설정되었습니다 (새 비밀번호: ${trimmed})`);
+    try {
+      /* therapists 배열의 t는 username만 있을 수 있음 — Supabase에서 dbId 조회 */
+      const dbUser = t.dbId ? { id: t.dbId } : await sbUsers.findByUsername(t.id);
+      if (!dbUser) {
+        showToast('⚠ 치료사 계정 조회 실패');
+        return;
+      }
+      await sbUsers.changePassword(dbUser.id, trimmed);
+      showToast(`✓ ${t.name} 치료사 비밀번호가 재설정되었습니다`);
+    } catch (err) {
+      console.error('치료사 비번 재설정 오류:', err);
+      showToast('⚠ 비밀번호 변경 중 오류가 발생했습니다');
+    }
   };
 
-  /* 치료사 추가 (관리자만) */
-  const addTherapist = (data) => {
+  /* 치료사 추가 (관리자만) — Supabase sp_users INSERT */
+  const addTherapist = async (data) => {
     const id = (data.id || '').trim();
     const password = (data.password || '').trim();
     const name = (data.name || '').trim();
@@ -4405,45 +4447,109 @@ function App() {
       showToast('아이디, 비밀번호, 이름을 모두 입력해주세요');
       return false;
     }
-    /* ID 중복 검사 (관리자 ID 및 기존 치료사 ID) */
     if (id === ADMIN_ACCOUNT.id) {
       showToast('관리자 아이디와 중복됩니다');
       return false;
     }
-    if (therapists.some((t) => t.id === id)) {
-      showToast(`이미 등록된 아이디입니다: ${id}`);
-      return false;
-    }
-    /* 비밀번호 강도 - 너무 약하면 차단 */
     if (password.length < 4) {
       showToast('비밀번호는 최소 4자 이상이어야 합니다');
       return false;
     }
-    /* 흔한 약한 비번 차단 */
     const weakPasswords = ['1234', '0000', '1111', 'password', 'admin', '123456', 'qwerty'];
     if (weakPasswords.includes(password.toLowerCase())) {
       showToast(`너무 흔한 비밀번호입니다: "${password}". 다른 비밀번호로 변경해주세요`);
       return false;
     }
-    const newT = { id, password, name, createdAt: new Date().toISOString() };
-    const next = [...therapists, newT];
-    setTherapists(next);
-    safeSetItem('schoolPrepTherapists_v1', JSON.stringify(next));
-    showToast(`✓ ${name} 치료사 계정 생성 완료 (ID: ${id})`);
-    return true;
+    try {
+      /* Supabase 중복 검사 */
+      const existing = await sbUsers.findByUsername(id);
+      if (existing) {
+        showToast(`이미 등록된 아이디입니다: ${id}`);
+        return false;
+      }
+      /* Supabase INSERT */
+      const created = await sbUsers.create({ username: id, password, name, role: 'therapist' });
+      const newDb = Array.isArray(created) ? created[0] : created;
+      /* 로컬 therapists 배열도 갱신 (UI 즉시 반영) */
+      const newT = { id: newDb.username, dbId: newDb.id, name: newDb.name, createdAt: newDb.created_at };
+      const next = [...therapists, newT];
+      setTherapists(next);
+      safeSetItem('schoolPrepTherapists_v1', JSON.stringify(next));
+      showToast(`✓ ${name} 치료사 계정 생성 완료 (ID: ${id})`);
+      return true;
+    } catch (err) {
+      console.error('치료사 추가 오류:', err);
+      showToast('⚠ 치료사 추가 중 오류가 발생했습니다');
+      return false;
+    }
   };
 
-  const updateTherapist = (oldId, data) => {
+  const updateTherapist = async (oldId, data) => {
+    /* 로컬 갱신 우선 (즉시 UI 반영) */
     const next = therapists.map((t) => t.id === oldId ? { ...t, ...data } : t);
     setTherapists(next);
     safeSetItem('schoolPrepTherapists_v1', JSON.stringify(next));
+    /* Supabase 갱신 (이름만 변경 가능 — username/role은 일반적으로 그대로) */
+    try {
+      const target = therapists.find((t) => t.id === oldId);
+      const dbId = target?.dbId || (await sbUsers.findByUsername(oldId))?.id;
+      if (dbId && data.name) {
+        await supabaseFetch(`/sp_users?id=eq.${dbId}`, {
+          method: 'PATCH',
+          body: { name: data.name },
+        });
+      }
+    } catch (err) {
+      console.error('치료사 수정 오류:', err);
+    }
   };
 
-  const deleteTherapist = (id) => {
+  const deleteTherapist = async (id) => {
+    /* 로컬 즉시 갱신 */
+    const target = therapists.find((t) => t.id === id);
     const next = therapists.filter((t) => t.id !== id);
     setTherapists(next);
     safeSetItem('schoolPrepTherapists_v1', JSON.stringify(next));
+    /* Supabase 갱신 */
+    try {
+      const dbId = target?.dbId || (await sbUsers.findByUsername(id))?.id;
+      if (dbId) {
+        await sbUsers.delete(dbId);
+      }
+    } catch (err) {
+      console.error('치료사 삭제 오류:', err);
+    }
   };
+
+  /* Supabase에서 치료사 목록 자동 로드 — 로그인 시 + 주기적 갱신 */
+  useEffect(() => {
+    if (!currentUser) return;
+    /* 관리자만 전체 목록 로드 (치료사는 본인 정보만 필요) */
+    if (currentUser.role !== 'admin') return;
+    let alive = true;
+    const loadTherapists = async () => {
+      try {
+        const users = await sbUsers.list();
+        if (!alive) return;
+        /* admin 제외, therapist만 가져옴 */
+        const list = (users || [])
+          .filter((u) => u.role === 'therapist')
+          .map((u) => ({
+            id: u.username,
+            dbId: u.id,
+            name: u.name,
+            createdAt: u.created_at,
+            isActive: u.is_active,
+          }));
+        setTherapists(list);
+        safeSetItem('schoolPrepTherapists_v1', JSON.stringify(list));
+      } catch (err) {
+        console.error('치료사 목록 로드 오류:', err);
+      }
+    };
+    loadTherapists();
+    return () => { alive = false; };
+  }, [currentUser]);
 
   /* 권한별 보이는 아동 필터 - 치료사는 본인 담당만 */
   const visibleChildren = useMemo(() => {
@@ -9735,9 +9841,16 @@ function LoginView({ onLogin, loginError, setLoginError }) {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [showGuide, setShowGuide] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = () => {
-    onLogin(id, password);
+  const handleSubmit = async () => {
+    if (submitting) return;
+    setSubmitting(true);
+    try {
+      await onLogin(id, password);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleKeyDown = (e) => {
@@ -9794,8 +9907,8 @@ function LoginView({ onLogin, loginError, setLoginError }) {
             <div className="login-error">⚠ {loginError}</div>
           )}
 
-          <button className="btn btn-primary login-btn" onClick={handleSubmit}>
-            로그인
+          <button className="btn btn-primary login-btn" onClick={handleSubmit} disabled={submitting}>
+            {submitting ? '로그인 중...' : '로그인'}
           </button>
 
           <div className="login-hint">
