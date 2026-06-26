@@ -39,6 +39,174 @@ const ADMIN_ACCOUNT = {
   name: '민다혜',
   role: 'admin',
 };
+
+/* ════════════════════════════════════════════════
+   Supabase 연결 설정 (Step 2)
+   - 어디서든 로그인 + 본인 데이터 동기화 + 관리자 통합 조회를 위한 서버 DB 연결
+   - REST API 직접 호출 방식 (SDK 없이 fetch만 사용)
+   ════════════════════════════════════════════════ */
+const SUPABASE_URL = 'https://vdubgrxwijydwfabwpnk.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZkdWJncnh3aWp5ZHdmYWJ3cG5rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MDk1ODgsImV4cCI6MjA5NzE4NTU4OH0.nqNO3vany3M6fzmG5BG6QVdvi8BW2UbhTDhxNnwvA88';
+const SUPABASE_REST = `${SUPABASE_URL}/rest/v1`;
+
+/* 공통 fetch 헬퍼 — Supabase REST API 호출 */
+const supabaseFetch = async (path, opts = {}) => {
+  const { method = 'GET', body, extraHeaders = {} } = opts;
+  const headers = {
+    'apikey': SUPABASE_ANON_KEY,
+    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+    'Content-Type': 'application/json',
+    ...extraHeaders,
+  };
+  if (method === 'POST' || method === 'PATCH') {
+    headers['Prefer'] = extraHeaders['Prefer'] || 'return=representation';
+  }
+  const res = await fetch(`${SUPABASE_REST}${path}`, {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Supabase ${method} ${path} ${res.status}: ${text}`);
+  }
+  if (res.status === 204) return null;
+  return res.json();
+};
+
+/* === 인증용 해시 함수 (PBKDF2-SHA256, 100,000 iterations) === */
+const hashPassword = async (password, salt) => {
+  const encoder = new TextEncoder();
+  const baseKey = await crypto.subtle.importKey(
+    'raw', encoder.encode(password), 'PBKDF2', false, ['deriveBits']
+  );
+  const bits = await crypto.subtle.deriveBits(
+    {
+      name: 'PBKDF2',
+      salt: encoder.encode(salt),
+      iterations: 100000,
+      hash: 'SHA-256',
+    },
+    baseKey,
+    256
+  );
+  return Array.from(new Uint8Array(bits))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+};
+
+const generateSalt = () => {
+  const arr = new Uint8Array(16);
+  crypto.getRandomValues(arr);
+  return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
+};
+
+/* === Supabase 테이블 접근 함수들 (Step 3에서 사용 시작) === */
+
+/* sp_users — 사용자 (관리자 + 치료사) */
+const sbUsers = {
+  list: async () => {
+    return await supabaseFetch('/sp_users?select=id,username,name,role,is_active,created_at&order=created_at.desc');
+  },
+  findByUsername: async (username) => {
+    const data = await supabaseFetch(`/sp_users?username=eq.${encodeURIComponent(username)}&select=*`);
+    return data && data.length > 0 ? data[0] : null;
+  },
+  create: async ({ username, password, name, role = 'therapist' }) => {
+    const salt = generateSalt();
+    const password_hash = await hashPassword(password, salt);
+    return await supabaseFetch('/sp_users', {
+      method: 'POST',
+      body: { username, password_hash, password_salt: salt, name, role, is_active: true },
+    });
+  },
+  changePassword: async (id, newPassword) => {
+    const salt = generateSalt();
+    const password_hash = await hashPassword(newPassword, salt);
+    return await supabaseFetch(`/sp_users?id=eq.${id}`, {
+      method: 'PATCH',
+      body: { password_hash, password_salt: salt },
+    });
+  },
+  setActive: async (id, isActive) => {
+    return await supabaseFetch(`/sp_users?id=eq.${id}`, {
+      method: 'PATCH',
+      body: { is_active: isActive },
+    });
+  },
+  delete: async (id) => {
+    return await supabaseFetch(`/sp_users?id=eq.${id}`, { method: 'DELETE' });
+  },
+};
+
+/* sp_children — 아동 명단 */
+const sbChildren = {
+  list: async ({ therapistId } = {}) => {
+    let url = '/sp_children?select=*&order=created_at.asc';
+    if (therapistId) url += `&therapist_id=eq.${therapistId}`;
+    return await supabaseFetch(url);
+  },
+  create: async (payload) => {
+    return await supabaseFetch('/sp_children', { method: 'POST', body: payload });
+  },
+  update: async (id, patch) => {
+    return await supabaseFetch(`/sp_children?id=eq.${id}`, { method: 'PATCH', body: patch });
+  },
+  delete: async (id) => {
+    return await supabaseFetch(`/sp_children?id=eq.${id}`, { method: 'DELETE' });
+  },
+};
+
+/* sp_child_records — 회기 평가 데이터 */
+const sbChildRecords = {
+  list: async ({ childId, therapistId } = {}) => {
+    let url = '/sp_child_records?select=*&order=created_at.desc';
+    if (childId) url += `&child_id=eq.${childId}`;
+    if (therapistId) url += `&therapist_id=eq.${therapistId}`;
+    return await supabaseFetch(url);
+  },
+  create: async (payload) => {
+    return await supabaseFetch('/sp_child_records', { method: 'POST', body: payload });
+  },
+  update: async (id, patch) => {
+    return await supabaseFetch(`/sp_child_records?id=eq.${id}`, { method: 'PATCH', body: patch });
+  },
+  delete: async (id) => {
+    return await supabaseFetch(`/sp_child_records?id=eq.${id}`, { method: 'DELETE' });
+  },
+};
+
+/* sp_archive — 보고서 보관함 (4종 보고서) */
+const sbArchive = {
+  list: async ({ childId, therapistId, reportType } = {}) => {
+    let url = '/sp_archive?select=*&order=saved_at.desc';
+    if (childId) url += `&child_id=eq.${childId}`;
+    if (therapistId) url += `&therapist_id=eq.${therapistId}`;
+    if (reportType) url += `&report_type=eq.${encodeURIComponent(reportType)}`;
+    return await supabaseFetch(url);
+  },
+  create: async (payload) => {
+    return await supabaseFetch('/sp_archive', { method: 'POST', body: payload });
+  },
+  delete: async (id) => {
+    return await supabaseFetch(`/sp_archive?id=eq.${id}`, { method: 'DELETE' });
+  },
+};
+
+/* sp_app_meta — 앱 설정 (관리자 비번 변경 등) */
+const sbAppMeta = {
+  get: async (key) => {
+    const data = await supabaseFetch(`/sp_app_meta?key=eq.${encodeURIComponent(key)}&select=*`);
+    return data && data.length > 0 ? data[0] : null;
+  },
+  set: async (key, value) => {
+    return await supabaseFetch('/sp_app_meta', {
+      method: 'POST',
+      body: { key, value },
+      extraHeaders: { 'Prefer': 'resolution=merge-duplicates,return=representation' },
+    });
+  },
+};
 const EVAL_DOMAINS = [
   {
     key: 'preparation',
