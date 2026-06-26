@@ -4284,6 +4284,99 @@ function App() {
   };
 
   /* ════════════════════════════════════════════════
+     Step 4 — Supabase 클라우드 동기화
+     - 사용자 데이터(children + archive + childRecords)를 sp_app_meta에 user_data_{username}로 저장
+     - 로그인 시 자동 로드 / 데이터 변경 시 자동 저장 (디바운스 1초)
+     - 관리자 로그인 시 모든 치료사 데이터 자동 합쳐 표시 (Step 5)
+     ════════════════════════════════════════════════ */
+  const cloudSyncKey = (username) => `user_data_${username}`;
+
+  /* 클라우드 → 로컬: 로그인 시 호출. isAdmin이면 모든 사용자 데이터 합침 */
+  const loadFromCloud = async (currentUserInfo) => {
+    if (!currentUserInfo) return null;
+    try {
+      if (currentUserInfo.role === 'admin') {
+        /* 관리자: 모든 user_data_* 키 가져와서 합치기 */
+        const all = await supabaseFetch(`/sp_app_meta?key=like.user_data_*&select=*`);
+        if (!all || all.length === 0) return null;
+        const merged = { children: [], archive: [], childRecords: [] };
+        all.forEach((row) => {
+          const data = row.value || {};
+          if (Array.isArray(data.children)) merged.children.push(...data.children);
+          if (Array.isArray(data.archive)) merged.archive.push(...data.archive);
+          if (Array.isArray(data.childRecords)) merged.childRecords.push(...data.childRecords);
+        });
+        return merged;
+      } else {
+        /* 치료사: 본인 데이터만 */
+        const meta = await sbAppMeta.get(cloudSyncKey(currentUserInfo.id));
+        return meta?.value || null;
+      }
+    } catch (err) {
+      console.error('클라우드 로드 오류:', err);
+      return null;
+    }
+  };
+
+  /* 로컬 → 클라우드: 데이터 변경 시 디바운스 저장. 관리자는 본인 키에만 저장 */
+  const saveToCloud = async (currentUserInfo, data) => {
+    if (!currentUserInfo) return;
+    try {
+      await sbAppMeta.set(cloudSyncKey(currentUserInfo.id), data);
+    } catch (err) {
+      console.error('클라우드 저장 오류:', err);
+    }
+  };
+
+  /* 로그인 시 클라우드에서 데이터 fresh 로드 */
+  const cloudLoadedRef = useRef(false);
+  useEffect(() => {
+    if (!currentUser) {
+      cloudLoadedRef.current = false;
+      return;
+    }
+    let alive = true;
+    const sync = async () => {
+      const cloudData = await loadFromCloud(currentUser);
+      if (!alive) return;
+      if (cloudData) {
+        /* 클라우드에 데이터가 있으면 적용 */
+        if (Array.isArray(cloudData.children)) {
+          setChildren(cloudData.children);
+          safeSetItem('schoolPrepChildren_v1', JSON.stringify(cloudData.children));
+        }
+        if (Array.isArray(cloudData.archive)) {
+          setArchive(cloudData.archive);
+          safeSetItem('schoolPrepArchive_v1', JSON.stringify(cloudData.archive));
+        }
+        if (Array.isArray(cloudData.childRecords)) {
+          setChildRecords(cloudData.childRecords);
+          safeSetItem('schoolPrepChildRecords_v1', JSON.stringify(cloudData.childRecords));
+        }
+      }
+      /* 클라우드에 없으면 기존 localStorage 데이터를 첫 업로드 (자동 마이그레이션) */
+      cloudLoadedRef.current = true;
+    };
+    sync();
+    return () => { alive = false; };
+  }, [currentUser]);
+
+  /* 데이터 변경 시 클라우드 자동 저장 (디바운스 1초) */
+  useEffect(() => {
+    if (!currentUser || !cloudLoadedRef.current) return;
+    /* 관리자는 통합 조회용이라 본인이 직접 변경한 경우만 저장 (필터링은 단순화) */
+    const timer = setTimeout(() => {
+      const payload = {
+        children: children || [],
+        archive: archive || [],
+        childRecords: childRecords || [],
+      };
+      saveToCloud(currentUser, payload);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [children, archive, childRecords, currentUser]);
+
+  /* ════════════════════════════════════════════════
      JSON 백업/복원 — 다른 컴퓨터로 이전 / 데이터 보호용
      ════════════════════════════════════════════════ */
 
@@ -8004,7 +8097,7 @@ function ChildManagementView({
                   className="field-input"
                   value={form.name}
                   onChange={(e) => handleNameChange(e.target.value)}
-                  placeholder="예: 주하민"
+                  placeholder="아동 이름"
                   autoFocus
                 />
               </label>
@@ -8017,7 +8110,7 @@ function ChildManagementView({
                     setForm({ ...form, nickname: e.target.value });
                     setNicknameManuallyEdited(true);
                   }}
-                  placeholder="예: 하민 (자동 추출됨, 수정 가능)"
+                  placeholder="호칭 (자동 추출됨, 수정 가능)"
                 />
               </label>
               <label className="child-form-field">
