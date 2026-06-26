@@ -4306,6 +4306,19 @@ function App() {
           if (Array.isArray(data.archive)) merged.archive.push(...data.archive);
           if (Array.isArray(data.childRecords)) merged.childRecords.push(...data.childRecords);
         });
+        /* Step 5: 중복 제거 (관리자 통합 조회 정확성) — id 기반 */
+        const dedupe = (arr) => {
+          const seen = new Set();
+          return arr.filter((item) => {
+            const key = item?.id || item?.uniqueId || JSON.stringify(item);
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          });
+        };
+        merged.children = dedupe(merged.children);
+        merged.archive = dedupe(merged.archive);
+        merged.childRecords = dedupe(merged.childRecords);
         return merged;
       } else {
         /* 치료사: 본인 데이터만 */
@@ -4375,6 +4388,43 @@ function App() {
     }, 1000);
     return () => clearTimeout(timer);
   }, [children, archive, childRecords, currentUser]);
+
+  /* Step 5: 주기적 동기화 — 30초마다 클라우드에서 다시 로드 (다른 디바이스 변경 감지)
+     단, 사용자가 입력 중일 수 있으므로 너무 자주는 안 함 */
+  useEffect(() => {
+    if (!currentUser) return;
+    const intervalId = setInterval(async () => {
+      if (!cloudLoadedRef.current) return;
+      const cloudData = await loadFromCloud(currentUser);
+      if (!cloudData) return;
+      /* 변경 감지: JSON 문자열 비교 후 다르면 업데이트 */
+      if (Array.isArray(cloudData.children)) {
+        const current = JSON.stringify(children || []);
+        const next = JSON.stringify(cloudData.children);
+        if (current !== next) {
+          setChildren(cloudData.children);
+          safeSetItem('schoolPrepChildren_v1', JSON.stringify(cloudData.children));
+        }
+      }
+      if (Array.isArray(cloudData.archive)) {
+        const current = JSON.stringify(archive || []);
+        const next = JSON.stringify(cloudData.archive);
+        if (current !== next) {
+          setArchive(cloudData.archive);
+          safeSetItem('schoolPrepArchive_v1', JSON.stringify(cloudData.archive));
+        }
+      }
+      if (Array.isArray(cloudData.childRecords)) {
+        const current = JSON.stringify(childRecords || []);
+        const next = JSON.stringify(cloudData.childRecords);
+        if (current !== next) {
+          setChildRecords(cloudData.childRecords);
+          safeSetItem('schoolPrepChildRecords_v1', JSON.stringify(cloudData.childRecords));
+        }
+      }
+    }, 30000); // 30초마다
+    return () => clearInterval(intervalId);
+  }, [currentUser, children, archive, childRecords]);
 
   /* ════════════════════════════════════════════════
      JSON 백업/복원 — 다른 컴퓨터로 이전 / 데이터 보호용
@@ -4454,6 +4504,19 @@ function App() {
       confirmLabel: '로그아웃',
     });
     if (!ok) return;
+
+    /* Step 5: 로그아웃 전 마지막 변경사항 강제 저장 (디바운스 미적용) */
+    try {
+      const payload = {
+        children: children || [],
+        archive: archive || [],
+        childRecords: childRecords || [],
+      };
+      await saveToCloud(currentUser, payload);
+    } catch (err) {
+      console.error('로그아웃 전 저장 오류:', err);
+    }
+
     setCurrentUser(null);
     setActiveChildId('');  // 활성 아동 초기화
     try { localStorage.removeItem('schoolPrepCurrentUser_v1'); } catch (e) {}
