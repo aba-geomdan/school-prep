@@ -1740,6 +1740,15 @@ const todayStr = () => {
   return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
 };
 
+/* "오늘"을 YYYY-MM-DD 로컬 날짜 (KST 기준)로 반환 — toISOString의 UTC 변환 회피 */
+const todayISO = () => {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+};
+
 const uid = () => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 
 /* ────────────────────────────────────────────────
@@ -1797,6 +1806,15 @@ const calculateSessionDates = (startDate, weekday, plannedSessions, skippedSessi
   const start = new Date(startDate + 'T00:00:00');
   if (isNaN(start.getTime())) return [];
 
+  /* 로컬 날짜를 YYYY-MM-DD로 추출 — toISOString()의 UTC 변환 문제 회피
+     (한국은 UTC+9라 자정 직후엔 toISOString().slice(0,10)이 어제로 떨어짐) */
+  const toLocalISO = (date) => {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  };
+
   /* 시작일을 첫 회기 요일에 맞춰 보정 */
   const startWeekday = start.getDay();
   const targetWeekday = weekday != null ? Number(weekday) : startWeekday;
@@ -1822,7 +1840,7 @@ const calculateSessionDates = (startDate, weekday, plannedSessions, skippedSessi
   let safety = 0;
   while (sessionNo <= plannedSessions && safety < 1000) {
     safety++;
-    const dateStr = cursor.toISOString().slice(0, 10);
+    const dateStr = toLocalISO(cursor);
     const skipType = skipMap[sessionNo];
 
     /* 1. 수동 지정 우선 */
@@ -4193,7 +4211,7 @@ function App() {
               name,
               birthDate: '',
               therapist: rec.therapist || '',
-              startDate: rec.evalStart || new Date().toISOString().slice(0, 10),
+              startDate: rec.evalStart || todayISO(),
               notes: '',
               createdAt: rec.savedAt || new Date().toISOString(),
             });
@@ -4737,7 +4755,7 @@ function App() {
       const blob = new Blob([json], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
-      const today = new Date().toISOString().slice(0, 10);
+      const today = todayISO();
       const childCount = children.length;
       link.href = url;
       link.download = `검단ABA_백업_${today}_${childCount}명.json`;
@@ -4967,7 +4985,7 @@ function App() {
       therapist: data.therapist || '',
       /* 담당 치료사 ID - 치료사가 등록하면 본인, 관리자는 지정 가능 */
       therapistId: data.therapistId || (currentUser?.role === 'therapist' ? currentUser.id : ''),
-      startDate: data.startDate || new Date().toISOString().slice(0, 10),
+      startDate: data.startDate || todayISO(),
       sessionWeekday: data.sessionWeekday != null ? Number(data.sessionWeekday) : new Date(data.startDate || new Date()).getDay(),
       skippedSessions: data.skippedSessions || [],
       manualOverrides: data.manualOverrides || {},
@@ -5137,7 +5155,7 @@ function App() {
     }
 
     /* 오늘 날짜 (YYYY-MM-DD) */
-    const today = new Date().toISOString().slice(0, 10);
+    const today = todayISO();
 
     const normDate = (d) => (d && /^\d{4}[-./]\d{1,2}[-./]\d{1,2}/.test(d))
       ? d.replace(/[./]/g, '-').slice(0, 10) : null;
@@ -6284,7 +6302,7 @@ function App() {
     setBatchPrintRecords(records);
 
     const safeChildName = (childName || '아동').replace(/[\\/:*?"<>|]/g, '').trim() || '아동';
-    const today = new Date().toISOString().slice(0, 10);
+    const today = todayISO();
     const downloadName = `${safeChildName}_회기별평가서_묶음_${records.length}건_${today}`;
     const originalTitle = document.title;
     document.title = downloadName;
@@ -6342,7 +6360,7 @@ function App() {
 
     /* 파일명에 들어갈 수 없는 특수문자 제거 + 아동 이름 fallback */
     const safeChildName = (activeChild?.name || info?.childName || '아동').replace(/[\\/:*?"<>|]/g, '').trim() || '아동';
-    const today = new Date().toISOString().slice(0, 10);
+    const today = todayISO();
     const downloadName = `${safeChildName}_${typeLabel}_${today}`;
 
     /* document.title 변경 (PDF 저장 시 기본 파일명으로 사용됨) */
@@ -6473,7 +6491,7 @@ ${body}
   /* 묶음 인쇄 폴백: HTML 다운로드 (열면 자동 인쇄) */
   const bundleFallbackToWindow = (html, title) => {
     try {
-      const dateStr = new Date().toISOString().slice(0, 10);
+      const dateStr = todayISO();
       const filename = `${title}_${dateStr}.html`.replace(/[\\/:*?"<>|]/g, '');
       const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
       const url = URL.createObjectURL(blob);
@@ -7005,8 +7023,23 @@ function SessionEvalView({
   const planned = activeChild.plannedSessions || 36;
   const isExtended = Math.max(...sessionNumbers) > planned;
 
+  /* 도움말 */
+  const help = useHelp('schoolPrepHelp_session_v1');
+
   return (
     <div className="view-wrap">
+      <HelpBox
+        isOpen={help.isOpen}
+        onClose={help.close}
+        steps={[
+          '<strong>아동 활성화</strong> — 먼저 「아동 관리」 탭에서 아동의 [활성화] 버튼을 누릅니다.',
+          '<strong>회기 번호 + 날짜 입력</strong> — 회기 번호를 누르거나 추가합니다. 중재 시작일이 등록되어 있으면 날짜가 자동으로 채워집니다.',
+          '<strong>8개 영역 점수 입력</strong> — 준비·참여·지시 따르기·규칙 이해·자기조절·대기행동·자발적 인사·과제 완수 각각 1~5점.',
+          '<strong>✨ 자동 생성</strong> — 점수 입력 후 ✨ 자동 생성 버튼을 누르면 잘한점·보완점·다음 회기 절차·가정 권고가 자동 작성됩니다.',
+          '<strong>저장</strong> — [저장] 버튼을 누르면 「보관함」에 자동 누적됩니다.',
+        ]}
+        tip="마지막 회기에서 <strong>[묶음 인쇄]</strong>를 누르면 1~10회기를 한 번에 PDF로 묶어 출력할 수 있습니다."
+      />
       {/* 활성 아동 표시 배너 */}
       <div className="active-child-banner no-print">
         <div>
@@ -7037,7 +7070,7 @@ function SessionEvalView({
 
       {/* 액션바 (인쇄 시 숨김) */}
       <div className="action-bar no-print">
-        <h2 className="view-title">회기별 아동 관찰 및 평가서</h2>
+        <h2 className="view-title">회기별 아동 관찰 및 평가서<HelpButton isOpen={help.isOpen} onReopen={help.reopen} /></h2>
         <div className="action-buttons">
           <button className="btn btn-ghost" onClick={onAutoGenerate}>✦ 총평 생성</button>
           <button className="btn btn-link-action" onClick={onSaveToChildDB} title="이 회기 데이터를 아동별 DB에 저장하여 중간·종결과 연계">🔗 아동 DB에 저장</button>
@@ -7480,8 +7513,22 @@ function MidReportView({
   /* Radar 색상 팔레트 (N개월 동적) */
   const radarColors = ['#c8c0b3', '#F5A0B1', '#D4728A', '#B85A75', '#C95D7C', '#7d6f5e', '#C95D7C', '#9c8e7a'];
 
+  /* 도움말 */
+  const help = useHelp('schoolPrepHelp_mid_v1');
+
   return (
     <div className="view-wrap">
+      <HelpBox
+        isOpen={help.isOpen}
+        onClose={help.close}
+        steps={[
+          '<strong>아동 활성화</strong> — 「아동 관리」 탭에서 아동을 활성화합니다.',
+          '<strong>「저장된 회기별 평가서에서 채움」 사용</strong> — 회기 평가서에서 저장한 점수가 자동으로 가져와집니다.',
+          '<strong>✨ 자동 생성</strong> — 영역별 변화 + 분기 총평 + 다음 8주 IEP 목표가 자동으로 작성됩니다.',
+          '<strong>인쇄 또는 저장</strong> — [인쇄]로 PDF 저장 또는 [저장]으로 보관함 등록 가능합니다.',
+        ]}
+        tip="중간보고서는 보통 4~5회기 단위로 작성합니다. 자동 생성된 총평이 어색하면 직접 수정 가능합니다."
+      />
       {/* 연계 채움 패널 - 활성 아동 사용 */}
       <div className="linkage-panel no-print">
         <div className="linkage-panel-title">
@@ -7526,7 +7573,7 @@ function MidReportView({
       </div>
 
       <div className="action-bar no-print">
-        <h2 className="view-title">학교 준비반 중간보고서</h2>
+        <h2 className="view-title">학교 준비반 중간보고서<HelpButton isOpen={help.isOpen} onReopen={help.reopen} /></h2>
         <div className="action-buttons">
           <button className="btn btn-ghost" onClick={onAutoGenerate}>✦ 기간 총평 생성</button>
           <button className="btn btn-secondary" onClick={onSave}>💾 보관함 저장</button>
@@ -7722,8 +7769,22 @@ function FinalReportView({
     hasAutoFilledRef.current = false;
   }, [activeChild?.id]);
 
+  /* 도움말 */
+  const help = useHelp('schoolPrepHelp_final_v1');
+
   return (
     <div className="view-wrap">
+      <HelpBox
+        isOpen={help.isOpen}
+        onClose={help.close}
+        steps={[
+          '<strong>영역별 변화 요약 표</strong> — 8개 영역마다 초기 수준과 최종 수준을 입력합니다. 예: "수동적 착석 (1.5점)" → "독립 수행 (4.5점)".',
+          '<strong>✨ 자동 생성 (주요 목표 및 중재 방향 요약)</strong> — 헤더 옆 ✨ 자동 생성 버튼을 누르면 도입·초기 평가·설정 목표·중재 방향 4단락이 자동 작성됩니다.',
+          '<strong>✨ 자동 생성 (종합 평가 및 권고사항)</strong> — 두드러진 성장·변동 영역·학교 권고·가정 권고 등이 자동 작성됩니다.',
+          '<strong>인쇄 → 보호자·학교 전달</strong> — 종결 후 보호자와 학교 양쪽에 전달용 PDF 출력.',
+        ]}
+        tip="영역별 점수를 정확히 입력해야 자동 생성이 정확하게 작동합니다."
+      />
       {/* 연계 자동 채움 패널 - 활성 아동 자동 사용 */}
       <div className="linkage-panel no-print">
         <div className="linkage-panel-title">
@@ -7760,7 +7821,7 @@ function FinalReportView({
       </div>
 
       <div className="action-bar no-print">
-        <h2 className="view-title">학교 준비반 종결보고서</h2>
+        <h2 className="view-title">학교 준비반 종결보고서<HelpButton isOpen={help.isOpen} onReopen={help.reopen} /></h2>
         <div className="action-buttons">
           <button className="btn btn-ghost" onClick={onAutoGenerate}>✦ 종합 평가 생성</button>
           <button className="btn btn-secondary" onClick={onSave}>💾 보관함 저장</button>
@@ -7937,6 +7998,7 @@ function ChildManagementView({
 }) {
   const [showAddForm, setShowAddForm] = useState(children.length === 0);
   const [editId, setEditId] = useState('');
+  const [therapistFilter, setTherapistFilter] = useState('all');
   const [form, setForm] = useState({
     name: '', nickname: '', birthDate: '', therapist: '', therapistId: '', startDate: '',
     sessionWeekday: 4,
@@ -8069,10 +8131,27 @@ function ChildManagementView({
     e.target.value = '';  // 같은 파일 재선택 가능하도록
   };
 
+  /* 도움말 */
+  const help = useHelp('schoolPrepHelp_children_v1');
+
   return (
     <div className="view-wrap">
+      <HelpBox
+        isOpen={help.isOpen}
+        onClose={help.close}
+        steps={[
+          '<strong>신규 아동 등록</strong> — 우측 [신규 아동 등록] 버튼을 누르고 이름·생년월일·중재 시작일을 입력합니다.',
+          '<strong>자동 요일 매칭</strong> — 중재 시작일을 선택하면 회기 요일이 자동으로 같은 요일로 설정됩니다.',
+          '<strong>활성화</strong> — 등록된 아동 카드의 [활성화] 버튼을 누르면 다른 탭(회기 평가서·중간·종결)에서 이 아동의 정보가 자동으로 채워집니다.',
+          '<strong>수정·삭제</strong> — 각 카드의 [수정]·[삭제] 버튼으로 변경 가능합니다.',
+        ]}
+        tip="관리자는 상단 「담당 치료사」 드롭다운으로 치료사별로 아동을 필터링할 수 있습니다."
+      />
       <div className="action-bar no-print">
-        <h2 className="view-title">👤 아동 관리</h2>
+        <h2 className="view-title">
+          👤 아동 관리
+          <HelpButton isOpen={help.isOpen} onReopen={help.reopen} />
+        </h2>
         <div className="action-buttons">
           <button
             className="btn btn-secondary"
@@ -8186,16 +8265,27 @@ function ChildManagementView({
                 />
               </label>
               <label className="child-form-field">
-                <span className="field-label">중재 시작일<small style={{color:'#D4728A', fontWeight: 400, marginLeft: 6}}>(첫 회기 저장 시 기록)</small></span>
+                <span className="field-label">중재 시작일<small style={{color:'#D4728A', fontWeight: 400, marginLeft: 6}}>(첫 회기 저장 시 기록, 요일 자동 매칭)</small></span>
                 <input
                   className="field-input"
                   type="date"
                   value={form.startDate}
-                  onChange={(e) => setForm({ ...form, startDate: e.target.value })}
+                  onChange={(e) => {
+                    const newDate = e.target.value;
+                    if (newDate) {
+                      /* 선택한 날짜의 요일을 sessionWeekday에 자동 매칭
+                         (T00:00:00 추가로 로컬 시간대 기준 요일 추출) */
+                      const dt = new Date(newDate + 'T00:00:00');
+                      const wd = dt.getDay();
+                      setForm({ ...form, startDate: newDate, sessionWeekday: wd });
+                    } else {
+                      setForm({ ...form, startDate: newDate });
+                    }
+                  }}
                 />
               </label>
               <label className="child-form-field">
-                <span className="field-label">회기 요일<small style={{color:'#D4728A', fontWeight: 400, marginLeft: 6}}>(주 1회 고정)</small></span>
+                <span className="field-label">회기 요일<small style={{color:'#D4728A', fontWeight: 400, marginLeft: 6}}>(시작일에 따라 자동 매칭 · 변경 가능)</small></span>
                 <select
                   className="field-input"
                   value={form.sessionWeekday}
@@ -8255,6 +8345,45 @@ function ChildManagementView({
           )}
         </h3>
 
+        {/* 치료사별 필터 — 관리자만 표시 */}
+        {currentUser?.role === 'admin' && children.length > 0 && (() => {
+          /* 등록된 아동의 담당 치료사 목록 (중복 제거) */
+          const therapistSet = new Set();
+          children.forEach((c) => {
+            if (c.therapistId) therapistSet.add(c.therapistId);
+            else if (c.therapist) therapistSet.add(c.therapist);
+          });
+          const therapistOptions = Array.from(therapistSet);
+          const countByT = (tKey) => children.filter((c) => (c.therapistId || c.therapist) === tKey).length;
+          return (
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: 10,
+              margin: '12px 0 16px', flexWrap: 'wrap',
+            }}>
+              <label style={{ fontSize: 14, color: '#3D2E4F', fontWeight: 600 }}>
+                담당 치료사:
+              </label>
+              <select
+                value={therapistFilter}
+                onChange={(e) => setTherapistFilter(e.target.value)}
+                style={{
+                  padding: '6px 12px', borderRadius: 8,
+                  border: '1px solid #F5C6CF', background: '#FFF8FA',
+                  color: '#3A2647', fontSize: 14, fontFamily: 'inherit',
+                  cursor: 'pointer', minWidth: 140,
+                }}
+              >
+                <option value="all">전체 ({children.length}명)</option>
+                {therapistOptions.map((t) => (
+                  <option key={t} value={t}>
+                    {t} ({countByT(t)}명)
+                  </option>
+                ))}
+              </select>
+            </div>
+          );
+        })()}
+
         {children.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon">👶</div>
@@ -8263,7 +8392,12 @@ function ChildManagementView({
           </div>
         ) : (
           <div className="child-grid">
-            {(childrenStats || childWithStats).map((c) => {
+            {(childrenStats || childWithStats)
+              .filter((c) => {
+                if (therapistFilter === 'all') return true;
+                return (c.therapistId || c.therapist) === therapistFilter;
+              })
+              .map((c) => {
               const s = c.stats || {};
               const isActive = activeChildId === c.id;
               return (
@@ -8427,8 +8561,22 @@ function TransitionReportView({
     setTransitionInfo({ ...transitionInfo, [field]: value });
   };
 
+  /* 도움말 */
+  const help = useHelp('schoolPrepHelp_transition_v1');
+
   return (
     <div className="view-wrap">
+      <HelpBox
+        isOpen={help.isOpen}
+        onClose={help.close}
+        steps={[
+          '<strong>종결 점수 입력</strong> — 종결보고서를 먼저 작성하면 점수가 자동으로 가져와집니다. 또는 직접 8개 영역 점수 입력.',
+          '<strong>진학 정보</strong> — 진학 예정 학년(예: 초등학교 1학년)과 특수교사 배치 여부를 선택합니다.',
+          '<strong>✨ 자동 생성</strong> — 강점·일상 지원·집중 지원 영역 분류 + 종결 변동 큰 영역의 추가 관찰 권장 + 입학 후 16주 IEP 목표가 자동으로 작성됩니다.',
+          '<strong>인쇄 → 학교 인계용</strong> — 학교에 전달할 PDF 출력.',
+        ]}
+        tip="이 보고서는 회기 표현을 자동으로 학교 환경에 맞게 변환합니다."
+      />
       <div className="linkage-panel no-print">
         <div className="linkage-panel-title">
           <span className="linkage-icon-sm">🎒</span>
@@ -8452,7 +8600,7 @@ function TransitionReportView({
       </div>
 
       <div className="action-bar no-print">
-        <h2 className="view-title">학교 전이 평가</h2>
+        <h2 className="view-title">학교 전이 평가<HelpButton isOpen={help.isOpen} onReopen={help.reopen} /></h2>
         <div className="action-buttons">
           <button className="btn btn-ghost" onClick={onAutoGenerate}>✦ 전이 평가 생성</button>
           <button className="btn btn-secondary" onClick={onSave}>💾 보관함 저장</button>
@@ -8737,13 +8885,29 @@ function ParentGuideView({ info, setInfo, onPrint, onBundlePrint, onSave, active
     );
   }
 
+  /* 도움말 — 첫 진입 시 자동 표시, 닫기 시 기억 */
+  const help = useHelp('schoolPrepHelp_parent_v1');
+
   return (
     <div className="view-wrap">
+      <HelpBox
+        isOpen={help.isOpen}
+        onClose={help.close}
+        steps={[
+          '<strong>회기 선택</strong> — 상단 드롭다운에서 안내하고 싶은 회기 번호를 고릅니다.',
+          '<strong>내용 확인</strong> — 회기별로 오늘 활동·가정에서 해볼 활동·다음 회기 예고가 자동으로 채워집니다. 필요하면 직접 수정 가능합니다.',
+          '<strong>인쇄 또는 PDF 저장</strong> — 우측 <strong>인쇄</strong> 버튼을 누르면 PDF로 저장하거나 보호자에게 출력해 전달할 수 있습니다.',
+          '<strong>한 번에 여러 회기 묶기</strong> — <strong>"묶음 인쇄"</strong> 버튼을 누르면 4회기 또는 36회기 전체를 한 번에 출력 가능합니다.',
+        ]}
+        tip="「아동 관리」 탭에서 <em>중재 시작일</em>을 등록하면 회기별 날짜가 자동으로 표시됩니다."
+      />
+
       <div className="action-bar no-print">
         <h2 className="view-title">
           회기별 보호자 안내문
           {bundleMode && isAllBundle && ' (전체 36회기 묶음)'}
           {bundleMode && !isAllBundle && ` (${bundleSessions[0]}~${bundleSessions[bundleSessions.length - 1]}회기 묶음)`}
+          <HelpButton isOpen={help.isOpen} onReopen={help.reopen} />
         </h2>
         <div className="action-buttons">
           {!bundleMode && (
@@ -9060,10 +9224,24 @@ function CurriculumView({ onPrint }) {
     setEndSession(e);
   };
 
+  /* 도움말 */
+  const help = useHelp('schoolPrepHelp_curriculum_v1');
+
   return (
     <div className="view-wrap">
+      <HelpBox
+        isOpen={help.isOpen}
+        onClose={help.close}
+        steps={[
+          '<strong>36회기 일람</strong> — 학교 준비반의 표준 36회기 커리큘럼을 한눈에 확인할 수 있습니다.',
+          '<strong>회기별 상세</strong> — 각 회기의 주제·목표·세부 활동이 정리되어 있습니다.',
+          '<strong>범위 선택</strong> — 빠른 선택 버튼으로 1개월(4회기)·3개월(12회기) 단위로 필터링 가능합니다.',
+          '<strong>PDF 저장</strong> — 우측 [📄 바로 PDF 저장] 버튼으로 출력 가능합니다.',
+        ]}
+        tip="이 화면은 참고용입니다. 실제 회기 진행은 「회기별 평가서」 탭에서 기록합니다."
+      />
       <div className="action-bar no-print">
-        <h2 className="view-title">친구야, 학교 가자! · 36회기 커리큘럼</h2>
+        <h2 className="view-title">친구야, 학교 가자! · 36회기 커리큘럼<HelpButton isOpen={help.isOpen} onReopen={help.reopen} /></h2>
         <div className="action-buttons">
           <button className="btn btn-primary" onClick={onPrint}>📄 바로 PDF 저장</button>
         </div>
@@ -9294,10 +9472,24 @@ function ArchiveView({ archive, onLoad, onDelete, onBatchPrint, children, childR
     return (childRecords || []).filter((r) => searchInChildRecord(r, searchKeyword.trim()));
   }, [childRecords, searchKeyword]);
 
+  /* 도움말 */
+  const help = useHelp('schoolPrepHelp_archive_v1');
+
   return (
     <div className="view-wrap">
+      <HelpBox
+        isOpen={help.isOpen}
+        onClose={help.close}
+        steps={[
+          '<strong>저장된 보고서 목록</strong> — 회기 평가서·중간·종결·학교 전이 네 종류의 보고서가 모두 모입니다.',
+          '<strong>검색·필터링</strong> — 아동 이름이나 코멘트로 검색 가능합니다.',
+          '<strong>미리보기·재인쇄</strong> — 보고서 카드를 클릭하면 다시 보거나 인쇄할 수 있습니다.',
+          '<strong>아동별 평가 데이터</strong> — 아동마다 누적된 회기 평가 점수를 한눈에 확인 가능합니다.',
+        ]}
+        tip="보고서는 「저장」 누를 때마다 새 항목으로 누적됩니다. 기존 보고서는 [삭제] 버튼으로 정리하세요."
+      />
       <div className="action-bar no-print">
-        <h2 className="view-title">보관함 · Archive</h2>
+        <h2 className="view-title">보관함 · Archive<HelpButton isOpen={help.isOpen} onReopen={help.reopen} /></h2>
       </div>
       <div className="report-paper archive-paper">
         {/* 아동 DB 섹션 */}
@@ -9659,6 +9851,91 @@ function AutoGrowTextarea({ value, className, minHeight, ...rest }) {
       style={{ overflow: 'hidden', resize: 'none', ...(minHeight ? { minHeight } : {}) }}
       {...rest}
     />
+  );
+}
+
+/* ════════════════════════════════════════════════
+   공통 도움말 시스템 — 각 탭의 첫 진입 안내
+   - 첫 진입 시 자동 표시
+   - 닫기 시 localStorage에 저장 → 다음부터 안 보임
+   - 헤더 옆 [? 도움말] 버튼으로 재표시 가능
+   ════════════════════════════════════════════════ */
+function useHelp(storageKey) {
+  const [isOpen, setIsOpen] = useState(() => {
+    try { return localStorage.getItem(storageKey) !== '1'; }
+    catch (e) { return true; }
+  });
+  const close = useCallback(() => {
+    setIsOpen(false);
+    try { localStorage.setItem(storageKey, '1'); } catch (e) {}
+  }, [storageKey]);
+  const reopen = useCallback(() => {
+    setIsOpen(true);
+    try { localStorage.removeItem(storageKey); } catch (e) {}
+  }, [storageKey]);
+  return { isOpen, close, reopen };
+}
+
+function HelpBox({ isOpen, onClose, title, steps, tip }) {
+  if (!isOpen) return null;
+  return (
+    <div className="no-print" style={{
+      background: '#FFF8FA',
+      border: '1.5px solid #F5C6CF',
+      borderRadius: 12,
+      padding: '16px 20px',
+      marginBottom: 18,
+      position: 'relative',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+        <h4 style={{ margin: 0, color: '#C95D7C', fontSize: 15, fontWeight: 700 }}>
+          💡 {title || '처음 사용하시는 분들을 위한 안내'}
+        </h4>
+        <button
+          type="button"
+          onClick={onClose}
+          style={{
+            background: 'transparent', border: 'none', color: '#B85A75',
+            fontSize: 13, cursor: 'pointer', padding: '4px 8px',
+            fontFamily: 'inherit',
+          }}
+        >
+          ✕ 닫기
+        </button>
+      </div>
+      <ol style={{ margin: 0, paddingLeft: 22, color: '#3D2E4F', fontSize: 13.5, lineHeight: 1.8 }}>
+        {(steps || []).map((s, i) => (
+          <li key={i} dangerouslySetInnerHTML={{ __html: s }} />
+        ))}
+      </ol>
+      {tip && (
+        <div style={{
+          marginTop: 12, padding: 10, background: '#FAEEEF',
+          borderRadius: 8, fontSize: 12.5, color: '#B85A75',
+        }}
+        dangerouslySetInnerHTML={{ __html: `<strong>💡 팁:</strong> ${tip}` }}
+        />
+      )}
+    </div>
+  );
+}
+
+function HelpButton({ isOpen, onReopen }) {
+  if (isOpen) return null;
+  return (
+    <button
+      type="button"
+      onClick={onReopen}
+      className="no-print"
+      style={{
+        marginLeft: 10, background: 'transparent', border: '1px solid #F5C6CF',
+        color: '#C95D7C', fontSize: 11.5, padding: '3px 9px', borderRadius: 6,
+        cursor: 'pointer', fontFamily: 'inherit', verticalAlign: 'middle',
+      }}
+      title="사용법 다시 보기"
+    >
+      ? 도움말
+    </button>
   );
 }
 
@@ -10290,10 +10567,24 @@ function AdminView({ therapists, onAddTherapist, onUpdateTherapist, onDeleteTher
     return { ...t, childCount: assignedChildren.length, recordCount };
   });
 
+  /* 도움말 */
+  const help = useHelp('schoolPrepHelp_admin_v1');
+
   return (
     <div className="view-wrap">
+      <HelpBox
+        isOpen={help.isOpen}
+        onClose={help.close}
+        steps={[
+          '<strong>치료사 계정 추가</strong> — [+ 신규 치료사 등록] 버튼으로 새 치료사의 ID·비번·이름을 입력해 계정을 만듭니다. 그 치료사는 본인 폰·PC에서 즉시 로그인 가능합니다.',
+          '<strong>치료사 비밀번호 재설정</strong> — 치료사가 비번을 잊으면 여기서 새로 설정해줄 수 있습니다.',
+          '<strong>관리자 본인 비번 변경</strong> — 헤더의 [비번 변경] 버튼으로 가능합니다.',
+          '<strong>아동 담당 변경</strong> — 치료사 카드에서 담당 아동을 다른 치료사에게 이동할 수 있습니다.',
+        ]}
+        tip="데이터는 클라우드 자동 동기화되어 어떤 디바이스에서 로그인해도 같은 데이터가 보입니다."
+      />
       <div className="action-bar no-print">
-        <h2 className="view-title">🔑 관리자 — 치료사 계정 관리</h2>
+        <h2 className="view-title">🔑 관리자 — 치료사 계정 관리<HelpButton isOpen={help.isOpen} onReopen={help.reopen} /></h2>
         <div className="action-buttons">
           {!showAddForm && (
             <button className="btn btn-primary" onClick={() => setShowAddForm(true)}>
@@ -12443,7 +12734,7 @@ class ErrorBoundary extends React.Component {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `검단ABA_긴급백업_${new Date().toISOString().slice(0, 10)}.json`;
+      a.download = `검단ABA_긴급백업_${todayISO()}.json`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
