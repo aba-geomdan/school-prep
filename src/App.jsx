@@ -12681,8 +12681,15 @@ function getGlobalCSS() {
     @media (max-width: 768px) {
       .report-paper { padding: 24px 18px; }
       .topbar { padding: 12px 16px; }
+      .brand { gap: 10px; min-width: 0; flex: 1 1 auto; }
+      .brand-mark { width: 44px; height: 44px; border-radius: 10px; padding: 4px; }
       .brand-title { font-size: 15px; }
       .brand-sub { font-size: 10px; }
+      .user-info {
+        flex-wrap: wrap; gap: 6px; padding: 6px 10px;
+        max-width: 100%; justify-content: flex-end;
+      }
+      .user-id { display: none; }
       .tabs { width: 100%; overflow-x: auto; }
       .tab-btn { padding: 6px 10px; font-size: 12px; white-space: nowrap; }
       .action-bar { flex-direction: column; align-items: stretch; }
