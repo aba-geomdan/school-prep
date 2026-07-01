@@ -47,31 +47,29 @@ const ADMIN_ACCOUNT = {
    ════════════════════════════════════════════════ */
 const SUPABASE_URL = 'https://vdubgrxwijydwfabwpnk.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZkdWJncnh3aWp5ZHdmYWJ3cG5rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MDk1ODgsImV4cCI6MjA5NzE4NTU4OH0.nqNO3vany3M6fzmG5BG6QVdvi8BW2UbhTDhxNnwvA88';
-const SUPABASE_REST = `${SUPABASE_URL}/rest/v1`;
+const SP_FN_URL = `${SUPABASE_URL}/functions/v1/sp-data`;
 
-/* 공통 fetch 헬퍼 — Supabase REST API 호출 */
+/* Edge Function 호출 공통 헬퍼 */
+const spCallFn = async (payload) => {
+  const res = await fetch(SP_FN_URL, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+  let out;
+  try { out = await res.json(); } catch (_) { throw new Error('서버 응답을 읽지 못했습니다'); }
+  if (!res.ok || out.error) throw new Error(out.error || '서버 오류');
+  return out.data;
+};
+
+/* 공통 fetch 헬퍼 — Edge Function 프록시 경유 (테이블 직접 접근 안 함) */
 const supabaseFetch = async (path, opts = {}) => {
   const { method = 'GET', body, extraHeaders = {} } = opts;
-  const headers = {
-    'apikey': SUPABASE_ANON_KEY,
-    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-    'Content-Type': 'application/json',
-    ...extraHeaders,
-  };
-  if (method === 'POST' || method === 'PATCH') {
-    headers['Prefer'] = extraHeaders['Prefer'] || 'return=representation';
-  }
-  const res = await fetch(`${SUPABASE_REST}${path}`, {
-    method,
-    headers,
-    body: body ? JSON.stringify(body) : undefined,
-  });
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Supabase ${method} ${path} ${res.status}: ${text}`);
-  }
-  if (res.status === 204) return null;
-  return res.json();
+  return await spCallFn({ action: 'proxy', path, method, body, extraHeaders });
 };
 
 /* === 인증용 해시 함수 (PBKDF2-SHA256, 100,000 iterations) === */
@@ -113,20 +111,10 @@ const sbUsers = {
     return data && data.length > 0 ? data[0] : null;
   },
   create: async ({ username, password, name, role = 'therapist' }) => {
-    const salt = generateSalt();
-    const password_hash = await hashPassword(password, salt);
-    return await supabaseFetch('/sp_users', {
-      method: 'POST',
-      body: { username, password_hash, password_salt: salt, name, role, is_active: true },
-    });
+    return await spCallFn({ action: 'createUser', username, password, name, role });
   },
   changePassword: async (id, newPassword) => {
-    const salt = generateSalt();
-    const password_hash = await hashPassword(newPassword, salt);
-    return await supabaseFetch(`/sp_users?id=eq.${id}`, {
-      method: 'PATCH',
-      body: { password_hash, password_salt: salt },
-    });
+    return await spCallFn({ action: 'changePassword', id, newPassword });
   },
   setActive: async (id, isActive) => {
     return await supabaseFetch(`/sp_users?id=eq.${id}`, {
@@ -4464,42 +4452,20 @@ function App() {
     }
 
     try {
-      /* Supabase에서 사용자 조회 */
-      const user = await sbUsers.findByUsername(trimmedId);
+      /* 서버에서 로그인 검증 (비밀번호 해시가 브라우저에 노출되지 않음) */
+      const result = await spCallFn({
+        action: 'verifyLogin',
+        username: trimmedId,
+        password: trimmedPw,
+        adminInitPassword: ADMIN_ACCOUNT.password,
+      });
 
-      if (!user) {
-        setLoginError('아이디 또는 비밀번호가 일치하지 않습니다');
+      if (!result || !result.ok) {
+        setLoginError((result && result.error) || '아이디 또는 비밀번호가 일치하지 않습니다');
         return false;
       }
 
-      if (!user.is_active) {
-        setLoginError('비활성화된 계정입니다. 관리자에게 문의하세요');
-        return false;
-      }
-
-      /* 관리자 첫 로그인 자동 활성화 — placeholder를 실제 해시로 교체 */
-      if (user.role === 'admin' && user.password_hash === '__INIT__') {
-        if (trimmedPw === ADMIN_ACCOUNT.password) {
-          /* 첫 로그인이므로 실제 해시 저장 */
-          const salt = generateSalt();
-          const hash = await hashPassword(trimmedPw, salt);
-          await supabaseFetch(`/sp_users?id=eq.${user.id}`, {
-            method: 'PATCH',
-            body: { password_hash: hash, password_salt: salt },
-          });
-          /* 통과 처리 */
-        } else {
-          setLoginError('아이디 또는 비밀번호가 일치하지 않습니다');
-          return false;
-        }
-      } else {
-        /* 일반 검증 — 입력 비번을 user.password_salt로 해시한 후 user.password_hash와 비교 */
-        const inputHash = await hashPassword(trimmedPw, user.password_salt);
-        if (inputHash !== user.password_hash) {
-          setLoginError('아이디 또는 비밀번호가 일치하지 않습니다');
-          return false;
-        }
-      }
+      const user = result.user;
 
       /* 로그인 성공 */
       const userInfo = { id: user.username, dbId: user.id, name: user.name, role: user.role };
@@ -4553,16 +4519,16 @@ function App() {
     if (currentPw === null) return;
 
     try {
-      const user = await sbUsers.findByUsername(ADMIN_ACCOUNT.id);
-      if (!user) {
-        showToast('⚠ 관리자 계정 조회 실패');
-        return;
-      }
-      const inputHash = await hashPassword(currentPw, user.password_salt);
-      if (inputHash !== user.password_hash) {
+      const check = await spCallFn({
+        action: 'verifyCurrentPassword',
+        username: ADMIN_ACCOUNT.id,
+        password: currentPw,
+      });
+      if (!check || !check.ok) {
         showToast('현재 비밀번호가 일치하지 않습니다');
         return;
       }
+      const adminDbId = check.dbId;
       const newPw = await showPrompt(
         '새 비밀번호를 입력해주세요 (4자 이상 권장)',
         '',
@@ -4574,7 +4540,7 @@ function App() {
         showToast('비밀번호는 4자 이상이어야 합니다');
         return;
       }
-      await sbUsers.changePassword(user.id, trimmed);
+      await sbUsers.changePassword(adminDbId, trimmed);
       showToast('✓ 관리자 비밀번호가 변경되었습니다');
     } catch (err) {
       console.error('비번 변경 오류:', err);
