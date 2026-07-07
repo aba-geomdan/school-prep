@@ -9543,7 +9543,7 @@ function MidReportView({
             <h3 className="section-title">영역별 종합 프로파일 (RadarChart)</h3>
             <div className="chart-wrap">
               <ResponsiveContainer width="100%" height={380}>
-                <RadarChart data={radarData} outerRadius="75%">
+                <RadarChart data={radarData} outerRadius="68%" margin={{ top: 16, right: 60, bottom: 16, left: 60 }}>
                   <PolarGrid stroke="#d1cabc" />
                   <PolarAngleAxis dataKey="domain" tick={{ fontSize: 12, fill: '#3D2E4F' }} />
                   <PolarRadiusAxis angle={90} domain={[0, 5]} tick={{ fontSize: 10 }} />
@@ -9796,10 +9796,11 @@ function FinalReportView({
           <div className="radar-block">
             <h3 className="section-title">영역별 성장량 한눈에 보기</h3>
             <div className="chart-wrap chart-final-bar">
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer width="100%" height={340} minWidth={480}>
                 <BarChart
                   data={finalChangeBarData}
-                  margin={{ top: 20, right: 24, left: 28, bottom: 56 }}
+                  margin={{ top: 20, right: 24, left: 28, bottom: 64 }}
+                  barCategoryGap="18%"
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="#F8D8DD" />
                   <XAxis
@@ -9866,7 +9867,13 @@ function ChildManagementView({
 }) {
   const [showAddForm, setShowAddForm] = useState(children.length === 0);
   const [editId, setEditId] = useState('');
-  const [therapistFilter, setTherapistFilter] = useState('all');
+  /* 아동 관리: 치료사별 아코디언 — 펼쳐진 치료사 키 집합 (여러 명 동시 펼침 가능) */
+  const [expandedTherapists, setExpandedTherapists] = useState(() => new Set());
+  const toggleTherapist = (key) => setExpandedTherapists((prev) => {
+    const next = new Set(prev);
+    if (next.has(key)) next.delete(key); else next.add(key);
+    return next;
+  });
   const [form, setForm] = useState({
     name: '', nickname: '', birthDate: '', therapist: '', therapistId: '', startDate: '',
     sessionWeekday: 4,
@@ -10225,44 +10232,6 @@ function ChildManagementView({
           )}
         </h3>
 
-        {/* 치료사별 필터 — 관리자만 표시 */}
-        {currentUser?.role === 'admin' && children.length > 0 && (() => {
-          /* 등록된 아동의 담당 치료사 목록 (중복 제거) */
-          const therapistSet = new Set();
-          children.forEach((c) => {
-            if (c.therapistId) therapistSet.add(c.therapistId);
-            else if (c.therapist) therapistSet.add(c.therapist);
-          });
-          const therapistOptions = Array.from(therapistSet);
-          const countByT = (tKey) => children.filter((c) => (c.therapistId || c.therapist) === tKey).length;
-          return (
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: 10,
-              margin: '12px 0 16px', flexWrap: 'wrap',
-            }}>
-              <label style={{ fontSize: 14, color: '#3D2E4F', fontWeight: 600 }}>
-                담당 치료사:
-              </label>
-              <select
-                value={therapistFilter}
-                onChange={(e) => setTherapistFilter(e.target.value)}
-                style={{
-                  padding: '6px 12px', borderRadius: 8,
-                  border: '1px solid #F5C6CF', background: '#FFF8FA',
-                  color: '#3A2647', fontSize: 14, fontFamily: 'inherit',
-                  cursor: 'pointer', minWidth: 140,
-                }}
-              >
-                <option value="all">전체 ({children.length}명)</option>
-                {therapistOptions.map((t) => (
-                  <option key={t} value={t}>
-                    {t} ({countByT(t)}명)
-                  </option>
-                ))}
-              </select>
-            </div>
-          );
-        })()}
 
         {children.length === 0 ? (
           <div className="empty-state">
@@ -10271,13 +10240,10 @@ function ChildManagementView({
             <p className="empty-sub">위의 "신규 아동 등록" 버튼을 눌러 시작해주세요.</p>
           </div>
         ) : (
-          <div className="child-grid">
-            {(childrenStats || childWithStats)
-              .filter((c) => {
-                if (therapistFilter === 'all') return true;
-                return (c.therapistId || c.therapist) === therapistFilter;
-              })
-              .map((c) => {
+          (() => {
+            const allChildren = childrenStats || childWithStats;
+            /* 카드 하나를 그리는 렌더 함수 (관리자 아코디언·치료사 나열에서 공용) */
+            const renderCard = (c) => {
               const s = c.stats || {};
               const isActive = activeChildId === c.id;
               return (
@@ -10377,8 +10343,49 @@ function ChildManagementView({
                 </div>
               </div>
               );
-            })}
-          </div>
+            };
+
+            if (currentUser?.role !== 'admin') {
+              return <div className="child-grid">{allChildren.map(renderCard)}</div>;
+            }
+
+            const groups = {};
+            allChildren.forEach((c) => {
+              const key = c.therapist || c.therapistId || '(미지정)';
+              if (!groups[key]) groups[key] = [];
+              groups[key].push(c);
+            });
+            const therapistKeys = Object.keys(groups).sort((a, b) => a.localeCompare(b, 'ko'));
+            return (
+              <div className="therapist-accordion">
+                {therapistKeys.map((tKey) => {
+                  const kids = groups[tKey];
+                  const open = expandedTherapists.has(tKey);
+                  const hasActive = kids.some((c) => c.id === activeChildId);
+                  return (
+                    <div key={tKey} className={`therapist-group ${open ? 'open' : ''}`}>
+                      <button
+                        type="button"
+                        className="therapist-toggle"
+                        onClick={() => toggleTherapist(tKey)}
+                        aria-expanded={open}
+                      >
+                        <span className="therapist-caret">{open ? '▾' : '▸'}</span>
+                        <span className="therapist-name">👩‍🏫 {tKey}</span>
+                        <span className="therapist-count">{kids.length}명</span>
+                        {hasActive && <span className="therapist-active-dot" title="활성 아동 포함">●</span>}
+                      </button>
+                      {open && (
+                        <div className="child-grid therapist-children">
+                          {kids.map(renderCard)}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })()
         )}
       </div>
     </div>
@@ -10590,8 +10597,10 @@ function ParentGuideView({ info, setInfo, onPrint, onBundlePrint, onSave, active
   const [nextPreview, setNextPreview] = useState('');
   /* 묶음 인쇄 모드 - 4회기 한 번에 안내문 출력 */
   const [bundleMode, setBundleMode] = useState(false);
-  /* 묶음 시작 회기 (이 회기부터 4개) */
+  /* 묶음 시작 회기 */
   const [bundleStart, setBundleStart] = useState(1);
+  /* 묶음 끝 회기 (시작~끝 범위를 자유롭게 선택 — 4주/5주 달 모두 커버) */
+  const [bundleEnd, setBundleEnd] = useState(4);
 
   /* 활성 아동의 반(班)에 맞는 커리큘럼·안내문 세트 (없으면 기초반 폴백) */
   const curriculum = getCurriculum(activeChild);
@@ -10609,11 +10618,13 @@ function ParentGuideView({ info, setInfo, onPrint, onBundlePrint, onSave, active
       return curriculum.map((c) => c.session);
     }
     const arr = [];
-    for (let s = bundleStart; s < bundleStart + 4 && s <= curriculum.length; s++) {
+    const start = Math.max(1, bundleStart);
+    const end = Math.min(bundleEnd, curriculum.length);
+    for (let s = start; s <= end; s++) {
       arr.push(s);
     }
     return arr;
-  }, [bundleStart]);
+  }, [bundleStart, bundleEnd, curriculum.length]);
   const isAllBundle = bundleStart === 0;
 
   /* 특정 회기의 guide 데이터 가져오기 (폴백 포함) */
@@ -10808,29 +10819,49 @@ function ParentGuideView({ info, setInfo, onPrint, onBundlePrint, onSave, active
             </select>
           )}
           {bundleMode && (
-            <select
-              className="session-picker"
-              value={bundleStart}
-              onChange={(e) => setBundleStart(Number(e.target.value))}
-              title="묶음 범위 선택"
-            >
-              {[1, 5, 9, 13, 17, 21, 25, 29, 33].map((s) => {
-                const end = Math.min(s + 3, curriculum.length);
-                return (
-                  <option key={s} value={s}>
-                    {s}~{end}회기 (4회기 묶음)
+            <>
+              <select
+                className="session-picker"
+                value={bundleStart}
+                onChange={(e) => {
+                  const v = Number(e.target.value);
+                  setBundleStart(v);
+                  /* 시작이 끝보다 뒤면 끝을 시작에 맞춰 보정 */
+                  if (v !== 0 && v > bundleEnd) setBundleEnd(v);
+                }}
+                title="묶음 시작 회기"
+              >
+                <option value={0}>📚 전체 {curriculum.length}회기</option>
+                {curriculum.map((c) => (
+                  <option key={c.session} value={c.session}>
+                    시작: {c.session}회기
                   </option>
-                );
-              })}
-              <option value={0}>📚 전체 36회기 (1~36)</option>
-            </select>
+                ))}
+              </select>
+              {bundleStart !== 0 && (
+                <select
+                  className="session-picker"
+                  value={bundleEnd}
+                  onChange={(e) => setBundleEnd(Number(e.target.value))}
+                  title="묶음 끝 회기"
+                >
+                  {curriculum
+                    .filter((c) => c.session >= bundleStart)
+                    .map((c) => (
+                      <option key={c.session} value={c.session}>
+                        끝: {c.session}회기 ({c.session - bundleStart + 1}개)
+                      </option>
+                    ))}
+                </select>
+              )}
+            </>
           )}
           <button
             className={`btn ${bundleMode ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setBundleMode(!bundleMode)}
-            title="4회기 한 번에 인쇄"
+            title="여러 회기 한 번에 인쇄"
           >
-            📑 {bundleMode ? '단일 모드' : '4회기 묶음'}
+            📑 {bundleMode ? '단일 모드' : '회기 묶음'}
           </button>
           <button className="btn btn-secondary" onClick={onSave}>💾 보관함 저장</button>
           <button className="btn btn-primary" onClick={onPrint}>📄 바로 PDF 저장</button>
@@ -10843,7 +10874,7 @@ function ParentGuideView({ info, setInfo, onPrint, onBundlePrint, onSave, active
           <div className="bundle-mode-title">
             📑 {isAllBundle
               ? `전체 36회기 인쇄 모드 (1~36회기 모두 출력)`
-              : `4회기 묶음 인쇄 모드 (${bundleSessions[0]}~${bundleSessions[bundleSessions.length - 1]}회기)`}
+              : `묶음 인쇄 모드 (${bundleSessions[0]}~${bundleSessions[bundleSessions.length - 1]}회기 · ${bundleSessions.length}개)`}
           </div>
           <div className={`bundle-mode-buttons ${isAllBundle ? 'all-mode' : ''}`}>
             {bundleSessions.map((s) => {
@@ -13501,7 +13532,7 @@ function getGlobalCSS() {
       padding: 16px 12px; margin-bottom: 12px;
     }
     /* 종결보고서 - 영역별 변화량 막대 차트 */
-    .chart-final-bar { height: 360px; }
+    .chart-final-bar { height: 360px; min-height: 360px; }
     /* 종결보고서 - 월별 추이 라인 차트 */
     .chart-final-line { height: 320px; }
     /* 차트 캡션 (보호자 친화 설명) */
@@ -13971,6 +14002,20 @@ function getGlobalCSS() {
     }
     .active-child-badge strong { color: #C95D7C; }
 
+    .therapist-accordion { display: flex; flex-direction: column; gap: 10px; margin: 12px 0 4px; }
+    .therapist-group { border: 1px solid #F5C6CF; border-radius: 10px; overflow: hidden; background: #FFF8FA; }
+    .therapist-group.open { background: #fff; box-shadow: 0 2px 8px rgba(212,114,138,0.08); }
+    .therapist-toggle {
+      width: 100%; display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px; background: transparent; border: none; cursor: pointer;
+      font-family: inherit; font-size: 15px; font-weight: 700; color: #3A2647; text-align: left;
+    }
+    .therapist-toggle:hover { background: #FFEEF2; }
+    .therapist-caret { color: #D4728A; font-size: 13px; width: 14px; }
+    .therapist-name { flex: 1; }
+    .therapist-count { font-size: 12px; font-weight: 600; color: #D4728A; background: #FFEEF2; padding: 2px 10px; border-radius: 12px; }
+    .therapist-active-dot { color: #C95D7C; font-size: 10px; }
+    .therapist-children { padding: 4px 16px 16px; }
     .child-grid {
       display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 14px;
@@ -14305,7 +14350,7 @@ function getGlobalCSS() {
         padding: 6px 4px !important;
       }
       /* 종결보고서 차트 - 인쇄 시 A4에 깔끔하게 들어가도록 축소 */
-      .chart-final-bar { height: 300px !important; margin-bottom: 4px !important; }
+      .chart-final-bar { height: 360px !important; min-height: 360px !important; margin-bottom: 4px !important; }
       .chart-final-line { height: 230px !important; margin-bottom: 4px !important; }
       .chart-caption {
         font-size: 9pt !important; color: #C95D7C !important;
