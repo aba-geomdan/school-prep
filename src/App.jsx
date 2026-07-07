@@ -8211,14 +8211,17 @@ function App() {
       return;
     }
 
-    /* 보고서 종류 한글 매핑 */
-    const typeLabel = {
+    /* 보고서 종류 라벨 — 호출부에서 이미 한글 라벨('중간보고서' 등)을 넘기므로
+       공백만 제거해 파일명에 사용한다. (과거 mid/final 영문 key 매핑이 실제 인자와
+       불일치해 모두 '보고서'로 폴백되던 버그 수정) 옛 영문 key도 호환 유지. */
+    const legacyLabel = {
       'session': '회기별평가서',
       'mid': '중간보고서',
       'final': '종결보고서',
       'transition': '학교전이평가',
       'home-tips': '보호자안내문',
-    }[type] || '보고서';
+    }[type];
+    const typeLabel = (legacyLabel || String(type || '').replace(/\s+/g, '')) || '보고서';
 
     /* 파일명에 들어갈 수 없는 특수문자 제거 + 아동 이름 fallback */
     const safeChildName = (activeChild?.name || info?.childName || '아동').replace(/[\\/:*?"<>|]/g, '').trim() || '아동';
@@ -8721,7 +8724,7 @@ ${body}
           />
         )}
 
-        {activeTab === 'curriculum' && <CurriculumView onPrint={() => handlePrint('커리큘럼')} />}
+        {activeTab === 'curriculum' && <CurriculumView activeChild={activeChild} onPrint={() => handlePrint('커리큘럼')} />}
 
         {activeTab === 'parent' && (
           <ParentGuideView
@@ -9796,13 +9799,16 @@ function FinalReportView({
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={finalChangeBarData}
-                  margin={{ top: 20, right: 24, left: 12, bottom: 8 }}
+                  margin={{ top: 20, right: 24, left: 28, bottom: 56 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="#F8D8DD" />
                   <XAxis
                     dataKey="domain"
-                    tick={{ fontSize: 11, fill: '#3D2E4F' }}
+                    tick={{ fontSize: 10, fill: '#3D2E4F' }}
                     interval={0}
+                    angle={-40}
+                    textAnchor="end"
+                    height={64}
                   />
                   <YAxis
                     domain={[0, 5]}
@@ -11064,10 +11070,11 @@ function ParentGuideView({ info, setInfo, onPrint, onBundlePrint, onSave, active
 /* ════════════════════════════════════════════════
    커리큘럼 View (36회기 안내)
    ════════════════════════════════════════════════ */
-function CurriculumView({ onPrint }) {
-  /* 반(班) 토글: 'basic'(기초반) | 'advanced'(심화반). 화면에서 자유 선택. */
-  const [classType, setClassType] = useState('basic');
-  const activeCurriculum = classType === 'advanced' ? CURRICULUM_ADVANCED : CURRICULUM;
+function CurriculumView({ activeChild, onPrint }) {
+  /* 반(班)은 선택된 아동의 classType을 따른다 (심화반 아동 → 심화반 커리큘럼).
+     미지정/알수없음 → 기초반 폴백. (getCurriculum 헬퍼 사용) */
+  const classType = activeChild?.classType === 'advanced' ? 'advanced' : 'basic';
+  const activeCurriculum = getCurriculum(activeChild);
   const totalSessions = activeCurriculum.length;  // 36
   /* 범위 선택 state */
   const [startSession, setStartSession] = useState(1);
@@ -11136,22 +11143,14 @@ function CurriculumView({ onPrint }) {
         </div>
 
         <div className="range-section">
-          <div className="range-label">반 선택</div>
+          <div className="range-label">반</div>
           <div className="range-buttons">
-            <button
-              type="button"
-              className={`range-btn ${classType === 'basic' ? 'active' : ''}`}
-              onClick={() => setClassType('basic')}
-            >
-              기초반
-            </button>
-            <button
-              type="button"
-              className={`range-btn ${classType === 'advanced' ? 'active' : ''}`}
-              onClick={() => setClassType('advanced')}
-            >
-              심화반
-            </button>
+            <span className="range-btn active" style={{ cursor: 'default' }}>
+              {classType === 'advanced' ? '심화반' : '기초반'}
+              <small style={{ color: '#D4728A', fontWeight: 400, marginLeft: 6 }}>
+                (선택한 아동 반 자동 적용)
+              </small>
+            </span>
           </div>
         </div>
 
@@ -12675,7 +12674,7 @@ function getPrintWindowCSS() {
     .change-grid-row { border-top: 1px solid #d1d5db; page-break-inside: avoid; break-inside: avoid; }
     .change-grid .cg-col { flex: 1 1 0; padding: 6px 8px; border-right: 1px solid #e8e1d2; font-size: 10pt; }
     .change-grid .cg-col:last-child { border-right: none; }
-    .change-grid .cg-domain { flex: 0 0 11%; font-weight: 700; background: #FFF8FA !important; }
+    .change-grid .cg-domain { flex: 0 0 16%; font-weight: 700; background: #FFF8FA !important; word-break: keep-all; }
     /* 변화 요약 칸은 다소 길어서 별도 너비 — "수행 변동 (-0.5점, 지속 지원 권고)" 한 줄에 들어가도록 */
     .change-grid .cg-summary { flex: 0 0 28%; }
     /* 셀 안 변환된 텍스트는 위쪽 정렬·여백 축소 */
@@ -13314,7 +13313,7 @@ function getGlobalCSS() {
       font-weight: 600; color: #C95D7C; font-size: 12px;
     }
     .eval-table td { border: 1px solid #F5C6CF; padding: 8px; vertical-align: middle; }
-    .domain-label { font-weight: 600; background: #FFF8FA; text-align: center; }
+    .domain-label { font-weight: 600; background: #FFF8FA; text-align: center; word-break: keep-all; }
     .domain-criteria { color: #C95D7C; font-size: 12px; line-height: 1.5; }
     .quarter-th { background: #F5E5E8 !important; color: #3D2E4F !important; }
     .quarter-cell { background: #FFF8FA; font-weight: 700; color: #3D2E4F; text-align: center; }
@@ -13441,7 +13440,7 @@ function getGlobalCSS() {
     .change-grid-row { border-top: 1px solid #F5C6CF; }
     .change-grid .cg-col { flex: 1 1 0; padding: 8px; border-right: 1px solid #e8e1d2; display: flex; align-items: center; }
     .change-grid .cg-col:last-child { border-right: none; }
-    .change-grid .cg-domain { flex: 0 0 14%; font-weight: 700; background: #FFF8FA; }
+    .change-grid .cg-domain { flex: 0 0 14%; font-weight: 700; background: #FFF8FA; word-break: keep-all; }
     .change-grid-head .cg-col { padding: 10px 8px; }
     .change-grid .cell-textarea { min-height: 48px; }
 
@@ -13502,7 +13501,7 @@ function getGlobalCSS() {
       padding: 16px 12px; margin-bottom: 12px;
     }
     /* 종결보고서 - 영역별 변화량 막대 차트 */
-    .chart-final-bar { height: 280px; }
+    .chart-final-bar { height: 360px; }
     /* 종결보고서 - 월별 추이 라인 차트 */
     .chart-final-line { height: 320px; }
     /* 차트 캡션 (보호자 친화 설명) */
@@ -14306,7 +14305,7 @@ function getGlobalCSS() {
         padding: 6px 4px !important;
       }
       /* 종결보고서 차트 - 인쇄 시 A4에 깔끔하게 들어가도록 축소 */
-      .chart-final-bar { height: 200px !important; margin-bottom: 4px !important; }
+      .chart-final-bar { height: 300px !important; margin-bottom: 4px !important; }
       .chart-final-line { height: 230px !important; margin-bottom: 4px !important; }
       .chart-caption {
         font-size: 9pt !important; color: #C95D7C !important;
