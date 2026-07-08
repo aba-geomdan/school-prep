@@ -9928,6 +9928,7 @@ function FinalReportView({
           value={finalGoals}
           onChange={(e) => setFinalGoals(e.target.value)}
           minHeight={110}
+          printMode={printMode}
         />
 
         <h3 className="section-title">영역별 변화 요약 (초기 → 최종)</h3>
