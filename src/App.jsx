@@ -10873,7 +10873,6 @@ function ParentGuideView({ info, setInfo, onPrint, onBundlePrint, onSave, active
     <div class="report-paper parent-paper">
       <div class="report-title-block">
         <img class="report-logo" src="${LOGO_DATA_URL}" alt="검단ABA언어행동연구소" />
-        <div class="report-org">「검단ABA언어행동연구소」</div>
         <div class="report-title">친구야, 학교 가자! (학교 준비반)</div>
         <hr class="report-divider"/>
       </div>
@@ -12090,7 +12089,6 @@ function ReportTitle({ subtitle }) {
   return (
     <div className="report-title-block">
       <img className="report-logo" src={LOGO_DATA_URL} alt="검단ABA언어행동연구소" />
-      <div className="report-org">「검단ABA언어행동연구소」</div>
       <div className="report-subtitle">{subtitle}</div>
       <div className="report-divider"></div>
     </div>
@@ -12882,7 +12880,7 @@ function getPrintWindowCSS() {
     .print-container { max-width: 100%; }
     .report-paper { padding: 0; background: #fff; box-shadow: none; max-width: 100%; }
     .report-title-block { text-align: center; margin-bottom: 24px; }
-    .report-logo { height: 44px; width: auto; display: block; margin: 0 auto 8px; object-fit: contain; }
+    .report-logo { height: 44px; width: auto; max-width: 220px; display: block; margin: 0 auto 8px; object-fit: contain; }
     .report-org { font-family: 'Gowun Batang', serif; font-size: 13px; color: #C95D7C; letter-spacing: 1.5px; margin-bottom: 6px; }
     .report-title { font-family: 'Gowun Batang', serif; font-size: 22px; font-weight: 700; color: #3A2647; margin: 4px 0; }
     .report-subtitle { font-family: 'Gowun Batang', serif; font-size: 20pt; font-weight: 700; color: #3A2647; margin-top: 4px; }
@@ -13497,6 +13495,7 @@ function getGlobalCSS() {
 
     /* 보고서 제목 */
     .report-title-block { text-align: center; margin-bottom: 32px; }
+    .report-logo { height: 48px; width: auto; max-width: 220px; display: block; margin: 0 auto 10px; object-fit: contain; }
     .report-org {
       font-family: 'Gowun Batang', 'Noto Sans KR', serif;
       font-size: 14px; color: #C95D7C; letter-spacing: 1.5px; margin-bottom: 6px;
