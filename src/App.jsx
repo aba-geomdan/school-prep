@@ -4494,64 +4494,53 @@ const buildSessionWeaknesses = (scores, sessionIdx, childName, domains = EVAL_DO
 /* 영역별 측정 가능한 행동 진술 - 보호자 친화 톤 */
 const ABA_DOMAIN_STATEMENTS = {
   preparation: {
-    high: '준비물 점검과 착석을 스스로 잘 해내고 있어요',
-    mid: '그림 카드를 보여드리거나 한 번 안내해드리면 준비 행동을 잘 해요',
-    low: '준비물 정리와 착석은 아직 선생님의 도움이 필요한 단계예요',
+    high: '준비물 점검과 착석을 스스로 잘 해냅니다',
+    mid: '그림 카드를 보여주거나 한 번 안내하면 준비 행동을 잘 합니다',
+    low: '준비물 정리와 착석에는 아직 교사의 도움이 필요합니다',
   },
   participation: {
-    high: '활동 시작 신호에 즉시 자발적으로 참여해요',
-    mid: '안내해드린 후 활동에 참여하고, 주의 집중은 회기마다 다양해요',
-    low: '활동 시작에 부분적인 도움이 필요하고, 집중 시간은 5분 이내예요',
+    high: '활동 시작 신호에 즉시 자발적으로 참여합니다',
+    mid: '안내한 뒤 활동에 참여하며, 주의 집중은 회기마다 차이가 있습니다',
+    low: '활동 시작에 부분적인 도움이 필요하고, 집중 시간은 5분 이내입니다',
   },
   followInstruction: {
-    high: '한두 단계 지시에 즉각 반응하며 잘 따라해요',
-    mid: '한 단계 지시는 잘 수행하고, 두 단계 지시는 다시 한 번 안내가 필요해요',
-    low: '한 단계 지시 수행에 그림 카드나 시범 보여주기가 필요해요',
+    high: '한두 단계 지시에 즉각 반응하며 잘 따라 합니다',
+    mid: '한 단계 지시는 잘 수행하고, 두 단계 지시에는 한 번 더 안내가 필요합니다',
+    low: '한 단계 지시 수행에도 그림 카드나 시범이 필요합니다',
   },
   ruleUnderstanding: {
-    high: '약속된 규칙(손들기·차례)을 스스로 잘 지켜요',
-    mid: '규칙 카드를 보여드리면 잘 지키고, 스스로 적용하는 빈도가 점차 늘고 있어요',
-    low: '규칙을 익히는 데 반복 안내가 필요한 단계예요',
+    high: '약속된 규칙(손들기·차례 지키기)을 스스로 잘 지킵니다',
+    mid: '규칙 카드를 보여주면 잘 지키고, 스스로 적용하는 빈도가 점차 늘고 있습니다',
+    low: '규칙을 익히는 데 반복 안내가 필요합니다',
   },
   selfRegulation: {
-    high: '답답한 상황에서도 요청 카드나 감각 도구를 자발적으로 사용해요',
-    mid: '선생님이 도와드리면 차분해지고, 자기 진정 전략을 시도하는 모습이 보여요',
-    low: '강한 정서 반응이 자주 있고, 자기 조절 전략은 아직 익혀가는 단계예요',
+    high: '답답한 상황에서도 요청 카드나 감각 도구를 자발적으로 사용합니다',
+    mid: '교사가 도와주면 차분해지며, 스스로 진정하려는 시도가 나타납니다',
+    low: '강한 정서 반응이 잦고, 자기 조절 전략은 아직 익혀가는 단계입니다',
   },
   waiting: {
-    high: '시각 타이머 없이 5분 이상 차분히 기다릴 수 있어요',
-    mid: '시각 타이머를 보여드리면 1~3분 정도 잘 기다려요',
-    low: '대기 중 자리 이탈이나 어려움이 자주 있어요',
+    high: '시각 타이머 없이도 5분 이상 차분히 기다립니다',
+    mid: '시각 타이머를 보여주면 1~3분 정도 잘 기다립니다',
+    low: '대기 중 자리 이탈이나 어려움이 자주 나타납니다',
   },
   spontaneousGreeting: {
-    high: '선생님·또래를 만나면 자발적으로 인사해요',
-    mid: '말이나 그림으로 안내해드리면 잘 인사해요',
-    low: '인사할 때 선생님의 모델링이나 도움이 필요한 단계예요',
+    high: '교사·또래를 만나면 자발적으로 인사합니다',
+    mid: '말이나 그림으로 안내하면 잘 인사합니다',
+    low: '인사할 때 교사의 시범이나 도움이 필요합니다',
   },
   taskCompletion: {
-    high: '활동을 끝까지 마무리하고, 마침 신호도 스스로 표현해요',
-    mid: '활동 후반에 안내가 필요하고, 부분 완수는 잘 하는 단계예요',
-    low: '활동 중간에 이탈하는 경우가 잦고, 끝까지 마치려면 지속적인 안내가 필요해요',
+    high: '활동을 끝까지 마무리하고, 마침 신호도 스스로 표현합니다',
+    mid: '활동 후반에 안내가 필요하나, 부분 완수는 잘 해냅니다',
+    low: '활동 중간에 이탈하는 경우가 잦고, 끝까지 마치려면 지속적인 안내가 필요합니다',
   },
 };
 
-const abaLevelToStatement = (domainKey, score, priorScore) => {
+const abaLevelToStatement = (domainKey, score) => {
   const stmts = ABA_DOMAIN_STATEMENTS[domainKey];
   if (!stmts) return '';
   const s = Number(score);
   if (isNaN(s)) return '';
-  const base = s >= 3.5 ? stmts.high : s >= 2.5 ? stmts.mid : stmts.low;
-  /* priorScore가 주어지면(최종 진술) 초기 대비 미세 변화를 문장 앞머리로 구분 —
-     초기와 최종이 같은 구간(high/mid/low)에 머물러도 문장이 갈리도록 함 */
-  const p = Number(priorScore);
-  if (isNaN(p)) return base;
-  const bandOf = (v) => (v >= 3.5 ? 2 : v >= 2.5 ? 1 : 0);
-  if (bandOf(p) !== bandOf(s)) return base; /* 구간이 바뀌면 base 문장이 이미 달라지므로 그대로 */
-  const d = s - p;
-  if (d >= 0.5) return `이전보다 나아지고 있어요 — ${base}`;
-  if (d >= 0.2) return `조금씩 나아지는 중이에요 — ${base}`;
-  if (d > -0.2) return base;
-  return `아직 도움이 더 필요한 편이에요 — ${base}`;
+  return s >= 3.5 ? stmts.high : s >= 2.5 ? stmts.mid : stmts.low;
 };
 
 /* 변화량 → ABA 표현 (수치 기반, 감성 표현 배제) */
@@ -4843,7 +4832,7 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
     /* 향상 폭이 큰 순으로 최대 2개 영역에 초기→현재 행동 변화 묘사 추가 */
     const sortedGradual = [...gradual].sort((a, b) => b.diff - a.diff);
     const contrast = [];
-    sortedGradual.slice(0, 2).forEach((c) => {
+    sortedGradual.slice(0, 2).forEach((c, ci) => {
       const dom = c.dom;
       const initBand = getScoreBand(c.first);
       const initPool = poolDescriptions(domains)[dom.key]?.[initBand];
@@ -4910,8 +4899,16 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
         .replace(/지내요$/, '지냅니다')
         .replace(/(\S)어요$/, '$1습니다');
       if (initDesc && strengthDesc) {
-        const connector = /(관찰되던|확인되던|이던)$/.test(initDesc) ? ' 양상에서,' : ' 모습이 관찰되었으나,';
-        contrast.push(`${dom.label} 영역은 초기에 ${initDesc}${connector} 현재는 ${strengthDesc}.`);
+        const isGwan = /(관찰되던|확인되던|이던|되던|하던|보이던|필요하던|않던|없던)$/.test(initDesc);
+        if (ci === 0) {
+          /* 골격A: 초기에 ~던 양상에서, 현재는 ~ */
+          const conn = isGwan ? ' 양상에서,' : ' 모습이 관찰되었으나,';
+          contrast.push(`${dom.label} 영역은 초기에 ${initDesc}${conn} 현재는 ${strengthDesc}.`);
+        } else {
+          /* 골격B: 두 문장으로 끊어 읽기 쉽게 */
+          const initClause = isGwan ? `${initDesc} 모습에서` : `${initDesc} 모습이 관찰되었으나`;
+          contrast.push(`${dom.label} 영역에서도 변화가 나타납니다. ${initClause} 이제는 ${strengthDesc}.`);
+        }
       } else if (strengthDesc) {
         contrast.push(`${dom.label} 영역은 현재 ${strengthDesc}.`);
       }
@@ -5383,16 +5380,30 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
       const strengthDesc = strengthPool && strengthPool.length > 0 ? toFormal(pickStable(strengthPool, seedF)) : '';
 
       if (initDesc && strengthDesc) {
-        /* initDesc가 '~던' 관형형으로 끝나면 '모습이 관찰' 중복 → '양상에서'로 연결
-           '관찰되던/확인되던/않던/없던/이던/필요하던/되던/하던' 등 모든 ~던 패턴 커버 */
-        const connector = /던$/.test(initDesc) ? ' 양상에서,' : ' 모습이 관찰되었으나,';
-        /* 시작 표현을 영역마다 다르게 → 단조로운 'OO 영역은 초기에' 반복 완화 */
-        const opener = ci === 0 ? `${dom.label} 영역은 처음에는`
-          : ci === 1 ? `${dom.label} 영역도 초반에는`
-          : `${dom.label} 영역 역시 시작 무렵에는`;
-        contrastSentences.push(
-          `${opener} ${initDesc}${connector} 지금은 ${strengthDesc}.`
-        );
+        const isGwan = /던$/.test(initDesc); /* initDesc가 '~던' 관형형인지 */
+        /* 영역 인덱스(ci)마다 문장 골격 자체를 바꿔 반복감을 줄인다.
+           initDesc는 대체로 '~던'(관형형)으로 끝나며, 아닌 경우도 아래에서 함께 처리. */
+        if (ci === 0) {
+          /* 골격A: 처음에는 ~던 양상에서, 지금은 ~ (한 문장 대비) */
+          const conn = isGwan ? ' 양상에서,' : ' 모습이 관찰되었으나,';
+          contrastSentences.push(
+            `${dom.label} 영역은 처음에는 ${initDesc}${conn} 지금은 ${strengthDesc}.`
+          );
+        } else if (ci === 1) {
+          /* 골격B: 두 문장으로 끊어 읽기 쉽게 */
+          const initClause = isGwan
+            ? `${initDesc} 모습에서`
+            : `${initDesc.replace(/(습니다|했다|였다)$/, '던')} 모습에서`;
+          contrastSentences.push(
+            `${dom.label} 영역에서도 변화가 뚜렷합니다. ${initClause} 이제는 ${strengthDesc}.`
+          );
+        } else {
+          /* 골격C: 초기 묘사를 앞으로 빼 리듬을 바꿈 */
+          const initHead = isGwan ? initDesc : `${initDesc.replace(/(습니다|했다|였다)$/, '던')}`;
+          contrastSentences.push(
+            `${initHead} ${dom.label} 영역은, 지금은 ${strengthDesc}.`
+          );
+        }
       } else if (strengthDesc) {
         const opener = ci === 0 ? `${dom.label} 영역은` : ci === 1 ? `${dom.label} 영역도` : `${dom.label} 영역 역시`;
         contrastSentences.push(`${opener} 지금은 ${strengthDesc}.`);
@@ -7544,7 +7555,7 @@ function App() {
       const diff = (i != null && f != null) ? (f - i) : null;
       const phrase = changeToAbaPhrase(diff);
       const initialStmt = i != null ? abaLevelToStatement(d.key, i) : '';
-      const finalStmt = f != null ? abaLevelToStatement(d.key, f, i) : '';
+      const finalStmt = f != null ? abaLevelToStatement(d.key, f) : '';
       newFinal[d.key] = {
         initial: i != null ? `${i.toFixed(1)}점 · ${initialStmt}` : '-',
         final: f != null ? `${f.toFixed(1)}점 · ${finalStmt}` : '-',
@@ -7829,7 +7840,7 @@ function App() {
         const i = initialScores[d.key];
         const f = finalScores[d.key];
         const initialStmt = i != null ? abaLevelToStatement(d.key, i) : '';
-        const finalStmt = f != null ? abaLevelToStatement(d.key, f, i) : '';
+        const finalStmt = f != null ? abaLevelToStatement(d.key, f) : '';
         const diff = (i != null && f != null) ? f - i : 0;
         const phrase = changeToAbaPhrase(diff);
         newFinal[d.key] = {
@@ -10861,6 +10872,7 @@ function ParentGuideView({ info, setInfo, onPrint, onBundlePrint, onSave, active
     return `
     <div class="report-paper parent-paper">
       <div class="report-title-block">
+        <img class="report-logo" src="${LOGO_DATA_URL}" alt="검단ABA언어행동연구소" />
         <div class="report-org">「검단ABA언어행동연구소」</div>
         <div class="report-title">친구야, 학교 가자! (학교 준비반)</div>
         <hr class="report-divider"/>
@@ -12077,6 +12089,7 @@ function HelpButton({ isOpen, onReopen }) {
 function ReportTitle({ subtitle }) {
   return (
     <div className="report-title-block">
+      <img className="report-logo" src={LOGO_DATA_URL} alt="검단ABA언어행동연구소" />
       <div className="report-org">「검단ABA언어행동연구소」</div>
       <div className="report-subtitle">{subtitle}</div>
       <div className="report-divider"></div>
@@ -12869,9 +12882,10 @@ function getPrintWindowCSS() {
     .print-container { max-width: 100%; }
     .report-paper { padding: 0; background: #fff; box-shadow: none; max-width: 100%; }
     .report-title-block { text-align: center; margin-bottom: 24px; }
+    .report-logo { height: 44px; width: auto; display: block; margin: 0 auto 8px; object-fit: contain; }
     .report-org { font-family: 'Gowun Batang', serif; font-size: 13px; color: #C95D7C; letter-spacing: 1.5px; margin-bottom: 6px; }
     .report-title { font-family: 'Gowun Batang', serif; font-size: 22px; font-weight: 700; color: #3A2647; margin: 4px 0; }
-    .report-subtitle { font-size: 13px; color: #B85A75; margin-top: 4px; }
+    .report-subtitle { font-family: 'Gowun Batang', serif; font-size: 20pt; font-weight: 700; color: #3A2647; margin-top: 4px; }
     .report-divider { border: none; border-top: 2px solid #C95D7C; margin: 14px 0; }
     table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
     th, td { border: 1px solid #F5C6CF; padding: 7px 9px; font-size: 10.5pt; text-align: left; vertical-align: top; }
@@ -12905,7 +12919,8 @@ function getPrintWindowCSS() {
     .change-grid-head { background: #f3ede1 !important; font-weight: 700; font-size: 10pt; }
     .change-grid-row { border-top: 1px solid #d1d5db; page-break-inside: avoid; break-inside: avoid; }
     .change-grid .cg-col { flex: 1 1 0; padding: 6px 8px; border-right: 1px solid #e8e1d2; font-size: 10pt; }
-    .change-grid .cg-col:last-child { border-right: none; }
+    .change-grid .cg-col:first-child { border-left: 1px solid #d1d5db; }
+    .change-grid .cg-col:last-child { border-right: 1px solid #d1d5db; }
     .change-grid .cg-domain { flex: 0 0 16%; font-weight: 700; background: #FFF8FA !important; word-break: keep-all; }
     /* 변화 요약 칸은 다소 길어서 별도 너비 — "수행 변동 (-0.5점, 지속 지원 권고)" 한 줄에 들어가도록 */
     .change-grid .cg-summary { flex: 0 0 28%; }
@@ -13510,8 +13525,8 @@ function getGlobalCSS() {
       font-size: 13px; font-family: inherit; color: #3A2647; padding: 2px 4px;
     }
     .cell-input:focus { background: #FFF8FA; }
-    .cell-half { width: 45% !important; display: inline-block; }
-    .dash { margin: 0 6px; color: #D4728A; }
+    .cell-half { width: auto !important; display: inline-block; min-width: 130px; }
+    .dash { margin: 0 10px; color: #D4728A; }
 
     /* ── 5점 척도 범례 ── */
     .score-legend {
@@ -13671,7 +13686,8 @@ function getGlobalCSS() {
     .change-grid-head { background: #f3ede1; font-weight: 700; font-size: 13px; color: #3D2E4F; }
     .change-grid-row { border-top: 1px solid #F5C6CF; }
     .change-grid .cg-col { flex: 1 1 0; padding: 8px; border-right: 1px solid #e8e1d2; display: flex; align-items: center; }
-    .change-grid .cg-col:last-child { border-right: none; }
+    .change-grid .cg-col:first-child { border-left: 1px solid #F5C6CF; }
+    .change-grid .cg-col:last-child { border-right: 1px solid #F5C6CF; }
     .change-grid .cg-domain { flex: 0 0 14%; font-weight: 700; background: #FFF8FA; word-break: keep-all; }
     .change-grid-head .cg-col { padding: 10px 8px; }
     .change-grid .cell-textarea { min-height: 48px; }
