@@ -4550,7 +4550,11 @@ const changeToAbaPhrase = (diff) => {
   if (diff >= 0.5) return { tag: '유의한 향상', detail: `평균 점수 +${diff.toFixed(1)} 상승`, key: 'meaningful' };
   if (diff >= 0.2) return { tag: '소폭 향상', detail: `평균 점수 +${diff.toFixed(1)} 상승`, key: 'small' };
   if (diff > -0.2) return { tag: '수행 수준 유지', detail: '평균 점수 변동 0.2점 미만', key: 'stable' };
-  return { tag: '수행 변동', detail: `평균 점수 ${diff.toFixed(1)} 하락`, key: 'declining' };
+  /* 하락도 폭에 따라 세분화 (향상이 3단계로 나뉘는 것과 대칭).
+     본문 '함께 살펴볼 영역'과 톤을 맞춰 큰 하락은 순화하지 않음 */
+  if (diff <= -1.0) return { tag: '뚜렷한 하락', detail: `평균 점수 ${diff.toFixed(1)} 하락`, key: 'declining' };
+  if (diff <= -0.5) return { tag: '수행 하락', detail: `평균 점수 ${diff.toFixed(1)} 하락`, key: 'declining' };
+  return { tag: '수행 변동', detail: `평균 점수 ${diff.toFixed(1)} 변동`, key: 'declining' };
 };
 
 /* 중간보고서 - 분기 총평 자동 생성 (ABA 임상 표현) */
@@ -4961,7 +4965,7 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
       const planLabel = growthForPlan.length >= 6
         ? '전반 영역'
         : `${growthForPlan.slice(0, 4).map((c) => c.dom.label).join(', ')} 영역`;
-      lines.push(`다음 기간에는 [성장 영역]인 ${planLabel}의 경우, 자발적인 수행이 나타나기 시작한 만큼 그동안 제공해 온 시각적·언어적 촉구를 조금씩 줄여 스스로 시작하고 이어가는 힘을 키우는 데 중점을 둡니다.`);
+      lines.push(`다음 기간에는 성장세를 보인 ${planLabel}의 경우, 자발적인 수행이 나타나기 시작한 만큼 그동안 제공해 온 시각적·언어적 촉구를 조금씩 줄여 스스로 시작하고 이어가는 힘을 키우는 데 중점을 둡니다.`);
       printedPlan = true;
     }
     if (focusForPlan.length > 0) {
@@ -4969,7 +4973,7 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
         ? '전반 영역'
         : `${focusForPlan.slice(0, 5).map((d) => d.dom.label).join(', ')} 영역`;
       const lead = printedPlan ? '한편 ' : '다음 기간에는 ';
-      lines.push(`${lead}[집중 중재 영역]인 ${focusLabel}은 단계적 촉구와 시각적 구조화(일과표, 타이머, 사회적 이야기)를 바탕으로 학교 적응의 기초를 다져갈 계획입니다. 특히 단체 지시를 따르고 혼자서 기다리는 능력을 핵심 목표로 두고 있습니다.`);
+      lines.push(`${lead}집중 지원이 필요한 ${focusLabel}은 단계적 촉구와 시각적 구조화(일과표, 타이머, 사회적 이야기)를 바탕으로 학교 적응의 기초를 다져갈 계획입니다. 특히 단체 지시를 따르고 혼자서 기다리는 능력을 핵심 목표로 두고 있습니다.`);
       printedPlan = true;
     }
     if (!printedPlan && highDomains.length > 0) {
@@ -7613,12 +7617,21 @@ function App() {
       const diff = f - i;
       const sign = diff > 0 ? `+${diff.toFixed(1)}점` : diff < 0 ? `${diff.toFixed(1)}점` : '±0.0점';
       const tag = phrase ? phrase.tag : '수행 수준 유지';
-      /* 도달 수준 보조 표현 */
+      /* 도달 수준 보조 표현. 단, 하락한 경우(diff < -0.2)엔 도달 수준이 높아도
+         '안정화'처럼 긍정적 표현을 붙이지 않는다 ('-0.2점, 자발 수행 안정화' 모순 방지) */
       let levelNote = '';
-      if (f >= 4.0) levelNote = ', 자발 수행 안정화';
-      else if (f >= 3.5) levelNote = ', 대부분 자발 수행';
-      else if (f >= 2.5) levelNote = ', 부분 촉구 하 수행';
-      else levelNote = ', 지속 지원 권고';
+      const declined = diff <= -0.2;
+      if (declined) {
+        levelNote = f >= 3.5 ? ', 높은 수준 유지 중 변동' : ', 지속 지원 권고';
+      } else if (f >= 4.0) {
+        levelNote = ', 자발 수행 안정화';
+      } else if (f >= 3.5) {
+        levelNote = ', 대부분 자발 수행';
+      } else if (f >= 2.5) {
+        levelNote = ', 부분 촉구 하 수행';
+      } else {
+        levelNote = ', 지속 지원 권고';
+      }
       return `${tag} (${sign}${levelNote})`;
     };
 
