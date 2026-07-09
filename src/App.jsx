@@ -3973,8 +3973,8 @@ const buildNextGoals = (scores, periodLabel, childName, domains = EVAL_DOMAINS) 
   goals.sort((a, b) => order[a.band] - order[b.band]);
 
   const lines = [];
-  lines.push(`${periodLabel} 권장 목표 (IEP-Style)`);
-  lines.push(`측정 가능한 행동 + 조건 + 기준 형식으로 정리한 다음 기간 목표이며, 회기 중 데이터로 진행도를 점검할 수 있습니다.`);
+  lines.push(`${periodLabel} 권장 목표`);
+  lines.push(`아래는 다음 기간에 중점을 둘 영역별 목표이며, 회기 중 관찰 자료로 진행 정도를 함께 살펴볼 수 있습니다.`);
   lines.push('');
   /* 본문에는 periodLabel 반복 안 함 — 헤더에 이미 명시됨.
      8개 영역마다 "다음 단계 프로그램(3~6개월) 동안" 반복되면 단조롭고 길어짐 */
@@ -7812,11 +7812,11 @@ function App() {
         refScores[d.key] = vals[vals.length - 1];
       }
     });
-    const goalsText = buildNextGoals(refScores, '다음 8주', displayName, getDomains(activeChild));
+    const goalsText = buildNextGoals(refScores, '다음 기간', displayName, getDomains(activeChild));
     const finalTxt = goalsText ? `${txt}\n\n${goalsText}` : txt;
 
     setMidComment(finalTxt);
-    showToast('분기 총평 및 다음 8주 목표가 생성되었습니다');
+    showToast('분기 총평 및 다음 기간 목표가 생성되었습니다');
   };
 
   /* "주요 목표 및 중재 방향 요약" 자동 생성 */
@@ -8048,7 +8048,7 @@ function App() {
     /* 학교 인계용 IEP-Style 목표 추가 - 담임교사·특수교사가 측정 가능한 목표를 받음
        센터 회기 단위(N회기 중 N회 등) 측정 기준은 학교에서 측정 어려우므로 통째로 제거.
        문장 끝의 빈 공간·중복 공백·고립된 마침표도 함께 정리 */
-    const rawGoals = buildNextGoals(scores, '입학 후 첫 학기(약 16주)', displayName, getDomains(activeChild));
+    const rawGoals = buildNextGoals(scores, '입학 초기', displayName, getDomains(activeChild));
     const goalsText = rawGoals
       /* 1) "(... 회기 ...)" 형식 측정 기준 괄호 전체 제거 */
       .replace(/\s*\([^)]*회기[^)]*\)/g, '')
@@ -9533,7 +9533,7 @@ function MidReportView({
         steps={[
           '<strong>아동 활성화</strong> — 「아동 관리」 탭에서 아동을 활성화합니다.',
           '<strong>「저장된 회기별 평가서에서 채움」 사용</strong> — 회기 평가서에서 저장한 점수가 자동으로 가져와집니다.',
-          '<strong>✨ 자동 생성</strong> — 영역별 변화 + 분기 총평 + 다음 8주 IEP 목표가 자동으로 작성됩니다.',
+          '<strong>✨ 자동 생성</strong> — 영역별 변화 + 분기 총평 + 다음 기간 권장 목표가 자동으로 작성됩니다.',
           '<strong>인쇄 또는 저장</strong> — [인쇄]로 PDF 저장 또는 [저장]으로 보관함 등록 가능합니다.',
         ]}
         tip="중간보고서는 보통 4~5회기 단위로 작성합니다. 자동 생성된 총평이 어색하면 직접 수정 가능합니다."
@@ -10777,7 +10777,7 @@ function TransitionReportView({
         steps={[
           '<strong>종결 점수 입력</strong> — 종결보고서를 먼저 작성하면 점수가 자동으로 가져와집니다. 또는 직접 8개 영역 점수 입력.',
           '<strong>진학 정보</strong> — 진학 예정 학년(예: 초등학교 1학년)과 특수교사 배치 여부를 선택합니다.',
-          '<strong>✨ 자동 생성</strong> — 강점·일상 지원·집중 지원 영역 분류 + 종결 변동 큰 영역의 추가 관찰 권장 + 입학 후 16주 IEP 목표가 자동으로 작성됩니다.',
+          '<strong>✨ 자동 생성</strong> — 강점·일상 지원·집중 지원 영역 분류 + 종결 변동 큰 영역의 추가 관찰 권장 + 입학 초기 권장 목표가 자동으로 작성됩니다.',
           '<strong>인쇄 → 학교 인계용</strong> — 학교에 전달할 PDF 출력.',
         ]}
         tip="이 보고서는 회기 표현을 자동으로 학교 환경에 맞게 변환합니다."
@@ -12687,7 +12687,7 @@ function LoginGuideModal({ onClose }) {
                 <div className="guide-feature-icon">📊</div>
                 <div className="guide-feature-text">
                   <strong>중간보고서</strong>
-                  <span>월별 점수 변화 · 레이더 차트 · 기간 총평 + IEP 목표</span>
+                  <span>월별 점수 변화 · 레이더 차트 · 기간 총평 + 다음 기간 목표</span>
                 </div>
               </div>
               <div className="guide-feature">
@@ -12738,8 +12738,8 @@ function LoginGuideModal({ onClose }) {
               <div className="guide-auto-item">
                 <div className="guide-auto-step">②</div>
                 <div className="guide-auto-body">
-                  <strong>중간보고서 — 월별 점수에서 기간 총평 + 다음 8주 목표 자동 추출</strong>
-                  <p>회기별 평가서가 저장되면 <b>월별 평균이 자동 누적</b>됩니다. 「✦ 자동 생성」을 누르면 영역별 <b>첫 달 vs 마지막 달 변화량</b>을 계산해 분류하고, 패턴에 맞춰 <b>기간 총평</b>을 임상 톤으로 작성합니다. 이어서 <b>IEP-Style 다음 8주 목표</b>(측정 가능한 행동 + 조건 + 기준)가 영역별로 자동 추출됩니다.</p>
+                  <strong>중간보고서 — 월별 점수에서 기간 총평 + 다음 기간 목표 자동 추출</strong>
+                  <p>회기별 평가서가 저장되면 <b>월별 평균이 자동 누적</b>됩니다. 「✦ 자동 생성」을 누르면 영역별 <b>첫 달 vs 마지막 달 변화량</b>을 계산해 분류하고, 패턴에 맞춰 <b>기간 총평</b>을 임상 톤으로 작성합니다. 이어서 <b>다음 기간 권장 목표</b>가 영역별로 자동 추출됩니다.</p>
                 </div>
               </div>
               <div className="guide-auto-item">
@@ -12753,7 +12753,7 @@ function LoginGuideModal({ onClose }) {
                 <div className="guide-auto-step">④</div>
                 <div className="guide-auto-body">
                   <strong>학교 전이 평가 — 종결 점수에서 학교 적응 시나리오 + 입학 후 목표</strong>
-                  <p>종결보고서의 영역별 점수(또는 최근 회기 평균)를 바탕으로 <b>학교 환경에서 예상되는 강점, 일상적 지원 필요 영역, 입학 초기 집중 지원 영역</b>으로 분류합니다. 담임교사·특수교사 권장사항·가정 입학 전 준비·학교 안내 항목까지 자동 작성되며, 마지막에 <b>입학 후 첫 학기(16주) 권장 IEP 목표</b>도 함께 제공됩니다.</p>
+                  <p>종결보고서의 영역별 점수(또는 최근 회기 평균)를 바탕으로 <b>학교 환경에서 예상되는 강점, 일상적 지원 필요 영역, 입학 초기 집중 지원 영역</b>으로 분류합니다. 담임교사·특수교사 권장사항·가정 입학 전 준비·학교 안내 항목까지 자동 작성되며, 마지막에 <b>입학 초기 권장 목표</b>도 함께 제공됩니다.</p>
                 </div>
               </div>
               <div className="guide-auto-item">
@@ -15134,5 +15134,5 @@ export default function AppWithErrorBoundary() {
       <App />
     </ErrorBoundary>
   );
-  
 }
+
