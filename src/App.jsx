@@ -8298,28 +8298,32 @@ function App() {
       setPrintMode(true);
 
       let restored = false;
+      let safetyTimer = null;
       const restore = () => {
         if (restored) return;
         restored = true;
         setPrintMode(false);
         setBatchPrintRecords(null);
         document.title = originalTitle;
+        if (safetyTimer) clearTimeout(safetyTimer);
         window.removeEventListener('afterprint', restore);
         window.removeEventListener('focus', restoreOnFocus);
+        document.removeEventListener('visibilitychange', onVisible);
       };
       const restoreOnFocus = () => { setTimeout(restore, 300); };
+      const onVisible = () => { if (!document.hidden) setTimeout(restore, 200); };
 
       setTimeout(() => {
+        window.addEventListener('afterprint', restore);
+        document.addEventListener('visibilitychange', onVisible);
+        setTimeout(() => window.addEventListener('focus', restoreOnFocus, { once: true }), 800);
+        safetyTimer = setTimeout(restore, 8000); /* 안전망: 8초 후 자동 원복 */
         try {
           window.print();
         } catch (e) {
           restore();
           showToast('인쇄 호출에 실패했습니다. 다시 시도해주세요');
-          return;
         }
-        window.addEventListener('afterprint', restore);
-        setTimeout(() => window.addEventListener('focus', restoreOnFocus), 800);
-        setTimeout(restore, 5000); /* 안전망: 5초 후 자동 원복 */
       }, 150);
     }, 200);
   };
@@ -8360,35 +8364,45 @@ function App() {
       setPrintMode(true);
 
       let restored = false;
+      let safetyTimer = null;
       const restore = () => {
         if (restored) return;
         restored = true;
         setPrintMode(false);
         document.title = originalTitle;
+        if (safetyTimer) clearTimeout(safetyTimer);
         window.removeEventListener('afterprint', restore);
         window.removeEventListener('focus', restoreOnFocus);
+        document.removeEventListener('visibilitychange', onVisible);
       };
-      /* focus 이벤트는 인쇄 대화상자 열린 직후 발화될 수 있어 약간 지연 후 등록 */
+      /* focus 이벤트는 인쇄 대화상자 열린 직후 발화될 수 있어 약간 지연 후 복원 */
       const restoreOnFocus = () => { setTimeout(restore, 300); };
+      /* 저장 대화상자를 닫고 탭으로 돌아오면 visibilitychange가 발화 → 확실한 복원 트리거 */
+      const onVisible = () => { if (!document.hidden) setTimeout(restore, 200); };
 
+      let printed = false; /* window.print() 중복 호출 방지 (폰트 경로 + 타이머 이중 호출 차단) */
       const fireNativePrint = () => {
+        if (printed || restored) return;
+        printed = true;
+        /* 복원 트리거를 먼저 등록 (afterprint / focus / visibilitychange 중 무엇이든 잡히면 복원) */
+        window.addEventListener('afterprint', restore);
+        document.addEventListener('visibilitychange', onVisible);
+        setTimeout(() => {
+          window.addEventListener('focus', restoreOnFocus, { once: true });
+        }, 800);
+        /* 안전망: 대화상자 뜬 시점 기준 8초 후 강제 해제 */
+        safetyTimer = setTimeout(restore, 8000);
         try {
           window.print();
         } catch (e) {
           restore();
           showToast('브라우저 인쇄 호출에 실패했습니다. 다시 시도해주세요');
-          return;
         }
-        window.addEventListener('afterprint', restore);
-        /* 인쇄 대화상자 떠 있는 동안 즉시 focus 이벤트 안 잡히게 약간 지연 */
-        setTimeout(() => {
-          window.addEventListener('focus', restoreOnFocus, { once: true });
-        }, 800);
-        /* 안전망: 5초 후 강제 해제 (afterprint도 focus도 안 잡혔을 때만) */
-        setTimeout(restore, 5000);
       };
 
-      /* 한글 폰트 로딩 완료 후 인쇄 호출 — 차트/특수문자 깨짐 방지 */
+      /* 한글 폰트 로딩 완료 후 인쇄 호출 — 차트/특수문자 깨짐 방지.
+         폰트 경로와 타이머 폴백이 둘 다 fireNativePrint를 부를 수 있으나
+         printed 플래그로 실제 print()는 한 번만 실행됨 */
       if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(() => {
           requestAnimationFrame(() => requestAnimationFrame(fireNativePrint));
@@ -15121,4 +15135,3 @@ export default function AppWithErrorBoundary() {
     </ErrorBoundary>
   );
 }
-
