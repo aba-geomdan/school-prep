@@ -9082,9 +9082,13 @@ function SessionEvalView({
             <tr>
               <td className="th">평가 기간</td>
               <td colSpan="3">
-                <input className="cell-input cell-half" type="date" value={info.evalStart} onChange={(e) => setInfo({ ...info, evalStart: e.target.value })} title="저장 시 자동 입력 (덮어쓰기 가능)" />
-                <span className="dash">~</span>
-                <input className="cell-input cell-half" type="date" value={info.evalEnd} onChange={(e) => setInfo({ ...info, evalEnd: e.target.value })} title="저장 시 자동 입력 (덮어쓰기 가능)" />
+                <DateRangeCell
+                  start={info.evalStart} end={info.evalEnd}
+                  onStartChange={(e) => setInfo({ ...info, evalStart: e.target.value })}
+                  onEndChange={(e) => setInfo({ ...info, evalEnd: e.target.value })}
+                  startTitle="저장 시 자동 입력 (덮어쓰기 가능)"
+                  endTitle="저장 시 자동 입력 (덮어쓰기 가능)"
+                />
                 <span className="no-print" style={{ fontSize: 11, color: '#D4728A', marginLeft: 8 }}>· 회기 일자에서 계산</span>
               </td>
             </tr>
@@ -9573,9 +9577,14 @@ function MidReportView({
             <tr>
               <td className="th">평가 기간</td>
               <td colSpan="3">
-                <input className="cell-input cell-half" type="date" value={info.evalStart} onChange={(e) => setInfo({ ...info, evalStart: e.target.value })} title="자동 채움 시 첫 회기 일자로 자동 입력" />
-                <span className="dash">~</span>
-                <input className="cell-input cell-half" type="date" value={info.evalEnd} onChange={(e) => setInfo({ ...info, evalEnd: e.target.value })} title="자동 채움 시 마지막 회기 일자로 자동 입력" />
+                <DateRangeCell
+                  start={info.evalStart} end={info.evalEnd}
+                  onStartChange={(e) => setInfo({ ...info, evalStart: e.target.value })}
+                  onEndChange={(e) => setInfo({ ...info, evalEnd: e.target.value })}
+                  printMode={printMode}
+                  startTitle="자동 채움 시 첫 회기 일자로 자동 입력"
+                  endTitle="자동 채움 시 마지막 회기 일자로 자동 입력"
+                />
                 <span className="no-print" style={{ fontSize: 10, color: '#D4728A', marginLeft: 8 }}>· 회기 기록에서 채워집니다</span>
               </td>
             </tr>
@@ -9977,9 +9986,14 @@ function FinalReportView({
             <tr>
               <td className="th">중재 기간</td>
               <td colSpan="3">
-                <input className="cell-input cell-half" type="date" value={info.evalStart} onChange={(e) => setInfo({ ...info, evalStart: e.target.value })} title="첫 회기 일자로 입력 (덮어쓰기 가능)" />
-                <span className="dash">~</span>
-                <input className="cell-input cell-half" type="date" value={info.evalEnd} onChange={(e) => setInfo({ ...info, evalEnd: e.target.value })} title="마지막 회기 일자(종결일)로 입력 (덮어쓰기 가능)" />
+                <DateRangeCell
+                  start={info.evalStart} end={info.evalEnd}
+                  onStartChange={(e) => setInfo({ ...info, evalStart: e.target.value })}
+                  onEndChange={(e) => setInfo({ ...info, evalEnd: e.target.value })}
+                  printMode={printMode}
+                  startTitle="첫 회기 일자로 입력 (덮어쓰기 가능)"
+                  endTitle="마지막 회기 일자(종결일)로 입력 (덮어쓰기 가능)"
+                />
                 <span className="no-print" style={{ fontSize: 10, color: '#D4728A', marginLeft: 8 }}>· 회기 기록에서 채워집니다</span>
               </td>
             </tr>
@@ -12039,6 +12053,25 @@ function PastRecordsPanel({ records, onLoadRecord, onDeleteRecord, onRestoreLive
    내용 길이에 맞춰 세로 높이가 자동으로 늘어나는 textarea.
    칸 안 스크롤·텍스트 잘림 없이 전체 문장이 한눈에 보임.
    value가 바뀌거나(자동생성 채움 포함) 마운트될 때 높이 재계산. */
+/* 평가/중재 기간 셀 - 인쇄 시엔 date input(브라우저 UI로 정렬이 틀어짐) 대신
+   순수 텍스트로 "YYYY-MM-DD ~ YYYY-MM-DD"를 렌더해 물결표 정렬 문제를 원천 차단 */
+function DateRangeCell({ start, end, onStartChange, onEndChange, printMode, startTitle, endTitle }) {
+  if (printMode) {
+    return (
+      <span className="date-range-print">
+        {start || ''} <span className="dash">~</span> {end || ''}
+      </span>
+    );
+  }
+  return (
+    <>
+      <input className="cell-input cell-half" type="date" value={start} onChange={onStartChange} title={startTitle} />
+      <span className="dash">~</span>
+      <input className="cell-input cell-half" type="date" value={end} onChange={onEndChange} title={endTitle} />
+    </>
+  );
+}
+
 function AutoGrowTextarea({ value, className, minHeight, printMode, ...rest }) {
   const ref = useRef(null);
   const resize = useCallback(() => {
@@ -13598,8 +13631,9 @@ function getGlobalCSS() {
       font-size: 13px; font-family: inherit; color: #3A2647; padding: 2px 4px;
     }
     .cell-input:focus { background: #FFF8FA; }
-    .cell-half { width: auto !important; display: inline-block; min-width: 130px; }
-    .dash { margin: 0 10px; color: #D4728A; }
+    .cell-half { width: 45% !important; display: inline-block; }
+    .dash { margin: 0 6px; color: #D4728A; }
+    .date-range-print { font-size: 13px; color: #3A2647; white-space: nowrap; }
 
     /* ── 5점 척도 범례 ── */
     .score-legend {
