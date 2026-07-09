@@ -4544,8 +4544,11 @@ const abaLevelToStatement = (domainKey, score) => {
 };
 
 /* 변화량 → ABA 표현 (수치 기반, 감성 표현 배제) */
-const changeToAbaPhrase = (diff) => {
-  if (diff == null) return null;
+const changeToAbaPhrase = (rawDiff) => {
+  if (rawDiff == null) return null;
+  /* 부동소수점 오차 방지: 2.8-1.8=0.999...처럼 표시(+1.0)와 등급 판정이 어긋나지
+     않도록, 표시와 동일하게 소수점 1자리로 반올림한 값으로 등급을 판정한다 */
+  const diff = Math.round(rawDiff * 10) / 10;
   if (diff >= 1.0) return { tag: '현저한 향상', detail: `평균 점수 +${diff.toFixed(1)} 상승`, key: 'major' };
   if (diff >= 0.5) return { tag: '유의한 향상', detail: `평균 점수 +${diff.toFixed(1)} 상승`, key: 'meaningful' };
   if (diff >= 0.2) return { tag: '소폭 향상', detail: `평균 점수 +${diff.toFixed(1)} 상승`, key: 'small' };
@@ -5181,7 +5184,8 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
     const i = initialScores?.[dom.key];
     const f = finalScores?.[dom.key];
     if (i == null || f == null) return;
-    const diff = f - i;
+    /* 부동소수점 오차 방지: 표시(+1.0)와 등급 판정(≥1.0)이 어긋나지 않도록 반올림 */
+    const diff = Math.round((f - i) * 10) / 10;
     const phrase = changeToAbaPhrase(diff);
     results.push({ dom, initial: i, final: f, diff, phrase });
   });
@@ -7034,6 +7038,18 @@ function App() {
       setSessionComments(blankCommentsFor(bundleLen));
       setSessionStatus(blankStatusFor(bundleLen));
       setSessionMemos(blankMemosFor(bundleLen));
+      /* ⚠ 종결·중간·전이 보고서 데이터도 초기화 — 그러지 않으면 이전 아동의 종결 표
+         (finalChanges)·총평이 새 아동 화면에 그대로 남아 '이름은 새 아동, 표는 이전 아동'
+         으로 섞이는 문제 발생 (예: 김주현 종결에 김원태 데이터가 보임) */
+      const blankFinal = {};
+      getDomains(activeChild).forEach((d) => { blankFinal[d.key] = { initial: '', final: '', summary: '' }; });
+      setFinalChanges(blankFinal);
+      setFinalSummary('');
+      setMidComment('');
+      setTransitionSummary('');
+      const blankMidData = {};
+      getDomains(activeChild).forEach((d) => { blankMidData[d.key] = {}; });
+      setMidMonthly({ months: [], data: blankMidData });
     }
 
     const autoDates = newNumbers.map((n) => {
@@ -7614,7 +7630,7 @@ function App() {
     /* 변화 요약 셀 문장 생성: 태그 한 단어가 아니라 점수차 + 변화 맥락을 담은 짧은 진술 */
     const buildChangeSummary = (key, i, f, phrase) => {
       if (i == null || f == null) return '-';
-      const diff = f - i;
+      const diff = Math.round((f - i) * 10) / 10; /* 부동소수점 오차 방지 */
       const sign = diff > 0 ? `+${diff.toFixed(1)}점` : diff < 0 ? `${diff.toFixed(1)}점` : '±0.0점';
       const tag = phrase ? phrase.tag : '수행 수준 유지';
       /* 도달 수준 보조 표현. 단, 하락한 경우(diff < -0.2)엔 도달 수준이 높아도
@@ -15135,4 +15151,3 @@ export default function AppWithErrorBoundary() {
     </ErrorBoundary>
   );
 }
-
