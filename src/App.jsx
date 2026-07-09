@@ -4695,6 +4695,21 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
       overallParts.push(`${labelStr}에서 점진적인 향상을 보이고 있습니다`);
     }
   }
+  /* ★ 강점을 이미 언급했더라도, 아직 종합에 안 담긴 '어려움' 영역(하락·낮은 수준)이 있으면
+     함께 서술 → 잘하는 것만 나오고 힘든 부분이 통째로 빠지는 문제 방지 (균형 있는 종합) */
+  if (overallParts.length > 0) {
+    const struggling = [...declining, ...lowDomains].filter(
+      (d, i, arr) => !usedKeys.has(d.dom.key) && arr.findIndex((x) => x.dom.key === d.dom.key) === i
+    );
+    if (struggling.length > 0) {
+      if (struggling.length >= 5) {
+        overallParts.push(`그 밖의 여러 영역에서는 아직 지속적인 지원이 필요하며, 단계적으로 도와갈 예정입니다`);
+      } else {
+        const names = struggling.slice(0, 3).map((d) => { usedKeys.add(d.dom.key); return d.dom.label; }).join(', ');
+        overallParts.push(`${names} 영역은 아직 지원이 필요한 단계로, 꾸준히 함께 다져갈 계획입니다`);
+      }
+    }
+  }
   /* declining만 있는 경우 (모든 영역 하락) 도입 누락 방지 */
   if (overallParts.length === 0 && declining.length > 0) {
     if (declining.length >= 6) {
@@ -4714,6 +4729,7 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
     }
   }
   if (overallParts.length > 0) {
+    lines.push('◆ 종합 요약');
     const intro = isMonthFormat
       ? `지난 ${months.length}개월 동안`
       : months.length >= 2
@@ -4723,59 +4739,17 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
     lines.push('');
   }
 
-  /* 1-2. 영역별 현재 수행 수준 - 8영역 각각 상세 진술 (CLINICAL 풀 활용) */
-  lines.push('영역별 현재 수행 수준');
-  lines.push('(아래 점수는 평가 기간 마지막 시점의 현재 수행 수준이며, 5점 척도 기준입니다.)');
-  results.forEach(({ dom, avg, first, last, diff }) => {
-    /* 묘사 매칭은 현재 시점(마지막 월) 점수 기준 — 표시 점수와 묘사가 어긋나지 않도록 */
-    const refScore = last;
-    const band = getScoreBand(refScore);
-    const pool = poolDescriptions(domains)[dom.key]?.[band];
-    const seed = (dom.key?.length || 0) + Math.floor(refScore * 10) + nameHash;
-    let desc = pool && pool.length > 0 ? pickStable(pool, seed) : '';
-    desc = toPresentTense(desc);
-
-    /* 변화 추세 표시 (last + diff 종합 판단) */
-    let trend = '';
-    if (last >= 4.0 && diff >= 1.0) trend = ' · 안정화 도달';
-    else if (last >= 4.0) trend = ' · 안정 유지';
-    else if (diff >= 1.0 && last >= 2.8) trend = ' · 뚜렷한 향상';
-    else if (diff >= 1.0) trend = ' · 향상 진행 중';
-    else if (diff >= 0.5 && last >= 2.8) trend = ' · 점진적 향상';
-    else if (diff >= 0.5) trend = ' · 향상 진행 중';
-    else if (diff <= -1.0) trend = ' · 감소 추세';
-    else if (diff <= -0.5) trend = ' · 다소 감소';
-    else if (last <= 2.0) trend = ' · 지속 지원 필요';
-    else trend = ' · 안정 유지';
-
-    /* 영역별 상세 보정: 모순 방지 + 구체적 양상 추가
-       ⚠ 점수가 high band(4점 이상)일 때는 CLINICAL_DESCRIPTIONS.high 표현 그대로 사용
-       (강제 묘사는 mid·low일 때만 의미 있는 임상 표현) */
-    if (dom.key === 'spontaneousGreeting' && diff >= 0.5) {
-      /* 자발적 인사: 독립 수행이 핵심 → 촉구 없는 자발성 강조 (수행수준-상세 모순 제거) */
-      desc = '촉구 없이도 자발적인 인사 행동이 나타나기 시작하며, 또래·교사와의 상호작용 상황에서 먼저 인사를 시도하는 빈도가 증가하고 있습니다';
-    } else if (dom.key === 'taskCompletion' && diff >= 0.5) {
-      /* 과제 완수: 수행수준(일과표 제시 시 완료)과 상세(정리까지) 매끄럽게 연결 */
-      desc = '시각적 일과표가 제시되면 과제를 끝까지 완료하며, 활동 종료 후 정리 행동까지 스스로 이어가는 모습이 나타납니다';
-    } else if (dom.key === 'participation' && band !== 'high') {
-      /* 참여: 회기 간 변동의 이유 구체화 (high band일 땐 적용 안 함 — 변동 표현이 모순) */
-      desc = '선호 활동이나 시각적 자극이 명확할 때는 10분 이상 착석과 집중이 유지되나, 구조화가 덜 되거나 비선호 과제 시에는 주의 집중 시간이 다소 짧아지는 회기 간 변동이 관찰됩니다';
-    } else if (dom.key === 'selfRegulation' && band !== 'high') {
-      desc = '원하는 강화를 즉시 얻지 못할 때 일시적인 좌절 행동을 보이나, 교사의 일관된 시각적 타이머 활용과 대기 촉구를 통해 스스로 감정을 가라앉히는 경험을 쌓아가고 있습니다';
-    } else if (dom.key === 'waiting' && band !== 'high') {
-      desc = '대기 상황에서 자리 이탈 경향을 보이나, 시각적 타이머와 단계적 대기 촉구를 활용하면 점차 짧은 시간 동안 자리를 유지합니다';
-    }
-
-    lines.push(`· ${dom.label} (현재 ${last.toFixed(1)}점${trend}): ${desc || '지속적인 관찰이 필요한 영역입니다'}`);
-  });
-  lines.push('');
+  /* 성장 구획 소제목 — major 또는 gradual(meaningful+small) 중 하나라도 있으면 */
+  if (major.length > 0 || meaningful.length > 0 || small.length > 0) {
+    lines.push('◆ 향상이 나타난 영역');
+  }
 
   /* 2. 성장 영역 - 단락 글 + 행동 묘사
      ⚠ 모순 방지: '향상'했더라도 도달 수준(last)이 낮으면 긍정 마무리("안정적 진전")를
      붙이지 않는다. 도달 수준에 따라 마무리 문구를 다르게 생성. */
   if (major.length > 0) {
     const growthLines = [];
-    major.slice(0, 3).forEach(({ dom, first, last, diff }) => {
+    major.slice(0, 3).forEach(({ dom, first, last, diff }, gi) => {
       const band = getScoreBand(last);  // 향상 후 '실제 도달' 수준 기준
       const pool = poolDescriptions(domains)[dom.key]?.[band];
       const seed = (dom.key?.length || 0) + 3;
@@ -4803,15 +4777,42 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
 
       /* 도달 수준에 맞는 마무리 문구 (모순 제거). closing 앞에 쉼표로 명확히 분리.
          "자리 잡아"라는 표현은 mid band 묘사의 "자리 이탈"과 충돌할 수 있어 "흐름"으로 표현 */
+      /* 도달 수준에 맞는 마무리 문구 (모순 제거). 같은 구간이 여러 영역이면
+         마무리가 똑같이 반복되므로, 구간별로 2~3종을 두고 영역 인덱스(gi)로 돌려씀 */
       let closing;
       if (last >= 3.5) {
-        closing = '전반적으로 안정화 흐름이 이어지고 있습니다';
+        const pool = [
+          '전반적으로 안정화 흐름이 이어지고 있습니다',
+          '높은 수준의 수행이 꾸준히 유지되고 있습니다',
+          '대부분의 상황에서 안정적으로 나타나고 있습니다',
+        ];
+        closing = pool[gi % pool.length];
       } else if (last >= 2.5) {
-        closing = '꾸준한 향상 흐름이 관찰되고 있습니다';
+        const pool = [
+          '꾸준한 향상 흐름이 관찰되고 있습니다',
+          '점진적인 성장세가 이어지고 있습니다',
+          '회기를 거듭하며 나아지는 모습이 보입니다',
+        ];
+        closing = pool[gi % pool.length];
       } else {
-        closing = '뚜렷한 상승 추세를 보이고 있어 지속적인 지원이 필요한 시점입니다';
+        const pool = [
+          '뚜렷한 상승 추세를 보이고 있어 지속적인 지원이 필요한 시점입니다',
+          '상승 흐름이 관찰되나 아직 지속적인 지원이 필요합니다',
+        ];
+        closing = pool[gi % pool.length];
       }
-      growthLines.push(`${dom.label} 영역이 ${first.toFixed(1)}점에서 ${last.toFixed(1)}점으로 +${diff.toFixed(1)}점 향상되었습니다. 현재는 ${behaviorDesc} ${closing}`);
+      /* 점수(X점→Y점 +Z점)는 위 월별 표에 이미 있으므로 본문에서는 제거하고
+         변화의 '정도'를 말로 표현 → 점수 나열 느낌 해소, 표와 역할 분담 */
+      let growthVerb;
+      if (diff >= 2.0) growthVerb = ['크게 향상되었습니다', '눈에 띄게 성장하였습니다', '큰 폭으로 나아졌습니다'][gi % 3];
+      else if (diff >= 1.0) growthVerb = ['뚜렷하게 향상되었습니다', '분명한 성장을 보였습니다', '확연히 나아졌습니다'][gi % 3];
+      else growthVerb = ['꾸준히 향상되었습니다', '점차 나아지고 있습니다', '조금씩 성장하고 있습니다'][gi % 3];
+      /* '현재는 [묘사]' 조합 시 묘사가 '~시간은/~행동은'처럼 은/는을 포함한 구로
+         시작하면 '현재는 주의 집중 시간은'처럼 조사가 겹쳐 어색 → 앞 12자 안에 은/는
+         조사가 있으면 접두어를 '현재 '로 바꿔 충돌 완화 */
+      const head = behaviorDesc.slice(0, 14);
+      const prefix = /[가-힣]은[\s]|[가-힣]는[\s]|시간은|행동은|빈도는|수준은/.test(head) ? '현재 ' : '현재는 ';
+      growthLines.push(`${dom.label} 영역이 ${growthVerb}. ${prefix}${behaviorDesc} ${closing}`);
     });
     /* 다중 영역 묘사 시 "또한" 반복 단조로움 해결 — 회기별로 다른 connector */
     const growthConnectors = ['. 또한 ', '. 더불어 ', '. 함께 '];
@@ -4826,7 +4827,7 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
   /* 2-2. 유의한 향상(+0.5~1.0) 및 소폭 향상(+0.2~0.5) 영역 - 초기→현재 행동 대비로 보강 */
   const gradual = [...meaningful, ...small];
   if (gradual.length > 0) {
-    const names = gradual.map((c) => `${c.dom.label}(+${c.diff.toFixed(1)}점)`).join(', ');
+    const names = gradual.map((c) => c.dom.label).join(', ');
     lines.push(`${names} 영역에서도 작은 폭이지만 향상이 확인되었습니다.`);
 
     /* 향상 폭이 큰 순으로 최대 2개 영역에 초기→현재 행동 변화 묘사 추가 */
@@ -4932,6 +4933,7 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
     /* 8개 모두 stable + 도입에서 한 카테고리로 6+개 처리한 경우 stable 분기는 중복 */
     const skipStable = allLowAndStable || allMidAndStable || allHighAndStable || isPolarized;
     if (!skipStable) {
+      lines.push('◆ 안정적으로 유지된 영역');
       if (stable.length >= 6) {
         lines.push(`전 영역에서 안정적인 수행이 유지되고 있습니다.`);
       } else {
@@ -4944,6 +4946,7 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
 
   /* 4. 다음 기간 중재 방향 - 강점(성장) 영역과 집중 중재 영역을 구분하여 차별화 */
   {
+    lines.push('◆ 다음 기간 중재 방향');
     /* 성장 영역: 향상 추세를 보인 영역 (Fading으로 독립성 강화) */
     const growthForPlan = [...major, ...meaningful];
     const growthKeys = new Set(growthForPlan.map((c) => c.dom.key));
@@ -4995,7 +4998,7 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
     .filter((d, i, arr) => arr.findIndex((x) => x.dom.key === d.dom.key) === i)
     .slice(0, 3);
   if (focusForHome.length > 0) {
-    lines.push('가정에서 함께해주시면 좋은 부분');
+    lines.push('◆ 가정에서 함께해주시면 좋은 부분');
     lines.push('센터에서의 변화가 가정에서도 일관되게 이어질 때 일반화가 촉진됩니다. 아래 내용을 일상에서 자연스럽게 적용해주시기를 권합니다.');
     /* 칭찬 멘트 연결 표현을 항목마다 다르게 → 반복되는 'AI 티' 완화 */
     const praiseLeads = [
@@ -5035,11 +5038,21 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
   }
 
   /* 6. 치료사 종합 소견 (임상적 총평) */
-  lines.push('치료사 종합 소견');
+  lines.push('◆ 치료사 종합 소견');
   const growthNames = [...major, ...meaningful].slice(0, 2).map((c) => c.dom.label);
-  const growthPhrase = growthNames.length > 0
-    ? `특히 ${growthNames.join(', ')} 영역에서 스스로 시도하려는 자발적인 모습이 늘어난 점은, 아동이 단순히 지시를 따르는 것을 넘어 '스스로 해보려는 힘'을 키워가고 있음을 보여주는 대견한 변화입니다.`
-    : '낯선 환경과 새로운 규칙에 대한 부담을 조금씩 덜어내며 정해진 일과를 받아들이는 모습이 자리 잡아가고 있습니다.';
+  let growthPhrase;
+  if (growthNames.length > 0) {
+    growthPhrase = `특히 ${growthNames.join(', ')} 영역에서 스스로 시도하려는 자발적인 모습이 늘어난 점은, 아동이 단순히 지시를 따르는 것을 넘어 '스스로 해보려는 힘'을 키워가고 있음을 보여주는 대견한 변화입니다.`;
+  } else {
+    /* 성장 영역이 없을 때(어려움이 큰 시기) — 앞 문장("정해진 일과를 받아들이며 잘 따라와")과
+       내용이 겹치지 않도록, 아이의 노력·과정에 초점을 둔 격려 문장 3종에서 선택 */
+    const encourageFallbacks = [
+      '아직은 하나하나가 도전인 시기이지만, 매 회기 자리를 지키고 활동에 함께하려 애쓰는 모습 자체가 소중한 출발점입니다.',
+      '눈에 띄는 큰 변화보다는 작은 시도들이 쌓여가는 시기이며, 이러한 노력이 앞으로의 성장을 위한 밑바탕이 되고 있습니다.',
+      '지금은 새로운 환경에 마음을 여는 과정에 있으며, 서두르지 않고 아이의 속도에 맞춰 한 걸음씩 나아가고 있습니다.',
+    ];
+    growthPhrase = encourageFallbacks[nameHash % encourageFallbacks.length];
+  }
   lines.push(`지난 기간 동안 아동은 낯선 그룹과 새로운 규칙에 적응하느라 쉽지 않았을 텐데, 정해진 일과를 조금씩 받아들이며 잘 따라와 주었습니다. ${growthPhrase}`);
   lines.push('남은 기간의 목표는 이러한 변화를 실제 초등학교 교실 환경에서도 발휘할 수 있도록 일반화하는 데 있습니다. 교실에서는 교사의 단체 지시 수행, 독립적인 대기, 도움이 필요할 때 스스로 요청하기와 같은 기술이 요구되므로, 센터에서는 실제 교실 상황을 모사한 구조화된 연습과 점진적인 촉구 감소를 통해 독립성을 키워가겠습니다.');
   lines.push('지금까지의 변화를 발판 삼아 센터와 가정이 같은 방향에서 꾸준히 도와준다면, 새로운 환경에서도 무리 없이 적응해 나갈 수 있으리라 봅니다.');
@@ -5284,6 +5297,7 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
   const growthCount = results.filter((r) => r.diff >= 0.5).length;
 
   {
+    lines.push('◆ 종합 요약');
     let leadSentence = `아동은 학교 준비반 전 과정에 참여하였으며, ${domains.length}개 평가 영역 전반의 평균 점수가 초기 ${avgInitial.toFixed(1)}점에서 종결 ${avgFinal.toFixed(1)}점으로 변화하였습니다`;
     if (avgDiff >= 0.5) {
       leadSentence += ` (평균 +${avgDiff.toFixed(1)}점 향상).`;
@@ -5327,10 +5341,15 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
     lines.push('');
   }
 
+  /* 성장 구획 소제목 — standout 또는 steady 중 하나라도 있으면 표시 */
+  if (standoutGrowth.length > 0 || steadyGrowth.length > 0) {
+    lines.push('◆ 특히 성장한 영역');
+  }
+
   /* 2. 주요 성장 영역 - 단락 글로 (점수 명시 유지 — 격식 문서 특성) */
   if (standoutGrowth.length > 0) {
     const growthSentences = [];
-    standoutGrowth.slice(0, 2).forEach(({ dom, initial, final, diff }) => {
+    standoutGrowth.slice(0, 3).forEach(({ dom, initial, final, diff }) => {
       const strengthPool = poolDomainStrengths(domains)[dom.key];
       const seed = (dom.key?.length || 0) + Math.floor(final * 10);
       const strengthRaw = strengthPool && strengthPool.length > 0 ? pickStable(strengthPool, seed) : '';
@@ -5340,6 +5359,11 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
       );
     });
     lines.push(`주요 성장 영역을 살펴보면, ${growthSentences.join(' ')}`);
+    /* 현저한 향상이 4개 이상이면 상세(3개) 뒤에 나머지를 한 줄로 언급 → 누락 방지 */
+    if (standoutGrowth.length > 3) {
+      const rest = standoutGrowth.slice(3).map((r) => r.dom.label).join(', ');
+      lines.push(`이 밖에도 ${rest} 영역에서 현저한 향상이 함께 확인되었습니다.`);
+    }
     lines.push('');
   }
 
@@ -5398,10 +5422,13 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
             `${dom.label} 영역에서도 변화가 뚜렷합니다. ${initClause} 이제는 ${strengthDesc}.`
           );
         } else {
-          /* 골격C: 초기 묘사를 앞으로 빼 리듬을 바꿈 */
-          const initHead = isGwan ? initDesc : `${initDesc.replace(/(습니다|했다|였다)$/, '던')}`;
+          /* 골격C: 영역명을 앞에 두고 초기→현재를 '~던 데에서, 이제는'으로 연결
+             (기존엔 긴 초기묘사가 주어 앞에 와서 주어가 뒤로 밀려 어색했음) */
+          const initClause = isGwan
+            ? `${initDesc} 데에서`
+            : `${initDesc.replace(/(습니다|했다|였다)$/, '던')} 데에서`;
           contrastSentences.push(
-            `${initHead} ${dom.label} 영역은, 지금은 ${strengthDesc}.`
+            `${dom.label} 영역은 ${initClause}, 이제는 ${strengthDesc}.`
           );
         }
       } else if (strengthDesc) {
@@ -5413,6 +5440,16 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
       lines.push(contrastSentences.join(' '));
     }
     lines.push('');
+  }
+
+  /* 안정·숙달 구획 소제목 — stable 또는 (성장 전체 제외) mastered가 표시될 때.
+     제외 기준을 아래 실제 서술부(전체 standoutGrowth)와 반드시 일치시켜 빈 소제목 방지 */
+  {
+    const standoutKeysForHead = new Set(standoutGrowth.map((r) => r.dom.key));
+    const masteredShown = !allStableAndMastered && masteredDomains.filter((r) => !standoutKeysForHead.has(r.dom.key)).length > 0;
+    if (stable.length > 0 || masteredShown) {
+      lines.push('◆ 안정적으로 자리 잡은 영역');
+    }
   }
 
   /* 4. 안정적으로 유지된 영역 */
@@ -5436,7 +5473,9 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
   if (masteredDomains.length > 0 && !allStableAndMastered) {
     /* "두드러진 성장" 단락에서 이미 언급된 영역(slice 0,3)과 중복 회피
        — 도입의 "준비, 지시 따르기, 자기조절 영역에서 두드러진 성장"이 3개 표시되는 것과 일치해야 마스터 단락에 중복 안 됨 */
-    const standoutKeys = new Set(standoutGrowth.slice(0, 3).map((r) => r.dom.key));
+    /* 성장(현저한 향상)으로 분류된 영역은 개수와 무관하게 전부 마스터 단락에서 제외
+       (slice로 일부만 제외하면 4번째 이상 성장 영역이 '안정'에 잘못 노출됨) */
+    const standoutKeys = new Set(standoutGrowth.map((r) => r.dom.key));
     const masteredToMention = masteredDomains.filter((r) => !standoutKeys.has(r.dom.key));
     if (masteredToMention.length > 0) {
       if (masteredToMention.length === results.length) {
@@ -5449,31 +5488,55 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
     }
   }
 
-  /* 4-2. 변동·하락이 관찰된 영역 - 객관적 관찰 진술 (긍정/부정 단정 배제) */
+  /* 4-2. 변동·하락이 관찰된 영역 - 하락 폭에 따라 톤을 다르게
+     (작은 변동은 자연스러운 변동으로, 큰 하락은 함께 살펴볼 부분으로 정직하게 서술) */
   if (declining.length > 0) {
+    /* 하락 서술은 '안정적으로 자리 잡은 영역'과 성격이 반대 → 별도 소제목으로 분리.
+       가장 큰 하락 폭에 따라 소제목 문구를 다르게 */
+    const worstDropForHead = Math.min(...declining.map((d) => d.diff));
+    lines.push(worstDropForHead <= -1.0 ? '◆ 함께 살펴볼 영역' : '◆ 변동이 관찰된 영역');
     if (declining.length === results.length) {
-      /* 8개 모두 같은 하락 — 영역명 나열 대신 평균 변화로 묶어서 표현 */
+      /* 8개 모두 하락 */
       const avgInitial = declining.reduce((a, b) => a + b.initial, 0) / declining.length;
       const avgFinal = declining.reduce((a, b) => a + b.final, 0) / declining.length;
       const avgDiff = avgFinal - avgInitial;
-      lines.push(
-        `전 영역에서 회기 후반부에 점수 변동이 관찰되었습니다 (평균 ${avgInitial.toFixed(1)}점 → ${avgFinal.toFixed(1)}점, ${avgDiff.toFixed(1)}점). ` +
-        `평가 과제의 난이도가 올라가거나 환경, 그날의 컨디션 등 여러 요인이 겹쳐 나타날 수 있는 자연스러운 변화로 보이는데, 학교에 입학한 뒤에도 이 부분이 어떻게 자리 잡아가는지 함께 지켜봐 주시면 좋겠습니다.`
-      );
+      if (avgDiff <= -1.0) {
+        /* 큰 폭 하락 — 미화하지 않고 점검 필요성을 정직하게 */
+        lines.push(
+          `전 영역에서 종결 시점 점수가 초기보다 낮아졌습니다 (평균 ${avgInitial.toFixed(1)}점 → ${avgFinal.toFixed(1)}점, ${avgDiff.toFixed(1)}점). ` +
+          `평가 난이도 상승이나 환경 변화 등 여러 요인이 함께 작용했을 수 있으나, 변화의 폭이 작지 않은 만큼 어떤 부분에서 어려움이 있었는지 면밀히 살펴보고, 다음 기간의 중재 방향을 점검할 필요가 있습니다.`
+        );
+      } else {
+        lines.push(
+          `전 영역에서 회기 후반부에 점수 변동이 관찰되었습니다 (평균 ${avgInitial.toFixed(1)}점 → ${avgFinal.toFixed(1)}점, ${avgDiff.toFixed(1)}점). ` +
+          `평가 과제의 난이도나 그날의 컨디션 등 여러 요인이 겹쳐 나타날 수 있는 변동으로 보이며, 학교에 입학한 뒤에도 이 부분이 어떻게 자리 잡아가는지 함께 지켜봐 주시면 좋겠습니다.`
+        );
+      }
     } else {
       const declSentences = declining.map(({ dom, initial, final, diff }) =>
         `${dom.label} 영역(초기 ${initial.toFixed(1)}점 → 종결 ${final.toFixed(1)}점, ${diff.toFixed(1)}점)`
       );
-      lines.push(
-        `${declSentences.join(', ')}에서는 회기 후반부에 점수 변동이 보였습니다. ` +
-        `평가 과제의 난이도가 올라가거나 환경, 그날의 컨디션 등 여러 요인이 겹쳐 나타날 수 있는 자연스러운 변화로 보이는데, 학교에 입학한 뒤에도 이 부분이 어떻게 자리 잡아가는지 함께 지켜봐 주시면 좋겠습니다.`
-      );
+      /* 하락 영역 중 가장 큰 하락 폭 기준으로 톤 결정 */
+      const worstDrop = Math.min(...declining.map((d) => d.diff));
+      if (worstDrop <= -1.0) {
+        /* 큰 하락 포함 — 정직하게 */
+        lines.push(
+          `${declSentences.join(', ')}에서는 종결 시점 점수가 초기보다 낮아졌습니다. ` +
+          `평가 난이도나 환경 등 여러 요인이 함께 작용했을 수 있으나, 하락 폭이 작지 않은 영역은 어떤 어려움이 있었는지 구체적으로 살펴보고 다음 기간에 집중적으로 지원할 계획입니다.`
+        );
+      } else {
+        lines.push(
+          `${declSentences.join(', ')}에서는 회기 후반부에 점수 변동이 보였습니다. ` +
+          `평가 과제의 난이도나 그날의 컨디션 등 여러 요인이 겹쳐 나타날 수 있는 변동으로 보이며, 학교에 입학한 뒤에도 이 부분이 어떻게 자리 잡아가는지 함께 지켜봐 주시면 좋겠습니다.`
+        );
+      }
     }
     lines.push('');
   }
 
   /* 5. 지속 지원이 필요한 영역 - 다정한 구어체 */
   if (needsHelp.length > 0) {
+    lines.push('◆ 앞으로 도와갈 영역');
     const helpSentences = [];
     /* 문장 시작을 영역마다 다르게 → 'OO 영역은' 반복 완화 */
     const openers = [
@@ -5516,6 +5579,7 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
   recommendationParts.push(`입학 초기 한두 달은 가정과 학교가 자주 소통하며 새 환경 적응을 함께 지켜보는 시기로 삼으시길 권합니다`);
   recommendationParts.push(`요청 카드나 감각 도구처럼 아동이 익힌 자기 조절 전략은 집과 학교에서 똑같이 쓰일 때 가장 효과가 큽니다`);
 
+  lines.push('◆ 학교생활을 위한 제언');
   lines.push(`학교생활로 넘어가실 때 몇 가지만 마음에 담아두셔도 좋겠습니다. ${recommendationParts.join('. ')}.`);
   lines.push('');
 
@@ -5539,12 +5603,22 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
     }
   });
   if (homeLines.length > 0) {
+    lines.push('◆ 가정에서 함께해 주실 부분');
     lines.push(`가정에서도 이런 부분을 함께해 주시면 큰 도움이 됩니다. ${homeLines.join(' ')}`);
     lines.push('');
   }
 
-  /* 8. 격려 마무리 - 다정한 구어체 */
-  lines.push(`${durationLabel} 아동은 정말 많이 자랐습니다. 이 변화가 학교에서도 이어지려면 결국 곁에 있는 어른들이 같은 방향을 봐주는 것이 가장 큰 힘이 됩니다. 그동안 믿고 맡겨주셔서 감사했고, 새 출발을 앞둔 아동을 저희도 끝까지 응원하겠습니다.`);
+  /* 8. 격려 마무리 - 아동의 전반적 변화에 맞춰 톤 차등
+     (평균이 크게 떨어진 아동에게 '정말 많이 자랐다'는 획일적 마무리는 부적절.
+      단, 평균 변화가 작아도 성장 영역이 여럿이면 성장 톤을 쓰도록 개수도 함께 판단) */
+  const growthAreaCount = standoutGrowth.length + steadyGrowth.length;
+  if (avgDiff >= 0.3 || growthAreaCount >= 3) {
+    lines.push(`${durationLabel} 아동은 정말 많이 자랐습니다. 이 변화가 학교에서도 이어지려면 결국 곁에 있는 어른들이 같은 방향을 봐주는 것이 가장 큰 힘이 됩니다. 그동안 믿고 맡겨주셔서 감사했고, 새 출발을 앞둔 아동을 저희도 끝까지 응원하겠습니다.`);
+  } else if (avgDiff > -0.3) {
+    lines.push(`${durationLabel} 아동은 낯선 환경 속에서도 자기만의 속도로 한 걸음씩 나아가 주었습니다. 앞으로의 성장이 학교에서도 이어지려면 곁에 있는 어른들이 같은 방향을 봐주는 것이 가장 큰 힘이 됩니다. 그동안 믿고 맡겨주셔서 감사했고, 새 출발을 앞둔 아동을 저희도 끝까지 응원하겠습니다.`);
+  } else {
+    lines.push(`${durationLabel} 아동에게는 쉽지 않은 시기였을지 모르지만, 매 순간 곁에서 함께해 온 노력은 결코 헛되지 않습니다. 지금 필요한 것을 정확히 살펴 다음 걸음을 함께 준비하겠습니다. 그동안 믿고 맡겨주셔서 감사했고, 새 출발을 앞둔 아동을 저희도 끝까지 응원하겠습니다.`);
+  }
 
   return replaceChildPronoun(lines.join('\n'), childName);
 };
@@ -5720,7 +5794,7 @@ const buildTransitionReport = (scores, childName, opts = {}, domains = EVAL_DOMA
 
   /* 2. 학교 적응 강점 영역 */
   if (classified.strength.length > 0) {
-    lines.push('학교 환경에서 예상되는 강점');
+    lines.push('◆ 학교 환경에서 예상되는 강점');
     classified.strength.forEach(({ dom }) => {
       lines.push(`· ${dom.label} — ${poolTransitionByDomain(domains)[dom.key]?.strength || ''}`);
     });
@@ -5729,7 +5803,7 @@ const buildTransitionReport = (scores, childName, opts = {}, domains = EVAL_DOMA
 
   /* 3. 일상적 지원 필요 영역 */
   if (classified.support.length > 0) {
-    lines.push('일상적 지원이 권장되는 영역');
+    lines.push('◆ 일상적 지원이 권장되는 영역');
     classified.support.forEach(({ dom }) => {
       lines.push(`· ${dom.label} — ${poolTransitionByDomain(domains)[dom.key]?.support || ''}`);
     });
@@ -5738,7 +5812,7 @@ const buildTransitionReport = (scores, childName, opts = {}, domains = EVAL_DOMA
 
   /* 4. 집중 지원 영역 */
   if (classified.intensive.length > 0) {
-    lines.push('입학 초기 집중 지원이 필요한 영역');
+    lines.push('◆ 입학 초기 집중 지원이 필요한 영역');
     classified.intensive.forEach(({ dom }) => {
       lines.push(`· ${dom.label} — ${poolTransitionByDomain(domains)[dom.key]?.intensive || ''}`);
     });
@@ -5753,7 +5827,7 @@ const buildTransitionReport = (scores, childName, opts = {}, domains = EVAL_DOMA
        "종결 단계 변동"이라는 맥락 정보 추가. 큰 변동(-1.0 이상)만 골라 부담 줄임 */
     const significant = decliningDomains.filter(d => d.diff <= -1.0);
     if (significant.length > 0) {
-      lines.push('추가 관찰 권장 영역');
+      lines.push('◆ 추가 관찰 권장 영역');
       if (significant.length >= 6) {
         /* 6+개 → "전 영역" 표현 (종결 5→1 같은 큰 하락 케이스 부담 완화) */
         const avgDiff = significant.reduce((a, b) => a + b.diff, 0) / significant.length;
@@ -5767,7 +5841,7 @@ const buildTransitionReport = (scores, childName, opts = {}, domains = EVAL_DOMA
   }
 
   /* 5. 담임교사 권장사항 */
-  lines.push('담임교사 권장사항');
+  lines.push('◆ 담임교사 권장사항');
   const strengthRatio = classified.strength.length / domains.length;
   const intensiveCount = classified.intensive.length;
   let homeroomKey;
@@ -5778,7 +5852,7 @@ const buildTransitionReport = (scores, childName, opts = {}, domains = EVAL_DOMA
   lines.push('');
 
   /* 6. 특수교사 / 지원인력 권장사항 */
-  lines.push('특수교사·지원인력 협업 권장');
+  lines.push('◆ 특수교사·지원인력 협업 권장');
   lines.push(hasSpecialEducator ? TRANSITION_OVERALL.specialEducator.available : TRANSITION_OVERALL.specialEducator.notAvailable);
   if (hasSpecialEducator && (classified.support.length + classified.intensive.length) > 0) {
     const focusAreas = [...classified.intensive, ...classified.support].slice(0, 4).map(({ dom }) => dom.label).join(' · ');
@@ -5787,7 +5861,7 @@ const buildTransitionReport = (scores, childName, opts = {}, domains = EVAL_DOMA
   lines.push('');
 
   /* 7. 가정 연계 - 입학 전 준비 */
-  lines.push('가정 입학 전 준비 (보호자 가이드)');
+  lines.push('◆ 가정 입학 전 준비 (보호자 가이드)');
   lines.push(TRANSITION_OVERALL.home.preEntry);
   lines.push('');
 
@@ -14999,5 +15073,4 @@ export default function AppWithErrorBoundary() {
       <App />
     </ErrorBoundary>
   );
-  
 }
