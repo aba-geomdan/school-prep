@@ -4658,13 +4658,25 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
   const overallParts = [];
   const usedKeys = new Set();
   if (highDomains.length > 0) {
-    /* 6개 이상이면 "전반 영역" 표현, 적으면 영역명 나열 */
-    if (highDomains.length >= 6) {
-      overallParts.push(`전반 영역에서 안정적인 수행을 보이고 있습니다`);
-      highDomains.forEach((d) => usedKeys.add(d.dom.key));
-    } else {
-      const names = highDomains.slice(0, 3).map((d) => { usedKeys.add(d.dom.key); return d.dom.label; }).join(', ');
-      overallParts.push(`${names} 영역에서 안정적인 수행을 보이고 있습니다`);
+    /* 기간평균은 높아도 월별 최저가 3.0 미만이면(중간에 뚝 떨어진 적 있으면)
+       "안정적"이라 부르지 않고 "월별 변동이 있는" 쪽으로 분리 서술
+       (예: 4.4→2.5→4.2 는 avg·last 조건은 통과하나 8월 급락을 감추지 않도록) */
+    const evenHigh = highDomains.filter((d) => Math.min(...d.vals) >= 3.0);
+    const fluctHigh = highDomains.filter((d) => Math.min(...d.vals) < 3.0);
+    /* 고르게 높은 영역 → "안정적인 수행" */
+    if (evenHigh.length > 0) {
+      if (evenHigh.length >= 6) {
+        overallParts.push(`전반 영역에서 안정적인 수행을 보이고 있습니다`);
+        evenHigh.forEach((d) => usedKeys.add(d.dom.key));
+      } else {
+        const names = evenHigh.slice(0, 3).map((d) => { usedKeys.add(d.dom.key); return d.dom.label; }).join(', ');
+        overallParts.push(`${names} 영역에서 안정적인 수행을 보이고 있습니다`);
+      }
+    }
+    /* 평균은 높으나 월별 변동이 있는 영역 → 정직하게 변동 명시 */
+    if (fluctHigh.length > 0) {
+      const names = fluctHigh.slice(0, 3).map((d) => { usedKeys.add(d.dom.key); return d.dom.label; }).join(', ');
+      overallParts.push(`${names} 영역은 기간평균은 높은 편이나 월별 수행에 변동이 있어 흐름을 함께 지켜보고 있습니다`);
     }
   }
   if (major.length > 0 || meaningful.length > 0) {
@@ -13066,6 +13078,8 @@ function getPrintWindowCSS() {
     .change-grid-head, .change-grid-row { display: flex; align-items: stretch; }
     .change-grid-head { background: #f3ede1 !important; font-weight: 700; font-size: 10pt; }
     .change-grid-row { border-top: 1px solid #d1d5db; page-break-inside: avoid; break-inside: avoid; }
+    /* 행 구분선을 셀 하단에도 이중으로 그려 PDF 엔진이 행 border-top을 누락해도 선이 남도록 보강 */
+    .change-grid-row .cg-col { border-bottom: 1px solid #d1d5db; }
     .change-grid .cg-col { flex: 1 1 0; padding: 6px 8px; border-right: 1px solid #e8e1d2; font-size: 10pt; }
     .change-grid .cg-col:first-child { border-left: 1px solid #d1d5db; }
     .change-grid .cg-col:last-child { border-right: 1px solid #d1d5db; }
@@ -13835,6 +13849,8 @@ function getGlobalCSS() {
     .change-grid-head, .change-grid-row { display: flex; align-items: stretch; }
     .change-grid-head { background: #f3ede1; font-weight: 700; font-size: 13px; color: #3D2E4F; }
     .change-grid-row { border-top: 1px solid #F5C6CF; }
+    /* 행 구분선을 셀 하단에도 이중으로 그려 PDF 엔진이 행 border-top을 누락해도 선이 남도록 보강 */
+    .change-grid-row .cg-col { border-bottom: 1px solid #F5C6CF; }
     .change-grid .cg-col { flex: 1 1 0; padding: 8px; border-right: 1px solid #e8e1d2; display: flex; align-items: center; }
     .change-grid .cg-col:first-child { border-left: 1px solid #F5C6CF; }
     .change-grid .cg-col:last-child { border-right: 1px solid #F5C6CF; }
