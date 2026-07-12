@@ -9012,11 +9012,17 @@ ${body}
             showConfirm={showConfirm}
             onExportBackup={exportBackup}
             onImportBackup={importBackup}
-            childrenStats={childrenStats.filter((c) => currentUser.role === 'admin' || c.therapistId === currentUser.id)}
+            childrenStats={childrenStats.filter((c) =>
+              currentUser.role === 'admin' ||
+              c.therapistId === currentUser.id ||
+              (currentUser.name && (c.therapistId === currentUser.name || c.therapist === currentUser.name))
+            )}
             upcomingSessions={upcomingSessions.filter((ev) => {
               if (currentUser.role === 'admin') return true;
               const child = children.find((c) => c.id === ev.childId);
-              return child?.therapistId === currentUser.id;
+              if (!child) return false;
+              return child.therapistId === currentUser.id ||
+                (currentUser.name && (child.therapistId === currentUser.name || child.therapist === currentUser.name));
             })}
             daysSinceBackup={daysSinceBackup}
             currentUser={currentUser}
@@ -9163,7 +9169,9 @@ ${body}
               /* 치료사는 본인 담당 아동의 보고서만 열람 */
               if (!rec.activeChildId) return false;
               const child = children.find((c) => c.id === rec.activeChildId);
-              return child?.therapistId === currentUser.id;
+              if (!child) return false;
+              return child.therapistId === currentUser.id ||
+                (currentUser.name && (child.therapistId === currentUser.name || child.therapist === currentUser.name));
             })}
             onLoad={loadFromArchive}
             onDelete={deleteFromArchive}
