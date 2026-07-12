@@ -6936,7 +6936,13 @@ function App() {
   const visibleChildren = useMemo(() => {
     if (!currentUser) return [];
     if (currentUser.role === 'admin') return children;  // 관리자는 모두 열람
-    return children.filter((c) => c.therapistId === currentUser.id);
+    /* 본인 담당 판정: UUID(신규 저장) 또는 이름(마이그레이션된 옛 데이터) 매칭 */
+    const myId = currentUser.id;
+    const myName = currentUser.name;
+    return children.filter((c) =>
+      c.therapistId === myId ||
+      (myName && (c.therapistId === myName || c.therapist === myName))
+    );
   }, [children, currentUser]);
 
   /* 권한별 보이는 회기 기록 필터 */
