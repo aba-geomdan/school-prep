@@ -101,6 +101,219 @@ const generateSalt = () => {
   return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
 };
 
+/* ═══════════════════════════════════════════════════════════════
+   Supabase Auth 인증 인프라 (A방식 마이그레이션 — SCERTS v2 이식)
+   - sessionStorage 세션(창 닫으면 로그아웃) + refresh_token 자동 갱신
+   - 데이터: sp_data 테이블 (RLS로 본인 것만) + 관리자 RPC 전체 조회
+   - 기존 SUPABASE_URL / SUPABASE_ANON_KEY 상수 재사용
+   ═══════════════════════════════════════════════════════════════ */
+const AUTH_SESSION_KEY = 'sb-auth-session-sp';
+
+function getStoredSession() {
+  try {
+    const raw = sessionStorage.getItem(AUTH_SESSION_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw);
+    if (s.expires_at && s.expires_at * 1000 < Date.now() + 5 * 60 * 1000) {
+      return null; // 만료됨 (refresh 필요)
+    }
+    return s;
+  } catch (e) { return null; }
+}
+
+function saveSession(session) {
+  try {
+    if (session) sessionStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(session));
+    else sessionStorage.removeItem(AUTH_SESSION_KEY);
+    localStorage.removeItem(AUTH_SESSION_KEY); // 과거 자동로그인 흔적 제거
+  } catch (e) {}
+}
+
+async function refreshSession(refreshToken) {
+  try {
+    const r = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+      body: JSON.stringify({ refresh_token: refreshToken }),
+    });
+    if (!r.ok) return null;
+    const data = await r.json();
+    if (data.access_token) { saveSession(data); return data; }
+    return null;
+  } catch (e) { return null; }
+}
+
+async function getValidAccessToken() {
+  let session = getStoredSession();
+  if (session?.access_token) return session.access_token;
+  const raw = sessionStorage.getItem(AUTH_SESSION_KEY);
+  if (raw) {
+    try {
+      const old = JSON.parse(raw);
+      if (old.refresh_token) {
+        const refreshed = await refreshSession(old.refresh_token);
+        if (refreshed?.access_token) return refreshed.access_token;
+      }
+    } catch (e) {}
+  }
+  return null;
+}
+
+async function authHeaders() {
+  const token = await getValidAccessToken();
+  return {
+    'apikey': SUPABASE_ANON_KEY,
+    'Authorization': token ? `Bearer ${token}` : `Bearer ${SUPABASE_ANON_KEY}`,
+    'Content-Type': 'application/json',
+  };
+}
+
+async function signInWithPassword(email, password) {
+  try {
+    const r = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await r.json();
+    if (!r.ok) {
+      return { error: data.error_description || data.msg || data.error || '로그인 실패' };
+    }
+    saveSession(data);
+    return { session: data, user: data.user };
+  } catch (e) {
+    return { error: '네트워크 오류: ' + e.message };
+  }
+}
+
+async function signOut() {
+  try {
+    const token = await getValidAccessToken();
+    if (token) {
+      await fetch(`${SUPABASE_URL}/auth/v1/logout`, {
+        method: 'POST',
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${token}` },
+      });
+    }
+  } catch (e) {}
+  saveSession(null);
+}
+
+async function getCurrentUser() {
+  try {
+    const token = await getValidAccessToken();
+    if (!token) return null;
+    const r = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${token}` },
+    });
+    if (!r.ok) return null;
+    return await r.json();
+  } catch (e) { return null; }
+}
+
+async function adminCreateUser(email, password, displayName) {
+  try {
+    const headers = await authHeaders();
+    const r = await fetch(`${SUPABASE_URL}/functions/v1/admin-users`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        action: 'create', email, password,
+        display_name: displayName || email.split('@')[0],
+      }),
+    });
+    const data = await r.json();
+    if (!r.ok) return { error: data.error || '계정 생성 실패' };
+    return { user: data.user };
+  } catch (e) { return { error: '네트워크 오류: ' + e.message }; }
+}
+
+async function adminDeleteUser(userId) {
+  try {
+    const headers = await authHeaders();
+    const r = await fetch(`${SUPABASE_URL}/functions/v1/admin-users`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ action: 'delete', user_id: userId }),
+    });
+    if (!r.ok) {
+      const data = await r.json().catch(() => ({}));
+      return { error: data.error || '삭제 실패' };
+    }
+    return { ok: true };
+  } catch (e) { return { error: '네트워크 오류: ' + e.message }; }
+}
+
+async function adminUpdateUserPassword(userId, newPassword) {
+  try {
+    const headers = await authHeaders();
+    const r = await fetch(`${SUPABASE_URL}/functions/v1/admin-users`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ action: 'update_password', user_id: userId, password: newPassword }),
+    });
+    const data = await r.json();
+    if (!r.ok) return { error: data.error || '비번 변경 실패' };
+    return { ok: true };
+  } catch (e) { return { error: '네트워크 오류: ' + e.message }; }
+}
+
+async function adminListUsers() {
+  try {
+    const headers = await authHeaders();
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_list_users`, {
+      method: 'POST', headers, body: '{}',
+    });
+    if (!r.ok) return [];
+    return await r.json();
+  } catch (e) { return []; }
+}
+
+async function adminGetUserData(userId) {
+  try {
+    const headers = await authHeaders();
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_get_user_data_sp`, {
+      method: 'POST', headers,
+      body: JSON.stringify({ target_user_id: userId }),
+    });
+    if (!r.ok) return [];
+    return await r.json();
+  } catch (e) { return []; }
+}
+
+/* === sp_data 데이터 저장/조회 (RLS로 본인 데이터만 접근) === */
+async function dataGet(key) {
+  try {
+    const headers = await authHeaders();
+    const user = await getCurrentUser();
+    if (!user?.id) return null;
+    const url = `${SUPABASE_URL}/rest/v1/sp_data?user_id=eq.${user.id}&key=eq.${encodeURIComponent(key)}&select=key,value`;
+    const r = await fetch(url, { headers });
+    if (!r.ok) return null;
+    const rows = await r.json();
+    if (rows && rows.length > 0) return { key: rows[0].key, value: rows[0].value };
+    return null;
+  } catch (e) { return null; }
+}
+
+async function dataSet(key, value) {
+  try {
+    const headers = await authHeaders();
+    const user = await getCurrentUser();
+    if (!user?.id) return null;
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/sp_data`, {
+      method: 'POST',
+      headers: { ...headers, 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify({
+        user_id: user.id, key, value,
+        updated_at: new Date().toISOString(),
+      }),
+    });
+    if (!r.ok) return null;
+    return { key, value };
+  } catch (e) { return null; }
+}
+
 /* === Supabase 테이블 접근 함수들 (Step 3에서 사용 시작) === */
 
 /* sp_users — 사용자 (관리자 + 치료사) */
@@ -5991,6 +6204,36 @@ function App() {
   /* ─── 인증/계정 관리 ─── */
   /* currentUser: null | { id, name, role } - 로그인 안 했으면 null */
   const [currentUser, setCurrentUser] = useState(null);
+
+  /* Auth 세션 검증 — 앱 시작 시 실제 Supabase Auth 세션으로 currentUser 확정.
+     토큰이 유효하면 최신 정보로 갱신, 만료/없으면 로그아웃 상태로 정리 */
+  const authVerifiedRef = useRef(false);
+  useEffect(() => {
+    if (authVerifiedRef.current) return;
+    authVerifiedRef.current = true;
+    (async () => {
+      try {
+        const authU = await getCurrentUser();
+        if (authU?.id) {
+          const meta = authU.user_metadata || {};
+          const userInfo = {
+            id: authU.id,
+            dbId: authU.id,
+            email: authU.email,
+            name: meta.display_name || (authU.email ? authU.email.split('@')[0] : '사용자'),
+            role: meta.role || 'therapist',
+          };
+          setCurrentUser(userInfo);
+          try { sessionStorage.setItem('schoolPrepCurrentUser_v1', JSON.stringify(userInfo)); } catch (e) {}
+        } else {
+          /* Auth 세션 없음/만료 → 로그아웃 상태로 정리 */
+          setCurrentUser(null);
+          try { sessionStorage.removeItem('schoolPrepCurrentUser_v1'); } catch (e) {}
+        }
+      } catch (e) {}
+    })();
+  }, []);
+
   /* therapists: [{ id, password, name, createdAt }] - 관리자가 등록한 치료사 목록 */
   const [therapists, setTherapists] = useState([]);
   /* 로그인 모달 상태 */
@@ -6107,21 +6350,26 @@ function App() {
         } catch (e) {}
       }
 
-      /* 로그인 상태 복원 - 브라우저를 닫으면 자동 로그아웃 (sessionStorage) */
+      /* 로그인 상태 복원 - 브라우저를 닫으면 자동 로그아웃 (sessionStorage)
+         단, Auth 세션(access/refresh 토큰)이 살아있을 때만 잠정 복원.
+         실제 검증은 아래 별도 useEffect에서 getCurrentUser()로 확정 */
       let currentUserStr = null;
-      try { currentUserStr = sessionStorage.getItem('schoolPrepCurrentUser_v1'); } catch (e) {}
+      let hasAuthSession = false;
+      try { hasAuthSession = !!sessionStorage.getItem(AUTH_SESSION_KEY); } catch (e) {}
+      if (hasAuthSession) {
+        try { currentUserStr = sessionStorage.getItem('schoolPrepCurrentUser_v1'); } catch (e) {}
+      } else {
+        /* Auth 세션 없으면 로그인 흔적 정리 (보안) */
+        try { sessionStorage.removeItem('schoolPrepCurrentUser_v1'); } catch (e) {}
+      }
       /* 과거 localStorage에 남아있던 자동로그인 흔적은 제거 (보안) */
       try { localStorage.removeItem('schoolPrepCurrentUser_v1'); localStorage.removeItem('schoolPrepCurrentUser_v1_backup'); } catch (e) {}
       if (currentUserStr) {
         try {
           const parsed = JSON.parse(currentUserStr);
           if (parsed?.id && parsed?.role) {
-            /* 관리자 계정은 표시 이름을 항상 최신 설정값으로 보정 (옛 '관리자' → 민다혜) */
-            const restored = (parsed.id === ADMIN_ACCOUNT.id)
-              ? { ...parsed, name: ADMIN_ACCOUNT.name }
-              : parsed;
-            setCurrentUser(restored);
-            if (restored.name) setInfo((prev) => ({ ...prev, therapist: prev.therapist || restored.name }));
+            setCurrentUser(parsed);
+            if (parsed.name) setInfo((prev) => ({ ...prev, therapist: prev.therapist || parsed.name }));
           }
         } catch (e) {}
       }
@@ -6135,7 +6383,7 @@ function App() {
       try {
         const cu = currentUserStr ? JSON.parse(currentUserStr) : null;
         if (cu?.id) {
-          const myName = (cu.id === ADMIN_ACCOUNT.id) ? ADMIN_ACCOUNT.name : cu.name;
+          const myName = cu.name || '';
           let changed = false;
           childrenList = childrenList.map((c) => {
             if (!c.therapistId) {
@@ -6282,29 +6530,42 @@ function App() {
   };
 
   /* ════════════════════════════════════════════════
-     Step 4 — Supabase 클라우드 동기화
-     - 사용자 데이터(children + archive + childRecords)를 sp_app_meta에 user_data_{username}로 저장
+     Step 4 — Supabase 클라우드 동기화 (A방식: sp_data + RLS)
+     - 사용자 데이터(children + archive + childRecords)를 sp_data의 'user_data' 키에 저장
+     - sp_data.value 는 text 이므로 JSON.stringify / JSON.parse 로 직렬화
      - 로그인 시 자동 로드 / 데이터 변경 시 자동 저장 (디바운스 1초)
-     - 관리자 로그인 시 모든 치료사 데이터 자동 합쳐 표시 (Step 5)
+     - 관리자 로그인 시 모든 사용자 데이터를 RPC로 조회해 합쳐 표시
      ════════════════════════════════════════════════ */
-  const cloudSyncKey = (username) => `user_data_${username}`;
+  const SP_DATA_KEY = 'user_data';
+
+  /* sp_data.value(text) → 객체 파싱 헬퍼 */
+  const parseUserData = (raw) => {
+    if (!raw) return null;
+    if (typeof raw === 'object') return raw; // 혹시 이미 객체면 그대로
+    try { return JSON.parse(raw); } catch (e) { return null; }
+  };
 
   /* 클라우드 → 로컬: 로그인 시 호출. isAdmin이면 모든 사용자 데이터 합침 */
   const loadFromCloud = async (currentUserInfo) => {
     if (!currentUserInfo) return null;
     try {
       if (currentUserInfo.role === 'admin') {
-        /* 관리자: 모든 user_data_* 키 가져와서 합치기 */
-        const all = await supabaseFetch(`/sp_app_meta?key=like.user_data_*&select=*`);
-        if (!all || all.length === 0) return null;
+        /* 관리자: 전체 사용자 목록 → 각자 sp_data 조회 → 합치기 */
+        const users = await adminListUsers();
+        if (!users || users.length === 0) return null;
         const merged = { children: [], archive: [], childRecords: [] };
-        all.forEach((row) => {
-          const data = row.value || {};
+        for (const u of users) {
+          const uid = u.id || u.user_id;
+          if (!uid) continue;
+          const rows = await adminGetUserData(uid);
+          const row = (rows || []).find((x) => x.key === SP_DATA_KEY);
+          const data = parseUserData(row?.value);
+          if (!data) continue;
           if (Array.isArray(data.children)) merged.children.push(...data.children);
           if (Array.isArray(data.archive)) merged.archive.push(...data.archive);
           if (Array.isArray(data.childRecords)) merged.childRecords.push(...data.childRecords);
-        });
-        /* Step 5: 중복 제거 (관리자 통합 조회 정확성) — id 기반 */
+        }
+        /* 중복 제거 (관리자 통합 조회 정확성) — id 기반 */
         const dedupe = (arr) => {
           const seen = new Set();
           return arr.filter((item) => {
@@ -6319,9 +6580,9 @@ function App() {
         merged.childRecords = dedupe(merged.childRecords);
         return merged;
       } else {
-        /* 치료사: 본인 데이터만 */
-        const meta = await sbAppMeta.get(cloudSyncKey(currentUserInfo.id));
-        return meta?.value || null;
+        /* 치료사: 본인 데이터만 (RLS로 본인 것만 조회됨) */
+        const row = await dataGet(SP_DATA_KEY);
+        return parseUserData(row?.value);
       }
     } catch (err) {
       console.error('클라우드 로드 오류:', err);
@@ -6329,11 +6590,11 @@ function App() {
     }
   };
 
-  /* 로컬 → 클라우드: 데이터 변경 시 디바운스 저장. 관리자는 본인 키에만 저장 */
+  /* 로컬 → 클라우드: 데이터 변경 시 디바운스 저장. 본인 소유 sp_data에만 저장 */
   const saveToCloud = async (currentUserInfo, data) => {
     if (!currentUserInfo) return;
     try {
-      await sbAppMeta.set(cloudSyncKey(currentUserInfo.id), data);
+      await dataSet(SP_DATA_KEY, JSON.stringify(data));
     } catch (err) {
       console.error('클라우드 저장 오류:', err);
     }
@@ -6436,53 +6697,41 @@ function App() {
   /* 로그인 시도 - Supabase sp_users 테이블에서 인증 (Step 3)
      첫 로그인 시 관리자 placeholder('__INIT__' 해시)면 입력 비번이 ADMIN_ACCOUNT.password와 일치 시 자동 활성화 */
   const handleLogin = async (id, password) => {
-    const trimmedId = (id || '').trim();
-    const trimmedPw = (password || '').trim();
-    if (!trimmedId || !trimmedPw) {
-      setLoginError('아이디와 비밀번호를 모두 입력해주세요');
+    const email = (id || '').trim();
+    const pw = (password || '').trim();
+    if (!email || !pw) {
+      setLoginError('이메일과 비밀번호를 모두 입력해주세요');
       return false;
     }
 
     try {
-      /* Supabase에서 사용자 조회 */
-      const user = await sbUsers.findByUsername(trimmedId);
-
-      if (!user) {
-        setLoginError('아이디 또는 비밀번호가 일치하지 않습니다');
-        return false;
-      }
-
-      if (!user.is_active) {
-        setLoginError('비활성화된 계정입니다. 관리자에게 문의하세요');
-        return false;
-      }
-
-      /* 관리자 첫 로그인 자동 활성화 — placeholder를 실제 해시로 교체 */
-      if (user.role === 'admin' && user.password_hash === '__INIT__') {
-        if (trimmedPw === ADMIN_ACCOUNT.password) {
-          /* 첫 로그인이므로 실제 해시 저장 */
-          const salt = generateSalt();
-          const hash = await hashPassword(trimmedPw, salt);
-          await supabaseFetch(`/sp_users?id=eq.${user.id}`, {
-            method: 'PATCH',
-            body: { password_hash: hash, password_salt: salt },
-          });
-          /* 통과 처리 */
+      const result = await signInWithPassword(email, pw);
+      if (result.error) {
+        const err = (result.error || '').toLowerCase();
+        if (err.includes('invalid') || err.includes('credential')) {
+          setLoginError('이메일 또는 비밀번호가 일치하지 않습니다');
+        } else if (err.includes('not confirmed')) {
+          setLoginError('이메일 확인이 필요합니다. 관리자에게 문의하세요');
         } else {
-          setLoginError('아이디 또는 비밀번호가 일치하지 않습니다');
-          return false;
+          setLoginError('로그인 실패: ' + result.error);
         }
-      } else {
-        /* 일반 검증 — 입력 비번을 user.password_salt로 해시한 후 user.password_hash와 비교 */
-        const inputHash = await hashPassword(trimmedPw, user.password_salt);
-        if (inputHash !== user.password_hash) {
-          setLoginError('아이디 또는 비밀번호가 일치하지 않습니다');
-          return false;
-        }
+        return false;
       }
 
-      /* 로그인 성공 */
-      const userInfo = { id: user.username, dbId: user.id, name: user.name, role: user.role };
+      /* 로그인 성공 — Auth 세션에서 사용자 정보 추출 */
+      const authU = result.user || (await getCurrentUser());
+      if (!authU?.id) {
+        setLoginError('로그인 정보를 불러오지 못했습니다. 다시 시도해주세요');
+        return false;
+      }
+      const meta = authU.user_metadata || {};
+      const userInfo = {
+        id: authU.id,           // Auth UUID (데이터 소유 판정 기준)
+        dbId: authU.id,         // 하위 호환 (기존 dbId 참조부용)
+        email: authU.email,
+        name: meta.display_name || (authU.email ? authU.email.split('@')[0] : '사용자'),
+        role: meta.role || 'therapist',
+      };
       setCurrentUser(userInfo);
       try { sessionStorage.setItem('schoolPrepCurrentUser_v1', JSON.stringify(userInfo)); } catch (e) {}
       setInfo((prev) => ({ ...prev, therapist: userInfo.name }));
@@ -6517,6 +6766,7 @@ function App() {
 
     setCurrentUser(null);
     setActiveChildId('');  // 활성 아동 초기화
+    try { await signOut(); } catch (e) {}
     try { sessionStorage.removeItem('schoolPrepCurrentUser_v1'); } catch (e) {}
     try { localStorage.removeItem('schoolPrepCurrentUser_v1'); } catch (e) {}
     try { localStorage.removeItem('schoolPrepCurrentUser_v1_backup'); } catch (e) {}
@@ -6526,36 +6776,27 @@ function App() {
   /* 관리자 비밀번호 변경 — localStorage에 새 비번 저장 (코드 수정 없이 변경 가능)
      초기값(ADMIN_ACCOUNT.password)으로 되돌리려면 localStorage 항목 삭제 */
   const handleChangeAdminPassword = async () => {
-    const currentPw = await showPrompt(
-      '현재 비밀번호를 입력해주세요',
+    if (!currentUser?.id || currentUser.role !== 'admin') {
+      showToast('⚠ 관리자만 사용할 수 있습니다');
+      return;
+    }
+    const newPw = await showPrompt(
+      '새 관리자 비밀번호를 입력해주세요 (6자 이상)',
       '',
-      { title: '관리자 비밀번호 변경 (1/2)', placeholder: '현재 비밀번호', isPassword: true }
+      { title: '관리자 비밀번호 변경', placeholder: '새 비밀번호', isPassword: true }
     );
-    if (currentPw === null) return;
-
+    if (newPw === null) return;
+    const trimmed = (newPw || '').trim();
+    if (trimmed.length < 6) {
+      showToast('비밀번호는 6자 이상이어야 합니다');
+      return;
+    }
     try {
-      const user = await sbUsers.findByUsername(ADMIN_ACCOUNT.id);
-      if (!user) {
-        showToast('⚠ 관리자 계정 조회 실패');
+      const res = await adminUpdateUserPassword(currentUser.id, trimmed);
+      if (res.error) {
+        showToast('⚠ ' + res.error);
         return;
       }
-      const inputHash = await hashPassword(currentPw, user.password_salt);
-      if (inputHash !== user.password_hash) {
-        showToast('현재 비밀번호가 일치하지 않습니다');
-        return;
-      }
-      const newPw = await showPrompt(
-        '새 비밀번호를 입력해주세요 (4자 이상 권장)',
-        '',
-        { title: '관리자 비밀번호 변경 (2/2)', placeholder: '새 비밀번호', isPassword: true }
-      );
-      if (newPw === null) return;
-      const trimmed = (newPw || '').trim();
-      if (trimmed.length < 4) {
-        showToast('비밀번호는 4자 이상이어야 합니다');
-        return;
-      }
-      await sbUsers.changePassword(user.id, trimmed);
       showToast('✓ 관리자 비밀번호가 변경되었습니다');
     } catch (err) {
       console.error('비번 변경 오류:', err);
@@ -6563,143 +6804,128 @@ function App() {
     }
   };
 
-  /* 치료사 비밀번호 재설정 — Supabase sp_users 업데이트 */
+  /* 선생님 비밀번호 재설정 — Edge Function (admin-users) */
   const handleResetTherapistPassword = async (therapistId) => {
     const t = therapists.find((x) => x.id === therapistId);
     if (!t) return;
     const newPw = await showPrompt(
-      `「${t.name}」 치료사의 새 비밀번호를 입력해주세요 (4자 이상 권장)`,
+      `「${t.name}」 선생님의 새 비밀번호를 입력해주세요 (6자 이상)`,
       '',
-      { title: '치료사 비밀번호 재설정', placeholder: '새 비밀번호', isPassword: true }
+      { title: '선생님 비밀번호 재설정', placeholder: '새 비밀번호', isPassword: true }
     );
     if (newPw === null) return;
     const trimmed = (newPw || '').trim();
-    if (trimmed.length < 4) {
-      showToast('비밀번호는 4자 이상이어야 합니다');
+    if (trimmed.length < 6) {
+      showToast('비밀번호는 6자 이상이어야 합니다');
       return;
     }
     try {
-      /* therapists 배열의 t는 username만 있을 수 있음 — Supabase에서 dbId 조회 */
-      const dbUser = t.dbId ? { id: t.dbId } : await sbUsers.findByUsername(t.id);
-      if (!dbUser) {
-        showToast('⚠ 치료사 계정 조회 실패');
+      const res = await adminUpdateUserPassword(t.id, trimmed);
+      if (res.error) {
+        showToast('⚠ ' + res.error);
         return;
       }
-      await sbUsers.changePassword(dbUser.id, trimmed);
-      showToast(`✓ ${t.name} 치료사 비밀번호가 재설정되었습니다`);
+      showToast(`✓ ${t.name} 선생님 비밀번호가 재설정되었습니다`);
     } catch (err) {
-      console.error('치료사 비번 재설정 오류:', err);
+      console.error('선생님 비번 재설정 오류:', err);
       showToast('⚠ 비밀번호 변경 중 오류가 발생했습니다');
     }
   };
 
-  /* 치료사 추가 (관리자만) — Supabase sp_users INSERT */
+  /* 선생님 추가 (관리자만) — Edge Function (admin-users create).
+     data: { id=이메일, password, name } */
   const addTherapist = async (data) => {
-    const id = (data.id || '').trim();
+    const email = (data.id || '').trim();
     const password = (data.password || '').trim();
     const name = (data.name || '').trim();
-    if (!id || !password || !name) {
-      showToast('아이디, 비밀번호, 이름을 모두 입력해주세요');
+    if (!email || !password || !name) {
+      showToast('이메일, 비밀번호, 이름을 모두 입력해주세요');
       return false;
     }
-    if (id === ADMIN_ACCOUNT.id) {
-      showToast('관리자 아이디와 중복됩니다');
+    if (!email.includes('@')) {
+      showToast('올바른 이메일 형식을 입력해주세요');
       return false;
     }
-    if (password.length < 4) {
-      showToast('비밀번호는 최소 4자 이상이어야 합니다');
+    if (password.length < 6) {
+      showToast('비밀번호는 최소 6자 이상이어야 합니다');
       return false;
     }
-    const weakPasswords = ['1234', '0000', '1111', 'password', 'admin', '123456', 'qwerty'];
+    const weakPasswords = ['123456', '000000', '111111', 'password', 'qwerty'];
     if (weakPasswords.includes(password.toLowerCase())) {
-      showToast(`너무 흔한 비밀번호입니다: "${password}". 다른 비밀번호로 변경해주세요`);
+      showToast(`너무 흔한 비밀번호입니다. 다른 비밀번호로 변경해주세요`);
       return false;
     }
     try {
-      /* Supabase 중복 검사 */
-      const existing = await sbUsers.findByUsername(id);
-      if (existing) {
-        showToast(`이미 등록된 아이디입니다: ${id}`);
+      const res = await adminCreateUser(email, password, name);
+      if (res.error) {
+        showToast('⚠ ' + res.error);
         return false;
       }
-      /* Supabase INSERT */
-      const created = await sbUsers.create({ username: id, password, name, role: 'therapist' });
-      const newDb = Array.isArray(created) ? created[0] : created;
-      /* 로컬 therapists 배열도 갱신 (UI 즉시 반영) */
-      const newT = { id: newDb.username, dbId: newDb.id, name: newDb.name, createdAt: newDb.created_at };
+      const created = res.user || {};
+      const newT = {
+        id: created.id,
+        email: created.email || email,
+        name: name,
+        createdAt: created.created_at || new Date().toISOString(),
+      };
       const next = [...therapists, newT];
       setTherapists(next);
       safeSetItem('schoolPrepTherapists_v1', JSON.stringify(next));
-      showToast(`✓ ${name} 치료사 계정 생성 완료 (ID: ${id})`);
+      showToast(`✓ ${name} 선생님 계정 생성 완료 (${email})`);
       return true;
     } catch (err) {
-      console.error('치료사 추가 오류:', err);
-      showToast('⚠ 치료사 추가 중 오류가 발생했습니다');
+      console.error('선생님 추가 오류:', err);
+      showToast('⚠ 선생님 추가 중 오류가 발생했습니다');
       return false;
     }
   };
 
+  /* 이름 수정 — Auth user_metadata 변경 API가 없어 로컬 표시만 갱신 */
   const updateTherapist = async (oldId, data) => {
-    /* 로컬 갱신 우선 (즉시 UI 반영) */
     const next = therapists.map((t) => t.id === oldId ? { ...t, ...data } : t);
     setTherapists(next);
     safeSetItem('schoolPrepTherapists_v1', JSON.stringify(next));
-    /* Supabase 갱신 (이름만 변경 가능 — username/role은 일반적으로 그대로) */
-    try {
-      const target = therapists.find((t) => t.id === oldId);
-      const dbId = target?.dbId || (await sbUsers.findByUsername(oldId))?.id;
-      if (dbId && data.name) {
-        await supabaseFetch(`/sp_users?id=eq.${dbId}`, {
-          method: 'PATCH',
-          body: { name: data.name },
-        });
-      }
-    } catch (err) {
-      console.error('치료사 수정 오류:', err);
-    }
   };
 
   const deleteTherapist = async (id) => {
-    /* 로컬 즉시 갱신 */
     const target = therapists.find((t) => t.id === id);
-    const next = therapists.filter((t) => t.id !== id);
-    setTherapists(next);
-    safeSetItem('schoolPrepTherapists_v1', JSON.stringify(next));
-    /* Supabase 갱신 */
     try {
-      const dbId = target?.dbId || (await sbUsers.findByUsername(id))?.id;
-      if (dbId) {
-        await sbUsers.delete(dbId);
+      const res = await adminDeleteUser(id);
+      if (res.error) {
+        showToast('⚠ ' + res.error);
+        return;
       }
+      const next = therapists.filter((t) => t.id !== id);
+      setTherapists(next);
+      safeSetItem('schoolPrepTherapists_v1', JSON.stringify(next));
+      showToast(`✓ ${target?.name || '선생님'} 계정이 삭제되었습니다`);
     } catch (err) {
-      console.error('치료사 삭제 오류:', err);
+      console.error('선생님 삭제 오류:', err);
+      showToast('⚠ 선생님 삭제 중 오류가 발생했습니다');
     }
   };
 
-  /* Supabase에서 치료사 목록 자동 로드 — 로그인 시 + 주기적 갱신 */
+  /* 전체 사용자 목록 자동 로드 — 관리자 로그인 시 (admin_list_users RPC) */
   useEffect(() => {
     if (!currentUser) return;
-    /* 관리자만 전체 목록 로드 (치료사는 본인 정보만 필요) */
     if (currentUser.role !== 'admin') return;
     let alive = true;
     const loadTherapists = async () => {
       try {
-        const users = await sbUsers.list();
+        const users = await adminListUsers();
         if (!alive) return;
-        /* admin 제외, therapist만 가져옴 */
         const list = (users || [])
-          .filter((u) => u.role === 'therapist')
+          .filter((u) => (u.role || u.user_metadata?.role) === 'therapist')
           .map((u) => ({
-            id: u.username,
-            dbId: u.id,
-            name: u.name,
+            id: u.id || u.user_id,
+            email: u.email,
+            name: u.display_name || u.name || (u.email ? u.email.split('@')[0] : ''),
             createdAt: u.created_at,
-            isActive: u.is_active,
           }));
         setTherapists(list);
         safeSetItem('schoolPrepTherapists_v1', JSON.stringify(list));
       } catch (err) {
-        console.error('치료사 목록 로드 오류:', err);
+        console.error('선생님 목록 로드 오류:', err);
       }
     };
     loadTherapists();
@@ -12610,14 +12836,14 @@ function LoginView({ onLogin, loginError, setLoginError }) {
 
         <div className="login-form">
           <div className="login-field">
-            <label className="login-label">아이디</label>
+            <label className="login-label">이메일</label>
             <input
-              type="text"
+              type="email"
               className="login-input"
               value={id}
               onChange={(e) => { setId(e.target.value); setLoginError(''); }}
               onKeyDown={handleKeyDown}
-              placeholder="아이디"
+              placeholder="이메일 주소"
               autoFocus
               autoComplete="off"
               autoCorrect="off"
@@ -12650,8 +12876,8 @@ function LoginView({ onLogin, loginError, setLoginError }) {
           </button>
 
           <div className="login-hint">
-            관리자는 지정된 아이디와 비밀번호로 로그인하세요.<br/>
-            치료사 계정은 관리자가 발급합니다.
+            관리자·선생님 모두 이메일과 비밀번호로 로그인하세요.<br/>
+            선생님 계정은 관리자가 발급합니다.
           </div>
 
           <button className="login-guide-btn" onClick={() => setShowGuide(true)}>
@@ -12902,7 +13128,7 @@ function AdminView({ therapists, onAddTherapist, onUpdateTherapist, onDeleteTher
       <div className="children-paper">
         <div className="children-intro">
           <strong>관리자 전용 화면</strong>
-          <p>치료사 계정을 추가·수정·삭제할 수 있습니다. 치료사는 자기 컴퓨터에서 본인 아이디·비밀번호로 로그인하면 본인이 담당하는 아동의 데이터만 볼 수 있습니다.</p>
+          <p>선생님 계정을 추가·삭제할 수 있습니다. 선생님은 본인 이메일·비밀번호로 로그인하면 본인이 담당하는 아동의 데이터만 볼 수 있습니다.</p>
         </div>
 
         {/* 등록/수정 폼 */}
@@ -12911,16 +13137,17 @@ function AdminView({ therapists, onAddTherapist, onUpdateTherapist, onDeleteTher
             <h3 className="child-form-title">{editId ? '✎ 치료사 정보 수정' : '+ 신규 치료사 등록'}</h3>
             <div className="child-form-grid">
               <label className="child-form-field">
-                <span className="field-label">아이디 <span style={{ color: '#C95D7C' }}>*</span></span>
+                <span className="field-label">이메일 <span style={{ color: '#C95D7C' }}>*</span></span>
                 <input
                   className="field-input"
+                  type="email"
                   value={form.id}
                   onChange={(e) => setForm({ ...form, id: e.target.value })}
-                  placeholder="예: kim01"
+                  placeholder="예: kim@geomdan.com"
                   disabled={!!editId}
                   autoFocus={!editId}
                 />
-                {editId && <small style={{ color: '#D4728A', fontSize: 10 }}>아이디는 수정 불가</small>}
+                {editId && <small style={{ color: '#D4728A', fontSize: 10 }}>이메일은 수정 불가</small>}
               </label>
               <label className="child-form-field">
                 <span className="field-label">비밀번호 <span style={{ color: '#C95D7C' }}>*</span></span>
