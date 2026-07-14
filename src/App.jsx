@@ -6,6 +6,33 @@ import {
 } from 'recharts';
 
 /* ================================================================
+   도메인 잠금 (지적재산 보호)
+   허용 host 외에서는 앱 렌더링 차단
+================================================================ */
+(function domainGuard() {
+  try {
+    var host = window.location.hostname;
+    var allowed =
+      host === 'aba-geomdan.github.io' ||
+      host === 'localhost' ||
+      host === '127.0.0.1' ||
+      host === '' ||
+      /\.local$/.test(host);
+    if (allowed) return;
+    document.documentElement.innerHTML =
+      '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;' +
+      'background:#FFF0F3;font-family:system-ui,-apple-system,sans-serif;padding:24px;">' +
+      '<div style="text-align:center;max-width:420px;">' +
+      '<div style="font-size:20px;font-weight:700;color:#D4728A;margin-bottom:12px;">접근할 수 없는 페이지</div>' +
+      '<div style="font-size:14px;color:#D4728A;line-height:1.6;">검단ABA언어행동연구소의 지적재산입니다.</div>' +
+      '</div></div>';
+    throw new Error('Unauthorized host');
+  } catch (e) {
+    if (e && e.message === 'Unauthorized host') throw e;
+  }
+})();
+
+/* ================================================================
    검단ABA언어행동연구소 - 학교 준비반 자동화 시스템
    ─────────────────────────────────────────────────────────────
    탭 구성:
