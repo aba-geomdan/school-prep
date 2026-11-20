@@ -6141,6 +6141,29 @@ const buildTransitionReport = (scores, childName, opts = {}, domains = EVAL_DOMA
   return replaceChildPronoun(lines.join('\n'), childName);
 };
 
+// ★ [통합본 연결] 통합본(원장님 화면)에서 아이를 골라 이 앱을 열었을 때 넘겨받은 이름·생년월일
+//   - 주소에는 아이 번호만(?aba_child=...), 이름·생년월일은 같은 사이트 저장칸(aba-child-handoff)에 잠깐 맡겨 둔 것을 한 번 읽고 지운다.
+//   - 이 앱(APPKEY) 것이고 30분 안의 것만 쓴다.
+const ABA_CHILD_HANDOFF_KEY = 'aba-child-handoff';
+function readAbaChildLink(appKey) {
+  try {
+    const params = new URLSearchParams(window.location.search || '');
+    const cid = params.get('aba_child');
+    if (!cid) return null;
+    let link = null;
+    try {
+      const h = JSON.parse(localStorage.getItem(ABA_CHILD_HANDOFF_KEY) || 'null');
+      if (h && h.app === appKey && String(h.cid) === String(cid) && Date.now() - (Number(h.ts) || 0) < 30 * 60 * 1000) {
+        const b = String(h.birth || '');
+        link = { cid: String(cid), name: String(h.name || '').trim(), birth: /^\d{4}-\d{2}-\d{2}$/.test(b) ? b : '' };
+      }
+    } catch (e) {}
+    try { localStorage.removeItem(ABA_CHILD_HANDOFF_KEY); } catch (e) {}
+    try { params.delete('aba_child'); const q = params.toString(); window.history.replaceState(null, '', window.location.pathname + (q ? '?' + q : '') + window.location.hash); } catch (e) {}
+    return link && link.name ? link : null;
+  } catch (e) { return null; }
+}
+
 function App() {
   /* 탭 상태 */
   const [activeTab, setActiveTab] = useState('children'); // children | curriculum | parent | session | mid | final | transition | archive
@@ -6629,7 +6652,9 @@ function App() {
 
   /* 로그인 시 클라우드에서 데이터 fresh 로드 */
   const cloudLoadedRef = useRef(false);
+  const [cloudReady, setCloudReady] = useState(false); // ★ [통합본 연결] 내 데이터를 다 불러왔는지
   useEffect(() => {
+    setCloudReady(false);
     if (!currentUser) {
       cloudLoadedRef.current = false;
       return;
@@ -6655,10 +6680,27 @@ function App() {
       }
       /* 클라우드에 없으면 기존 localStorage 데이터를 첫 업로드 (자동 마이그레이션) */
       cloudLoadedRef.current = true;
+      setCloudReady(true);
     };
     sync();
     return () => { alive = false; };
   }, [currentUser]);
+
+  /* ★ [통합본 연결] 원장님 계정일 때만: 같은 이름 아이가 있으면 그 아이를 고르고,
+     없으면 아동 관리의 '신규 아동 등록' 칸을 열어 이름·생년월일을 채워 둔다 (등록은 직접) */
+  const [abaLink, setAbaLink] = useState(() => readAbaChildLink('prep'));
+  const [childPrefill, setChildPrefill] = useState(null);
+  useEffect(() => {
+    if (!abaLink || !currentUser) return;
+    if (currentUser.role !== 'admin') { setAbaLink(null); return; }
+    if (!cloudReady) return;
+    const found = (children || []).find((c) => String(c.name || '').trim() === abaLink.name);
+    if (found) setActiveChildId(found.id);
+    else setChildPrefill({ name: abaLink.name, birthDate: abaLink.birth || '' });
+    setActiveTab('children');
+    setAbaLink(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [abaLink, currentUser, cloudReady]);
 
   /* 데이터 변경 시 클라우드 자동 저장 (디바운스 1초) */
   useEffect(() => {
@@ -9033,6 +9075,8 @@ ${body}
             childRecords={visibleChildRecords}
             archive={archive}
             onAdd={addChild}
+            prefill={childPrefill}
+            onPrefillUsed={() => setChildPrefill(null)}
             onUpdate={updateChild}
             onDelete={deleteChild}
             onGoToSession={() => setActiveTab('session')}
@@ -10474,6 +10518,7 @@ function FinalReportView({
 function ChildManagementView({
   children, activeChildId, setActiveChildId, childRecords, archive,
   onAdd, onUpdate, onDelete, onGoToSession,
+  prefill, onPrefillUsed,
   showConfirm, onExportBackup, onImportBackup,
   childrenStats, upcomingSessions, daysSinceBackup,
   currentUser, therapists,
@@ -10493,6 +10538,17 @@ function ChildManagementView({
     plannedSessions: 36, classType: 'basic', notes: '',
   });
   const [nicknameManuallyEdited, setNicknameManuallyEdited] = useState(false);
+
+  /* ★ [통합본 연결] 통합본에서 넘어온 아이: 등록 칸을 열고 이름·호칭·생년월일만 채움 */
+  useEffect(() => {
+    if (!prefill || !prefill.name) return;
+    setEditId('');
+    setNicknameManuallyEdited(false);
+    setForm((prev) => ({ ...prev, name: prefill.name, nickname: extractNickname(prefill.name), birthDate: prefill.birthDate || prev.birthDate }));
+    setShowAddForm(true);
+    if (onPrefillUsed) onPrefillUsed();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prefill]);
 
   const resetForm = () => {
     setForm({
