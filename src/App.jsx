@@ -4806,7 +4806,9 @@ const HOME_PAIR_ADVANCED = {
 /* '…단계입니다'로 끝나는 설명은 '영역은'과 이어야 문장이 맞음 ('영역에서 … 단계입니다'는 어색) */
 const domainParticle = (desc, also) => (/[은는] 아직/.test(desc) ? (also ? '에서도' : '에서') : /단계입니다$|단계$/.test(desc) ? (also ? '도' : '은') : /에서/.test(desc.slice(0, 14)) ? (also ? '도' : '에서는') : (also ? '에서도' : '에서'));
 
-const buildSessionWeaknesses = (scores, sessionIdx, childName, domains = EVAL_DOMAINS, prevScores = null, sessionNumber = null) => {
+/* 마지막 회기(예정 회기 수에 이른 회기)에는 '다음 회기에서는…' 대신 마무리 문장 */
+const LAST_SESSION_CLOSING = '이번 회기로 학교 준비반 일정을 마무리하며, 그동안 연습한 방법이 입학 후에도 이어지도록 학교와 가정에서 같은 방식으로 도와주시는 것이 중요합니다.';
+const buildSessionWeaknesses = (scores, sessionIdx, childName, domains = EVAL_DOMAINS, prevScores = null, sessionNumber = null, isLast = false) => {
   const entries = Object.entries(scores).filter(([_, v]) => v != null && v !== '');
   if (entries.length === 0) return '';
   const nameHash = strHash(childName);
@@ -4826,7 +4828,7 @@ const buildSessionWeaknesses = (scores, sessionIdx, childName, domains = EVAL_DO
     if (allHigh) {
       /* 한 회기 점수만으로 '일반화 단계 진입'을 단정하지 않음 */
       /* 같은 달 회기마다 같은 문장이 반복되지 않게 회기 번호로 돌려 씀 */
-      phrases.push(pickStable([
+      phrases.push(isLast ? LAST_SESSION_CLOSING : pickStable([
         '다음 회기에서는 또래와 함께하는 상황 등 다양한 맥락에서도 같은 수행이 유지되는지 확인할 예정입니다.',
         '다음 회기에서는 처음 하는 활동이나 새로운 자료에서도 같은 수행이 이어지는지 살펴볼 예정입니다.',
         '다음 회기에서는 교사의 안내를 더 줄인 상황에서도 같은 모습이 유지되는지 확인할 예정입니다.',
@@ -4853,7 +4855,7 @@ const buildSessionWeaknesses = (scores, sessionIdx, childName, domains = EVAL_DO
       '가정에서는 스스로 해낸 작은 순간을 바로 짚어 칭찬해 주시면 좋습니다',
     ];
     if (allMid) {
-      phrases.push(pickStable(midPlans, actualSessionNumber) + '.');
+      phrases.push(isLast ? LAST_SESSION_CLOSING : pickStable(midPlans, actualSessionNumber) + '.');
       phrases.push(pickStable(midHomes, actualSessionNumber + nameHash) + '.');
       return phrases.join(' ');
     }
@@ -4864,7 +4866,9 @@ const buildSessionWeaknesses = (scores, sessionIdx, childName, domains = EVAL_DO
       '안내가 있으면 수행하는 단계로, 다음 회기에서는 안내를 조금씩 줄이고 스스로 시작한 순간을 바로 강화할 예정입니다',
       '아직 안내가 필요한 단계여서, 다음 회기에서는 같은 활동을 반복하며 스스로 해 보는 기회를 늘려 갈 예정입니다',
     ];
-    phrases.push(`${l.text}${l.all ? '은' : '은'} ${pickStable(midLeads, actualSessionNumber + nameHash)}.`);
+    phrases.push(isLast
+      ? `${l.text}은 안내가 있으면 수행하는 단계여서, 학교에서도 짧은 안내와 시각 단서가 함께 주어지면 도움이 됩니다. ${LAST_SESSION_CLOSING}`
+      : `${l.text}${l.all ? '은' : '은'} ${pickStable(midLeads, actualSessionNumber + nameHash)}.`);
     /* 여러 영역을 함께 짚었으면 한 영역에만 맞는 가정 권고 대신 공통 권고 */
     const homePool = l.all ? null : poolHomeGuidance(domains, midDoms[0][1])[lowest[0].key];
     if (homePool) phrases.push(pickStable(homePool, actualSessionNumber + (lowest[0].key?.length || 0) + nameHash) + '.');
@@ -4913,7 +4917,7 @@ const buildSessionWeaknesses = (scores, sessionIdx, childName, domains = EVAL_DO
   let procIdx = 0;
   if (procPool && procPool.length > 0) {
     procIdx = Math.abs(actualSessionNumber + (topChallengeKey?.length || 0) + nameHash) % procPool.length;
-    phrases.push(`다음 회기에서는 ${procPool[procIdx]}.`);
+    phrases.push(isLast ? LAST_SESSION_CLOSING : `다음 회기에서는 ${procPool[procIdx]}.`);
   }
 
   const homePool = poolHomeGuidance(domains, topChallengeScore)[topChallengeKey];
@@ -4928,7 +4932,7 @@ const buildSessionWeaknesses = (scores, sessionIdx, childName, domains = EVAL_DO
      돌릴 수 있도록 돕는 톤. 임상 정확성은 위 단락들이 이미 담고 있으므로 안전. */
   const allScores = entries.map(([, v]) => Number(v));
   const avgScore = allScores.reduce((a, b) => a + b, 0) / allScores.length;
-  if (avgScore <= 1.5) {
+  if (avgScore <= 1.5 && !isLast) {
     const encouragements = [
       '이 시기의 작은 시도들이 다음 단계의 바탕이 되므로, 회기와 가정에서 같은 방식으로 도와주시면 큰 도움이 됩니다.',
       '지금은 결과보다 시도가 쌓이는 과정이 중요하므로, 작은 변화도 함께 살펴봐 주시기 바랍니다.',
@@ -9225,9 +9229,13 @@ function App() {
         if (v != null && v !== '') scores[d.key] = v;
       });
       const prevForThisSlot = prevForSlot(idx);
+      /* 마지막 회기: 예정 회기 수 이상이고, 이 평가서에서 점수가 있는 마지막 칸 */
+      const plannedN = (activeChild && activeChild.plannedSessions) || 36;
+      const laterScored = sessionNumbers.some((no, j) => j > idx && slotScores(sessionScores, j));
+      const isLastSlot = Number(sessionNumbers[idx]) >= plannedN && !laterScored;
       return {
         good: replaceChildPronoun(buildSessionStrengths(scores, idx, prevForThisSlot, nameForVariety, sessionNumbers[idx], getDomains(activeChild)), target),
-        improve: replaceChildPronoun(buildSessionWeaknesses(scores, idx, nameForVariety, getDomains(activeChild), prevForThisSlot, sessionNumbers[idx]), target),
+        improve: replaceChildPronoun(buildSessionWeaknesses(scores, idx, nameForVariety, getDomains(activeChild), prevForThisSlot, sessionNumbers[idx], isLastSlot), target),
       };
     });
     setSessionComments(newComments);
