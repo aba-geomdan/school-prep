@@ -3643,7 +3643,7 @@ const CLINICAL_DESCRIPTIONS = {
     ],
     low: [
       '대기 중 자리 이탈 또는 문제 행동이 자주 관찰되었습니다',
-      '즉시 강화가 제공될 때 대기가 가능하며, 자발 대기는 학습 중인 단계로 확인되었습니다',
+      '즉시 강화가 제공될 때 대기가 가능하며, 자발 대기는 아직 익혀 가는 단계입니다',
       '대기 행동을 익히는 단계로, 단계적 접근이 필요하였습니다',
       '짧은 대기부터 단계적으로 대기 행동을 익혀 가는 단계입니다',
       '즉시 강화와 함께 짧은 대기부터 익혀 가는 단계입니다',
@@ -3711,7 +3711,7 @@ const CLINICAL_DESCRIPTIONS_ADVANCED = {
     low: [
       '준비물 준비와 착석에 교사의 단계적 안내가 요구되었습니다',
       '다음 활동 예측에 기반한 자발 착석은 형성 중인 단계로 확인되었습니다',
-      '준비 완료 후 시간 관리에 교사의 구조화가 요구되었습니다',
+      '준비물 준비와 착석에 교사의 단계적 안내가 요구되었습니다',
       '일과표를 함께 보며 준비 순서를 익혀 가는 단계입니다',
       '준비 흐름을 스스로 이어 가는 힘을 길러 가는 단계입니다',
     ],
@@ -3720,7 +3720,7 @@ const CLINICAL_DESCRIPTIONS_ADVANCED = {
     high: [
       '도입-전개-마무리의 수업 구조를 인식하고 단계별 요구 행동을 촉구 없이 수행하였습니다',
       '활동 흐름을 스스로 파악하여 다음 단계를 예측·준비하는 능동적 참여가 관찰되었습니다',
-      '모둠 활동에서 발표·정리 등 능동적 역할을 자발적으로 수행하였습니다',
+      '모둠 활동 중 발표·정리 등 능동적 역할을 자발적으로 수행하였습니다',
     ],
     mid: [
       '수업 구조는 인식하나 단계가 바뀔 때 안내가 요구되었습니다',
@@ -3744,7 +3744,7 @@ const CLINICAL_DESCRIPTIONS_ADVANCED = {
     mid: [
       '다단계 지시 수행에 간헐적 안내가 요구되었습니다',
       '자발적 과제 시작은 안정적이나 중간 난이도 구간에서 촉구가 관찰되었습니다',
-      '지시 이해 후 자기 점검 단계는 학습 중인 단계로 확인되었습니다',
+      '지시 이해 후 자기 점검 단계는 아직 익혀 가는 단계입니다',
     ],
     low: [
       '다단계 지시 수행에 단계 분할과 시각적 구조화가 요구되었습니다',
@@ -3763,7 +3763,7 @@ const CLINICAL_DESCRIPTIONS_ADVANCED = {
     mid: [
       '문제 상황 인식은 가능하나 대처 행동 선택에 안내가 요구되었습니다',
       '익숙한 문제 상황에서는 대처를 시도하나 새로운 상황에는 안내가 필요하였습니다',
-      '대안적 해결 시도는 관찰되나 상황 판단의 일관성은 학습 중인 단계로 확인되었습니다',
+      '대안적 해결 시도는 관찰되나 상황 판단의 일관성은 아직 익혀 가는 단계입니다',
     ],
     low: [
       '문제 상황 인식에 교사의 구체적 단서 제시가 요구되었습니다',
@@ -3787,7 +3787,7 @@ const CLINICAL_DESCRIPTIONS_ADVANCED = {
     low: [
       '일정·계획이 바뀌면 적응하는 데 교사의 도움이 많이 요구되었습니다',
       '좌절·실수 후 재시도에 교사의 일관된 중재가 요구되었습니다',
-      '자기 진정 전략을 통한 독립 회복은 학습 중인 단계로 확인되었습니다',
+      '자기 진정 전략을 통한 독립 회복은 아직 익혀 가는 단계입니다',
       '변화에 유연하게 반응하는 힘을 길러 가는 단계입니다',
       '좌절 후 교사의 도움을 받아 회복하는 경험을 쌓아 가는 단계입니다',
     ],
@@ -3801,12 +3801,12 @@ const CLINICAL_DESCRIPTIONS_ADVANCED = {
     mid: [
       '대기 상황에서 대체행동 선택은 가능하나 대기가 길어지면 안내가 요구되었습니다',
       '짧은 대기는 대체로 견디나 시간 연장 시 촉구가 관찰되었습니다',
-      '대체행동의 자발적 선택은 학습 중인 단계로 확인되었습니다',
+      '대체행동의 자발적 선택은 아직 익혀 가는 단계입니다',
     ],
     low: [
       '대기 상황에서 적절한 대체행동 선택에 교사의 안내가 요구되었습니다',
       '지연 상황에서 부적응 행동을 대체하는 자발 시도는 형성 중인 단계로 확인되었습니다',
-      '대기 시간의 자기주도적 관리는 학습 중인 단계로 확인되었습니다',
+      '대기 시간의 자기주도적 관리는 아직 익혀 가는 단계입니다',
       '대기 시간에 할 수 있는 대체행동을 익혀 가는 단계입니다',
       '지연 상황을 교사와 함께 다루는 경험을 쌓아 가는 단계입니다',
     ],
@@ -3819,13 +3819,13 @@ const CLINICAL_DESCRIPTIONS_ADVANCED = {
     ],
     mid: [
       '또래 상호작용 개시는 가능하나 유지·조율에 부분적 안내가 요구되었습니다',
-      '요청 수용은 안정적이나 적절한 거절 표현은 학습 중인 단계로 확인되었습니다',
+      '요청 수용은 안정적이나 적절한 거절 표현은 아직 익혀 가는 단계입니다',
       '협동 과제에서 차례 지키기는 가능하나 상호작용 지속에 촉구가 관찰되었습니다',
     ],
     low: [
       '또래 상호작용 개시에 모델링과 촉구가 일관되게 요구되었습니다',
       '요청 수용·거절의 적절한 표현은 형성 중인 단계로 확인되었습니다',
-      '협동 과제에서 차례 지키기는 학습 중인 단계로 확인되었습니다',
+      '협동 과제에서의 차례 지키기는 아직 익혀 가는 단계입니다',
       '또래에게 먼저 다가가는 힘을 길러 가는 단계입니다',
       '또래와 주고받는 상호작용 경험을 쌓아 가는 단계입니다',
     ],
@@ -3838,13 +3838,13 @@ const CLINICAL_DESCRIPTIONS_ADVANCED = {
     ],
     mid: [
       '활동 전환은 수행하나 완료 후 자기 점검에는 안내가 요구되었습니다',
-      '과제 마무리는 대체로 가능하나 자기평가 단계는 학습 중인 단계로 확인되었습니다',
+      '과제 마무리는 대체로 가능하나 자기평가 단계는 아직 익혀 가는 단계입니다',
       '전환 실행은 가능하나 다음 활동 계획에 부분 촉구가 관찰되었습니다',
     ],
     low: [
       '활동 간 독립 전환에 교사의 안내가 요구되었습니다',
       '과제 완료 후 자기 점검·평가는 형성 중인 단계로 확인되었습니다',
-      '전환-마무리의 자기주도적 실행은 학습 중인 단계로 확인되었습니다',
+      '전환-마무리의 자기주도적 실행은 아직 익혀 가는 단계입니다',
       '스스로 마무리하고 점검하는 힘을 길러 가는 단계입니다',
       '활동을 안내에 따라 마무리하는 경험을 쌓아 가는 단계입니다',
     ],
@@ -3875,7 +3875,7 @@ const CLINICAL_NEXT_PROCEDURES = {
   selfRegulation: [
     '감정 카드(기쁨·슬픔·화남·불안)를 활용한 감정 이름 붙이기 학습을 진행할 예정입니다',
     '말·몸짓·그림 등 아동에게 맞는 요청 표현을 가르친 뒤 자발 사용을 강화할 예정입니다',
-    '진정 코너를 운영하여 자기 진정 방법을 연습할 공간을 마련할 예정입니다',
+    '진정 코너에서 자기 진정 방법을 연습할 예정입니다',
   ],
   waiting: [
     '시각 타이머와 함께 대기 시간을 단계적으로 늘려 갈 예정입니다',
@@ -3956,10 +3956,10 @@ const IEP_NEXT_GOALS = {
     ],
     mid: [
       '시각 단서 1회 제시 후 준비 4단계(가방-자리-도구-대기)를 추가 안내 없이 수행한다 (4회기 중 3회 이상)',
-      '교실에 들어온 뒤 추가 안내 없이 자리에 앉는다 (4회기 중 3회 이상)',
+      '교실에 들어온 뒤 1회 안내 후 자리에 앉는다 (4회기 중 3회 이상)',
     ],
     high: [
-      '시각 단서 없이 준비 4단계를 독립 수행하고, 동일 행동을 다른 활동 공간에서도 유지한다 (3회기 연속)',
+      '준비 4단계(가방-자리-도구-대기)를 다른 활동 공간과 새로운 사람 앞에서도 스스로 수행한다 (3회기 연속)',
       '처음 보는 교사나 새로운 활동 공간에서도 준비 단계를 독립 수행한다 (3회기 연속)',
     ],
   },
@@ -3969,8 +3969,8 @@ const IEP_NEXT_GOALS = {
       '선호 활동이 포함된 짧은 활동에 교사의 안내 후 참여를 시작한다 (4회기 중 3회 이상)',
     ],
     mid: [
-      '활동 시작 신호에 언어 촉구 없이 참여 행동을 시작한다 (4회기 중 3회 이상)',
-      '비선호 활동에서도 중도 이탈 없이 활동 끝까지 참여한다 (4회기 중 3회 이상)',
+      '활동 시작 신호와 1회 안내 후 참여 행동을 시작한다 (4회기 중 3회 이상)',
+      '비선호 활동에서도 1회 안내로 중도 이탈 없이 끝까지 참여한다 (4회기 중 3회 이상)',
     ],
     high: [
       '새로운 자료나 활동이 도입되어도 추가 안내 없이 참여를 유지한다 (3회기 연속)',
@@ -3983,8 +3983,8 @@ const IEP_NEXT_GOALS = {
       '익숙한 1단계 지시를 부분 신체 촉구 후 정확히 수행한다 (4회기 중 3회 이상)',
     ],
     mid: [
-      '1단계 지시를 추가 안내 없이 수행하며, 2단계 지시는 시각 카드 보조로 정확히 수행한다 (4회기 중 3회 이상)',
-      '새 지시도 반복 제시(2회 이내) 후 정확히 수행한다 (4회기 중 3회 이상)',
+      '1단계 지시를 1회 안내 후 수행하며, 2단계 지시는 시각 단서와 함께 제시하면 정확히 수행한다 (4회기 중 3회 이상)',
+      '새 지시도 1회 안내 후 정확히 수행한다 (4회기 중 3회 이상)',
     ],
     high: [
       '1~2단계 지시를 추가 안내 없이 정확히 수행하고, 동일 지시를 다른 교사·다른 환경에서도 유지한다 (3회기 연속)',
@@ -3997,7 +3997,7 @@ const IEP_NEXT_GOALS = {
       '규칙을 지키지 못했을 때 교사의 안내와 시범 후 수정 행동을 보인다 (4회기 중 3회 이상)',
     ],
     mid: [
-      '학급 규칙을 시각 카드 없이 자발 적용한다 (4회기 중 3회 이상)',
+      '학급 규칙을 1회 안내 후 지킨다 (4회기 중 3회 이상)',
       '처음 가는 장소나 새로운 활동에서도 규칙을 1회 안내 후 적용한다 (4회기 중 3회 이상)',
     ],
     high: [
@@ -4011,7 +4011,7 @@ const IEP_NEXT_GOALS = {
       '교사의 안내에 따라 자리 이탈 없이 활동을 유지한다 (4회기 중 3회 이상)',
     ],
     mid: [
-      '정서가 동요할 때 도움 요청이나 휴식 요청을 말·몸짓·그림 등으로 스스로 표현한다 (4회기 중 3회 이상)',
+      '정서가 동요할 때 1회 안내 후 도움 요청이나 휴식 요청을 말·몸짓·그림 등으로 표현한다 (4회기 중 3회 이상)',
       '좌절 상황 후 1회 안내로 진정하고 활동을 다시 시작한다 (4회기 중 3회 이상)',
     ],
     high: [
@@ -4022,14 +4022,14 @@ const IEP_NEXT_GOALS = {
   waiting: {
     low: [
       '시각 타이머가 제시된 짧은 대기 상황에서 자리를 지키며 기다린다 (4회기 중 3회 이상)',
-      '대기 중 할 수 있는 행동(손 무릎에 두기·책 보기)을 1회 안내 후 수행한다 (회기당 1회 이상)',
+      '교사의 시범과 촉구를 받아 대기 중 할 수 있는 행동(손 무릎에 두기·책 보기)을 수행한다 (회기당 1회 이상)',
     ],
     mid: [
-      '시각 타이머가 제시된 대기 상황에서 추가 안내 없이 끝까지 기다린다 (4회기 중 3회 이상)',
-      '대기 시간이 조금씩 길어져도 자리 이탈 없이 기다린다 (4회기 중 3회 이상)',
+      '대기 상황에서 1회 안내 후 자리를 지키며 끝까지 기다린다 (4회기 중 3회 이상)',
+      '대기 시간이 조금씩 길어져도 1회 안내로 자리 이탈 없이 기다린다 (4회기 중 3회 이상)',
     ],
     high: [
-      '시각 타이머 없이도 다양한 상황(줄서기·발표 순서·간식 기다리기 등)에서 차례를 기다린다 (3회기 연속)',
+      '다양한 상황(줄서기·발표 순서·간식 기다리기 등)에서 추가 안내 없이 차례를 기다린다 (3회기 연속)',
       '또래와의 활동에서 자발적으로 차례를 양보하거나 기다린다 (회기당 1회 이상)',
     ],
   },
@@ -4039,8 +4039,8 @@ const IEP_NEXT_GOALS = {
       '교사가 먼저 인사하면 말·몸짓·그림 중 편한 방법으로 따라 인사한다 (4회기 중 3회 이상)',
     ],
     mid: [
-      '익숙한 대상(교사·또래)에게 시각 촉구 없이 먼저 인사한다 (4회기 중 3회 이상)',
-      '교사뿐 아니라 또래에게도 촉구 없이 먼저 인사한다 (4회기 중 3회 이상)',
+      '익숙한 대상(교사·또래)에게 1회 안내 후 인사한다 (4회기 중 3회 이상)',
+      '교사가 먼저 인사하면 1회 안내 후 교사·또래에게 인사한다 (4회기 중 3회 이상)',
     ],
     high: [
       '교사·또래·새로운 대상 모두에게 말·몸짓·그림 등 자신에게 맞는 방법으로 먼저 인사한다 (3회기 연속)',
@@ -4053,7 +4053,7 @@ const IEP_NEXT_GOALS = {
       '교사의 안내를 받아 활동의 마지막 단계까지 수행한다 (회기당 1회 이상)',
     ],
     mid: [
-      '시각 일과표 제시 시 활동을 끝까지 자발 완수한다 (4회기 중 3회 이상)',
+      '활동을 1회 안내 후 끝까지 마무리한다 (4회기 중 3회 이상)',
       '난이도가 조금 높은 활동도 1회 안내 후 끝까지 마무리한다 (4회기 중 3회 이상)',
     ],
     high: [
@@ -4073,11 +4073,11 @@ const IEP_NEXT_GOALS_ADVANCED = {
       '다음 활동을 1회 안내받은 뒤 착석한다 (4회기 중 3회 이상)',
     ],
     mid: [
-      '시각 일과표를 스스로 참조하여 준비물을 독립 준비하고, 다음 활동을 예측해 스스로 착석한다 (4회기 중 3회 이상)',
-      '준비 완료 후 남은 시간을 스스로 관리(자료 점검·다음 활동 준비)한다 (4회기 중 3회 이상)',
+      '시각 일과표를 1회 확인한 뒤 준비물을 준비하고, 다음 활동을 안내받으면 스스로 착석한다 (4회기 중 3회 이상)',
+      '준비를 마친 뒤 1회 안내로 남은 시간에 자료를 점검하고 다음 활동을 준비한다 (4회기 중 3회 이상)',
     ],
     high: [
-      '일과표 참조 없이 준비물 준비·예측 착석·시간 관리를 독립 수행하고, 다른 활동 공간에서도 유지한다 (3회기 연속)',
+      '추가 안내 없이 준비물 준비·예측 착석·시간 관리를 독립 수행하고, 다른 활동 공간에서도 유지한다 (3회기 연속)',
       '새로운 장소나 처음 보는 교사 앞에서도 준비를 독립 수행한다 (3회기 연속)',
     ],
   },
@@ -4087,8 +4087,8 @@ const IEP_NEXT_GOALS_ADVANCED = {
       '모둠 활동에서 배정된 역할을 1회 안내 후 수행한다 (회기당 1회 이상)',
     ],
     mid: [
-      '수업 구조를 인식하여 단계별 요구 행동을 촉구 없이 수행하고 활동에 지속 참여한다 (4회기 중 3회 이상)',
-      '모둠 내 능동적 역할(발표·정리)을 자발 수행한다 (4회기 중 3회 이상)',
+      '수업 단계가 바뀔 때 1회 안내 후 단계별 요구 행동을 수행하고 활동에 지속 참여한다 (4회기 중 3회 이상)',
+      '모둠 활동에서 맡은 역할(발표·정리 등)을 1회 안내 후 수행한다 (4회기 중 3회 이상)',
     ],
     high: [
       '수업 흐름을 스스로 예측·준비하며 능동 참여하고, 새 활동 구조에서도 추가 안내 없이 참여를 유지한다 (3회기 연속)',
@@ -4101,8 +4101,8 @@ const IEP_NEXT_GOALS_ADVANCED = {
       '과제를 부분 촉구 후 시작한다 (4회기 중 3회 이상)',
     ],
     mid: [
-      '다단계 지시를 이해하여 과제를 자발 시작·수행하고, 설정 시간 내 최소 촉구로 완료한다 (4회기 중 3회 이상)',
-      '과제 중 막힘 지점에서 스스로 방법을 조정하거나 도움을 요청한다 (4회기 중 3회 이상)',
+      '다단계 지시를 1회 안내 후 시작하고, 정해진 시간 안에 최소 촉구로 완료한다 (4회기 중 3회 이상)',
+      '과제 중 막히면 1회 안내 후 도움을 요청하거나 방법을 바꿔 시도한다 (4회기 중 3회 이상)',
     ],
     high: [
       '다단계 과제를 자발 시작·수행·완료하고 결과를 스스로 점검하며, 다른 과제 유형에서도 유지한다 (3회기 연속)',
@@ -4115,7 +4115,7 @@ const IEP_NEXT_GOALS_ADVANCED = {
       '도움 요청 등 대안적 해결을 1회 안내 후 시도한다 (회기당 1회 이상)',
     ],
     mid: [
-      '문제 상황을 스스로 인식하고 적절한 대처 언어·행동을 자발 선택한다 (4회기 중 3회 이상)',
+      '문제 상황에서 1회 안내 후 적절한 대처 언어·행동을 선택한다 (4회기 중 3회 이상)',
       '익숙하지 않은 문제 상황에서도 대안적 해결(도움 요청 등)을 1회 안내 후 시도한다 (4회기 중 3회 이상)',
     ],
     high: [
@@ -4129,7 +4129,7 @@ const IEP_NEXT_GOALS_ADVANCED = {
       '좌절·실수 후 1회 안내로 재시도한다 (회기당 1회 이상)',
     ],
     mid: [
-      '일정·계획 변경에 유연하게 반응하고, 좌절 상황에서 자기 진정 후 자발 재시도한다 (4회기 중 3회 이상)',
+      '일정·계획이 바뀌거나 좌절 상황이 생기면 1회 안내 후 진정하고 다시 시도한다 (4회기 중 3회 이상)',
       '실수 상황에서 1회 안내 후 정서를 가라앉히고 활동으로 돌아온다 (4회기 중 3회 이상)',
     ],
     high: [
@@ -4143,8 +4143,8 @@ const IEP_NEXT_GOALS_ADVANCED = {
       '짧은 대기를 부적응 행동 없이 부분 촉구로 유지한다 (회기당 1회 이상)',
     ],
     mid: [
-      '대기·지연 상황에서 적절한 대체행동을 자발 선택·실행한다 (4회기 중 3회 이상)',
-      '대기 상황에 맞는 대체행동을 스스로 골라 끝까지 이어 간다 (4회기 중 3회 이상)',
+      '대기·지연 상황에서 1회 안내 후 대체행동을 선택해 실행한다 (4회기 중 3회 이상)',
+      '대기 상황에서 고른 대체행동을 1회 안내로 끝까지 이어 간다 (4회기 중 3회 이상)',
     ],
     high: [
       '긴 대기 상황에서도 대체행동을 자발 유지하고, 다양한 상황(줄서기·발표 순서 등)에 적용한다 (3회기 연속)',
@@ -4157,7 +4157,7 @@ const IEP_NEXT_GOALS_ADVANCED = {
       '촉구를 받은 뒤 또래에게 짧은 상호작용을 시작한다 (회기당 1회 이상)',
     ],
     mid: [
-      '또래 상호작용을 자발 개시하고, 요청을 상황에 맞게 수용·거절한다 (4회기 중 3회 이상)',
+      '1회 안내 후 또래와의 상호작용을 시작하고, 요청을 상황에 맞게 수용·거절한다 (4회기 중 3회 이상)',
       '협동 과제에서 차례를 지키며 상호작용을 유지한다 (4회기 중 3회 이상)',
     ],
     high: [
@@ -4171,8 +4171,8 @@ const IEP_NEXT_GOALS_ADVANCED = {
       '과제 완료 후 교사와 함께 결과를 확인한다 (회기당 1회 이상)',
     ],
     mid: [
-      '활동 간 전환을 독립 수행하고, 과제 완료 후 자기 점검·평가를 자발 수행한다 (4회기 중 3회 이상)',
-      '자기평가 결과에 따라 필요 시 스스로 보완한다 (4회기 중 3회 이상)',
+      '활동 간 전환을 1회 안내 후 수행하고, 과제 완료 후 자기 점검을 시도한다 (4회기 중 3회 이상)',
+      '자기 점검 결과 고칠 부분을 1회 안내 후 보완한다 (4회기 중 3회 이상)',
     ],
     high: [
       '전환-마무리-자기평가를 독립 수행하고, 다음 활동을 스스로 계획·실행한다 (3회기 연속)',
@@ -4289,7 +4289,7 @@ const CLINICAL_HOME_GUIDANCE = {
     '일상 상황에서 아주 짧은 대기부터 시작해 기다리는 시간을 조금씩 늘려 주실 것을 권고드립니다',
     '기다릴 때 할 수 있는 행동을 함께 정해 차분히 보내는 경험을 늘려 주실 것을 권고드립니다',
     '시각 타이머(모래시계·앱)를 활용해 기다림이 끝나는 시점을 예측할 수 있게 해 주실 것을 권고드립니다',
-    '식사 준비·외출 준비 등 자연스러운 대기 상황에서 그림책 보기처럼 짧은 활동으로 시간을 보내는 습관을 기르실 것을 권고드립니다',
+    '식사 준비·외출 준비 등 자연스러운 대기 상황에서 그림책 보기처럼 짧은 활동으로 시간을 보내는 습관이 자리 잡도록 도와주실 것을 권고드립니다',
   ],
   spontaneousGreeting: [
     '가족이 먼저 따뜻하게 인사하는 모습을 일상에서 꾸준히 보여 주실 것을 권고드립니다',
@@ -4307,9 +4307,9 @@ const CLINICAL_HOME_GUIDANCE = {
 /* 기초반 가정 안내 — 2.5점 미만(도움이 많이 필요한) 영역용. 어른이 함께하며 작은 한 걸음을 칭찬하는 방향 */
 const CLINICAL_HOME_GUIDANCE_LOW = {
   preparation: [
-    '준비 순서를 그림으로 만들어 부모님과 함께 하나씩 확인하며 진행하실 것을 권고드립니다',
+    '준비 순서를 그림으로 만들어 아동과 함께 하나씩 확인하며 진행하실 것을 권고드립니다',
     '가방 정리 같은 준비 행동을 처음에는 함께하시고, 한 가지라도 먼저 해내면 바로 칭찬해 주실 것을 권고드립니다',
-    '매일 같은 순서로 준비하며, 부모님이 다음 순서를 먼저 짧게 알려 주실 것을 권고드립니다',
+    '매일 같은 순서로 준비하며, 다음 순서를 먼저 짧게 알려 주실 것을 권고드립니다',
   ],
   participation: [
     '짧고 끝이 분명한 놀이부터 함께하시며 참여한 순간을 바로 칭찬해 주실 것을 권고드립니다',
@@ -4342,7 +4342,7 @@ const CLINICAL_HOME_GUIDANCE_LOW = {
     '인사할 상황에서 부모님이 아동과 함께 인사하며 시범을 보여 주실 것을 권고드립니다',
   ],
   taskCompletion: [
-    '끝이 분명한 짧은 활동부터 함께 끝까지 마치고 「다 했다」를 함께 표시하실 것을 권고드립니다',
+    '끝이 분명한 짧은 활동부터 함께 끝까지 마치고 「다 했다」를 표시하실 것을 권고드립니다',
     '활동의 마지막 단계를 아동이 해내도록 남겨 두고, 해내면 바로 칭찬해 주실 것을 권고드립니다',
     '해야 할 순서를 그림으로 보여 주시고 마친 단계를 함께 표시하실 것을 권고드립니다',
   ],
@@ -4405,7 +4405,7 @@ const CLINICAL_HOME_GUIDANCE_ADVANCED = {
    '스스로 맡기기'보다 '처음에는 함께 → 익숙해지면 조금씩 맡기기' 순서로 안내한다. */
 const CLINICAL_HOME_GUIDANCE_ADVANCED_LOW = {
   preparation: [
-    '준비물 목록을 그림으로 만들어 부모님과 함께 하나씩 확인하는 루틴부터 시작하실 것을 권고드립니다',
+    '준비물 목록을 그림으로 만들어 아동과 함께 하나씩 확인하는 루틴부터 시작하실 것을 권고드립니다',
     '등원 전 준비를 함께 하시되, 아동이 한 가지라도 먼저 챙기면 바로 구체적으로 칭찬해 주실 것을 권고드립니다',
     '준비 순서를 사진으로 만들어 잘 보이는 곳에 두고 함께 보며 진행하실 것을 권고드립니다',
   ],
@@ -4566,7 +4566,7 @@ const DOMAIN_RECOMMENDATIONS = {
   selfRegulation: [
     '예상치 못한 변경은 미리 알려 주고, 감정이 올라올 때 잠시 진정할 수 있는 공간(교실 모서리 등)을 마련해 주면 도움이 됩니다',
     '속상할 때 쓸 수 있는 표현(말·몸짓·그림)을 미리 정해 두고, 그 표현을 쓰면 바로 반응해 주면 도움이 됩니다',
-    '감정이 올라왔을 때는 어른이 곁에서 진정을 도운 뒤 짧게 감정을 이름 붙여 주는 순서가 도움이 됩니다',
+    '감정이 올라왔을 때는 어른이 곁에서 진정을 도운 뒤 짧게 감정에 이름을 붙여 주는 순서가 도움이 됩니다',
   ],
   waiting: [
     '대기 상황에서는 시각 타이머(짧은 시간부터)와 함께 손에 쥘 작은 물건(연필·작은 책)을 주면 기다리는 데 도움이 됩니다',
@@ -4576,7 +4576,7 @@ const DOMAIN_RECOMMENDATIONS = {
   spontaneousGreeting: [
     '아직 어른의 시범이 필요한 단계이므로, 만날 때마다 어른이 먼저 짧고 같은 말로 인사를 건네고 손 흔들기 같은 작은 반응도 바로 칭찬해 주면 도움이 됩니다',
     '말·몸짓·그림 등 아동에게 편한 인사 방법을 정해 두고, 그 방법으로 인사했을 때도 똑같이 인정해 주면 도움이 됩니다',
-    '학기 초 담임교사·등하원 도우미 등 자주 만나는 분들과 짧은 인사 루틴을 미리 약속해 두면 도움이 됩니다',
+    '학기 초 담임교사·등하교 도우미 등 자주 만나는 분들과 짧은 인사 루틴을 미리 약속해 두면 도움이 됩니다',
   ],
   taskCompletion: [
     '시작과 끝이 분명한 짧은 활동부터 끝까지 마치는 경험을 쌓고, 마지막 단계를 마친 직후 바로 칭찬해 주면 도움이 됩니다',
@@ -4658,175 +4658,260 @@ const getPhaseLeadIn = (sessionNumber, hasGrowth) => {
     : `${sessionNumber}회기에서는 `;
 };
 
+/* 회기 점수 비교 — 바로 앞 회기(같은 평가서의 앞 칸, 첫 칸이면 지난 평가서의 마지막 회기)의 실제 점수와 비교.
+   회기 점수는 정수라 1점 이상 차이만 '올랐다/낮아졌다'로 적음 */
+const sessionScoreChanges = (scores, prevScores, domains) => {
+  const ups = [];
+  const downs = [];
+  if (!prevScores) return { ups, downs };
+  domains.forEach((d) => {
+    const c = scores[d.key];
+    const pv = prevScores[d.key];
+    if (c == null || c === '' || pv == null || pv === '') return;
+    const curr = Number(c);
+    const prev = Number(pv);
+    if (isNaN(curr) || isNaN(prev)) return;
+    const diff = curr - prev;
+    if (diff >= 1) ups.push({ dom: d, diff, prev, curr });
+    else if (diff <= -1) downs.push({ dom: d, diff, prev, curr });
+  });
+  ups.sort((x, y) => y.diff - x.diff);
+  downs.sort((x, y) => x.diff - y.diff);
+  return { ups, downs };
+};
+const fmtScore = (v) => (Number.isInteger(Number(v)) ? `${Number(v)}점` : `${Number(v).toFixed(1)}점`);
+/* 영역 이름 목록 — 표준 순서로, 거의 전부면 'A 영역을 제외한 전 영역' */
+const sessionDomList = (items, totalCount, domains) => {
+  const order = (k) => domains.findIndex((d) => d.key === k);
+  const sorted = [...items].sort((x, y) => order(x.key) - order(y.key));
+  if (sorted.length === totalCount) return { text: '전 영역', all: true };
+  if (sorted.length >= 5 && totalCount - sorted.length <= 2) {
+    const rest = domains.filter((d) => !sorted.some((x) => x.key === d.key));
+    return { text: `${rest.map((d) => `'${d.label}'`).join(', ')} 영역을 제외한 전 영역`, all: true, restKeys: rest.map((d) => d.key) };
+  }
+  return { text: `${sorted.map((d) => `'${d.label}'`).join(', ')} 영역`, all: false };
+};
+/* 점수 변화 문장: 같은 점수로 바뀐 영역끼리 묶어 모두 적음 (예전엔 첫 영역 하나만 나왔음) */
+const sessionChangeSentence = (list, word, totalCount, domains) => {
+  if (list.length === 0) return '';
+  const groups = [];
+  list.forEach((c) => {
+    const g = groups.find((x) => x.prev === c.prev && x.curr === c.curr);
+    if (g) g.items.push(c.dom); else groups.push({ prev: c.prev, curr: c.curr, items: [c.dom] });
+  });
+  /* 제외 영역이 실제 점수 기록이 없는 영역일 수 있어, '전 영역' 판단은 점수가 기록된 영역 수 기준 */
+  if (groups.length === 1) {
+    const l = sessionDomList(groups[0].items, totalCount, domains);
+    return `직전 회기 대비 ${l.text} 점수가 ${fmtScore(groups[0].prev)}에서 ${fmtScore(groups[0].curr)}으로 ${word}`;
+  }
+  const sameSize = groups.every((g) => Math.abs(g.curr - g.prev) === Math.abs(groups[0].curr - groups[0].prev));
+  if (sameSize && groups.length <= 3) {
+    /* 바뀐 폭이 같으면 '가장 크게'라고 하지 않고 각각 적음 */
+    const parts = groups.map((g) => `${sessionDomList(g.items, totalCount, domains).text} 점수가 ${fmtScore(g.prev)}에서 ${fmtScore(g.curr)}으로`);
+    return `직전 회기 대비 ${parts.join(', ')} ${word}`;
+  }
+  /* 바뀐 폭이 여러 가지면 문장이 길어지지 않게: 바뀐 영역 전체 + 가장 크게 바뀐 영역 */
+  const allItems = groups.flatMap((g) => g.items);
+  const lAll = sessionDomList(allItems, totalCount, domains);
+  const big = [...groups].sort((x, y) => Math.abs(y.curr - y.prev) - Math.abs(x.curr - x.prev))[0];
+  const lBig = sessionDomList(big.items, totalCount, domains);
+  const stem = word.replace(/습니다\.$/, '');
+  if (lBig.all) return `직전 회기 대비 ${lAll.text} 점수가 ${stem}으며, ${lBig.text}은 ${fmtScore(big.prev)}에서 ${fmtScore(big.curr)}으로 ${word}`;
+  return `직전 회기 대비 ${lAll.text} 점수가 ${stem}으며, 특히 ${lBig.text}은 ${fmtScore(big.prev)}에서 ${fmtScore(big.curr)}으로 가장 크게 ${word}`;
+};
+
+/* 같은 점수인 영역이 여럿이면 회기마다 돌아가며 고름 (예전엔 늘 준비·참여만 나왔음) */
+const rotateTied = (sortedEntries, rot) => {
+  if (sortedEntries.length === 0) return sortedEntries;
+  const out = [];
+  let i = 0;
+  while (i < sortedEntries.length) {
+    let j = i;
+    while (j < sortedEntries.length && Number(sortedEntries[j][1]) === Number(sortedEntries[i][1])) j++;
+    const grp = sortedEntries.slice(i, j);
+    const k = grp.length > 1 ? (Math.abs(rot) % grp.length) : 0;
+    out.push(...grp.slice(k), ...grp.slice(0, k));
+    i = j;
+  }
+  return out;
+};
+
 const buildSessionStrengths = (scores, sessionIdx, prevScores, childName, sessionNumber, domains = EVAL_DOMAINS) => {
   const entries = Object.entries(scores).filter(([_, v]) => v != null && v !== '');
   if (entries.length === 0) return '';
-  const sorted = entries.sort(([, a], [, b]) => Number(b) - Number(a));
-  /* 4점 이상만 잘한점 - mid band(3점) 표현이 "특히/이와 함께" conjunction과 어색하게 묶이는 문제 해결 */
+  const nameHash = strHash(childName);
+  const actualSessionNumber = sessionNumber || (sessionIdx + 1);
+  const sorted = rotateTied(entries.sort(([, a], [, b]) => Number(b) - Number(a)), actualSessionNumber + nameHash);
+  /* 4점 이상만 '특히…' 문장으로 짚음 */
   const top = sorted.slice(0, 3).filter(([, v]) => Number(v) >= 4);
 
   const allScores = entries.map(([, v]) => Number(v));
   const avgScore = allScores.reduce((a, b) => a + b, 0) / allScores.length;
-  const actualSessionNumber = sessionNumber || (sessionIdx + 1);
-
-  /* 4점 이상 영역이 없는 경우 별도 처리 */
-  if (top.length === 0) {
-    /* hasMid: 3점 이상 영역이 하나라도 있는 경우 (3.0/3.5점 등 mid-band 모두 커버) */
-    const hasMid = entries.some(([, v]) => Number(v) >= 3);
-    if (!hasMid) return ''; /* 모두 1, 2점 → 잘한점 비움, 보완점에서 다룸 */
-    /* 3점 이상이 있되 4점은 없음 → 중간 수준 간단 묘사 */
-    /* 1회기 leadIn은 "도입 시점으로,"로 끝나므로 "으로" 반복 피하려 "이며"로 연결 */
-    const leadInMid = actualSessionNumber === 1
-      ? '본 회기(도입 시점)에서는 '
-      : getPhaseLeadIn(actualSessionNumber, false);
-    const midTop = entries.filter(([, v]) => Number(v) >= 3).map(([k]) => domains.find((d) => d.key === k)).filter(Boolean);
-    const allAtLeastMid = entries.every(([, v]) => Number(v) >= 2.5);
-    if (allAtLeastMid) return `${leadInMid}전반 평균 ${avgScore.toFixed(1)}점으로, 전 영역에서 안내가 있으면 수행하는 모습이 확인되었습니다.`;
-    return `${leadInMid}전반 평균 ${avgScore.toFixed(1)}점이며, ${listLabels(midTop, 3)} 영역에서 안내가 있으면 수행하는 모습이 확인되었습니다.`;
-  }
-
-  /* 아동별 다양성 확보: 이름 해시를 seed에 섞으면 동일 점수 패턴에서도 아동마다 다른 표현 선택.
-     결정적이라 새로고침해도 같은 결과 유지. */
-  const nameHash = strHash(childName);
-
-  const growthChanges = [];
-  if (prevScores && Object.keys(prevScores).length > 0) {
-    domains.forEach((d) => {
-      const curr = Number(scores[d.key]);
-      const prev = Number(prevScores[d.key]);
-      if (isNaN(curr) || isNaN(prev)) return;
-      const diff = curr - prev;
-      if (diff < 0.5) return;
-      growthChanges.push({ dom: d, diff, prev, curr });
-    });
-    growthChanges.sort((a, b) => b.diff - a.diff);
-  }
+  const { ups } = sessionScoreChanges(scores, prevScores, domains);
 
   const phrases = [];
-
-  const topKey = top[0][0];
-  const topScore = top[0][1];
-  const topDom = domains.find((d) => d.key === topKey);
-  const topBand = getScoreBand(topScore);
-  const topPool = poolDescriptions(domains)[topKey]?.[topBand];
-  const topSeed = (sessionIdx * 7) + (topKey?.length || 0) + nameHash;
-  const topDesc = topPool ? pickStable(topPool, topSeed) : '';
-
-  const leadIn = getPhaseLeadIn(actualSessionNumber, growthChanges.length > 0);
-  let openingSentence;
-  if (actualSessionNumber === 1) {
-    openingSentence = `${leadIn}전반 평균 ${avgScore.toFixed(1)}점의 수행을 보였습니다.`;
+  /* 첫 문장(회기 번호·평균)은 점수와 관계없이 항상 씀 — 예전엔 점수가 모두 낮으면 빠져 몇 회기 이야기인지 알 수 없었음 */
+  const leadInBase = actualSessionNumber === 1 ? '본 회기는 도입 시점으로, ' : getPhaseLeadIn(actualSessionNumber, ups.length > 0 && top.length > 0);
+  const upShare = ups.length === entries.length ? '전 영역' : (ups.length >= 5 && entries.length - ups.length <= 2) ? '대부분의 영역' : '일부 영역';
+  const leadIn = leadInBase.replace('일부 영역에서 향상이', `${upShare}에서 향상이`);
+  if (top.length === 0) {
+    const midTop = entries.filter(([, v]) => Number(v) >= 2.5).map(([k]) => domains.find((d) => d.key === k)).filter(Boolean);
+    const allAtLeastMid = entries.every(([, v]) => Number(v) >= 2.5);
+    if (allAtLeastMid) {
+      phrases.push(`${leadIn}전반 평균 ${avgScore.toFixed(1)}점으로, ${entries.length === domains.length ? '전 영역' : '점수가 기록된 모든 영역'}에서 안내가 있으면 수행하는 모습이 확인되었습니다.`);
+    } else if (midTop.length > 0) {
+      phrases.push(`${leadIn}전반 평균 ${avgScore.toFixed(1)}점이며, ${midTop.map((d) => `'${d.label}'`).join(', ')} 영역에서 안내가 있으면 수행하는 모습이 확인되었습니다.`);
+    } else {
+      phrases.push(`${leadIn}전반 평균 ${avgScore.toFixed(1)}점이 확인되었습니다.`);
+    }
   } else {
-    openingSentence = `${leadIn}전반 평균 ${avgScore.toFixed(1)}점이 확인되었습니다.`;
-  }
-  phrases.push(openingSentence);
-
-  if (topDom && topDesc) {
-    phrases.push(`특히 '${topDom.label}' 영역에서 ${topDesc}.`);
-  }
-
-  if (top.length >= 2) {
-    const secondKey = top[1][0];
-    const secondScore = top[1][1];
-    const secondDom = domains.find((d) => d.key === secondKey);
-    const secondBand = getScoreBand(secondScore);
-    const secondPool = poolDescriptions(domains)[secondKey]?.[secondBand];
-    const secondSeed = (sessionIdx * 11) + (secondKey?.length || 0) + nameHash;
-    const secondDesc = secondPool ? pickStable(secondPool, secondSeed) : '';
-    if (secondDom && secondDesc) {
-      const connectors = ['또한 ', '아울러 ', '이와 함께 ', '더불어 '];
-      const conn = pickStable(connectors, sessionIdx + nameHash);
-      phrases.push(`${conn}'${secondDom.label}' 영역에서도 ${secondDesc}.`);
+    phrases.push(actualSessionNumber === 1
+      ? `${leadIn}전반 평균 ${avgScore.toFixed(1)}점의 수행을 보였습니다.`
+      : `${leadIn}전반 평균 ${avgScore.toFixed(1)}점이 확인되었습니다.`);
+    const topKey = top[0][0];
+    const topDom = domains.find((d) => d.key === topKey);
+    const topPool = poolDescriptions(domains)[topKey]?.[getScoreBand(top[0][1])];
+    const topDesc = topPool ? pickStable(topPool, actualSessionNumber + (topKey?.length || 0) + nameHash) : '';
+    if (topDom && topDesc) phrases.push(`특히 '${topDom.label}' 영역에서 ${topDesc}.`);
+    if (top.length >= 2) {
+      const secondKey = top[1][0];
+      const secondDom = domains.find((d) => d.key === secondKey);
+      const secondPool = poolDescriptions(domains)[secondKey]?.[getScoreBand(top[1][1])];
+      const secondDesc = secondPool ? pickStable(secondPool, actualSessionNumber * 2 + (secondKey?.length || 0) + nameHash) : '';
+      if (secondDom && secondDesc) {
+        const connectors = ['또한 ', '아울러 ', '이와 함께 ', '더불어 '];
+        const conn = pickStable(connectors, actualSessionNumber + nameHash);
+        phrases.push(`${conn}'${secondDom.label}' 영역에서도 ${secondDesc}.`);
+      }
     }
   }
 
-  if (growthChanges.length > 0) {
-    const best = growthChanges[0];
-    const intensifier = best.diff >= 1.0 ? '현저한 향상' : '뚜렷한 향상';
-    phrases.push(`직전 회기 대비 '${best.dom.label}' 영역 점수가 ${best.prev.toFixed(1)}점에서 ${best.curr.toFixed(1)}점으로 올라 ${intensifier}이 확인되었습니다.`);
+  if (ups.length > 0) {
+    phrases.push(`${sessionChangeSentence(ups, '올랐습니다.', entries.length, domains.filter((d) => entries.some(([k]) => k === d.key)))}`);
   }
 
   return phrases.join(' ');
 };
 
-const buildSessionWeaknesses = (scores, sessionIdx, childName, domains = EVAL_DOMAINS) => {
+/* 다음 회기 절차와 가정 권고 짝 — 절차 n번에 맞는(겹치지 않으면서 이어지는) 가정 권고 번호.
+   보완할 점은 2점 이하 영역에서만 나오므로 가정 권고는 늘 LOW 풀에서 고름 */
+const HOME_PAIR_BASIC = {
+  preparation: [0, 1, 2], participation: [0, 1, 2], followInstruction: [1, 0, 2], ruleUnderstanding: [0, 2, 1],
+  selfRegulation: [0, 2, 1], waiting: [0, 1, 2], spontaneousGreeting: [2, 0, 1], taskCompletion: [2, 1, 0],
+};
+const HOME_PAIR_ADVANCED = {
+  preparation: [1, 0, 2], participation: [0, 1, 0], followInstruction: [2, 0, 1], ruleUnderstanding: [2, 0, 1],
+  selfRegulation: [1, 2, 0], waiting: [1, 2, 0], spontaneousGreeting: [0, 1, 2], taskCompletion: [0, 1, 2],
+};
+/* '…단계입니다'로 끝나는 설명은 '영역은'과 이어야 문장이 맞음 ('영역에서 … 단계입니다'는 어색) */
+const domainParticle = (desc, also) => (/[은는] 아직/.test(desc) ? (also ? '에서도' : '에서') : /단계입니다$|단계$/.test(desc) ? (also ? '도' : '은') : /에서/.test(desc.slice(0, 14)) ? (also ? '도' : '에서는') : (also ? '에서도' : '에서'));
+
+const buildSessionWeaknesses = (scores, sessionIdx, childName, domains = EVAL_DOMAINS, prevScores = null, sessionNumber = null) => {
   const entries = Object.entries(scores).filter(([_, v]) => v != null && v !== '');
   if (entries.length === 0) return '';
-  const sorted = entries.sort(([, a], [, b]) => Number(a) - Number(b));
+  const nameHash = strHash(childName);
+  const actualSessionNumber = sessionNumber || (sessionIdx + 1);
+  const sorted = rotateTied(entries.sort(([, a], [, b]) => Number(a) - Number(b)), actualSessionNumber + nameHash);
   /* 2점 이하만 보완점 대상 — 3점(중립)은 잘한점·보완점 어디도 아니라 중복 방지 */
   const bottom = sorted.slice(0, 3).filter(([, v]) => Number(v) <= 2);
-
-  const nameHash = strHash(childName);
   const phrases = [];
+  const { downs } = sessionScoreChanges(scores, prevScores, domains);
+  const scoredDomains = domains.filter((d) => entries.some(([k]) => k === d.key));
+  const downTxt = downs.length > 0 ? sessionChangeSentence(downs, '낮아졌습니다.', entries.length, scoredDomains) : '';
+  const downKeys = new Set(downs.map((c) => c.dom.key));
 
   if (bottom.length === 0) {
-    /* allHigh: 4점 이상 (3.5점은 중간이라 mid 케이스로 보냄) */
     const allHigh = entries.every(([, v]) => Number(v) >= 4);
+    if (downTxt) phrases.push(downTxt);
     if (allHigh) {
-      phrases.push('전 영역에서 안정적 수행이 확인되어 일반화 단계 진입이 가능한 시점입니다.');
-      phrases.push('다음 회기에서는 또래와 함께하는 상황 등 다양한 맥락에서 행동이 유지되는지 확인할 예정입니다.');
+      /* 한 회기 점수만으로 '일반화 단계 진입'을 단정하지 않음 */
+      phrases.push('다음 회기에서는 또래와 함께하는 상황 등 다양한 맥락에서도 같은 수행이 유지되는지 확인할 예정입니다.');
       phrases.push('가정에서도 익힌 행동을 자연스럽게 써 볼 기회를 마련하시고, 수행했을 때 구체적으로 칭찬해 주실 것을 권고드립니다.');
       return phrases.join(' ');
     }
-    /* 모두 mid 수준 (3점 정체 등) — 잘한점·보완점 어느 쪽에도 들어가지 않지만
-       다음 회기 절차·가정 권고는 필요. 점진 강화 방향 안내 */
-    const allMid = entries.every(([, v]) => Number(v) >= 2.5 && Number(v) <= 3.5);
+    /* 3점대가 섞인 회기 — 안내가 있으면 수행하는 영역을 짚고 다음 회기 계획·가정 권고를 씀 (예전엔 통째로 빠졌음) */
+    const midDoms = rotateTied([...entries].filter(([, v]) => Number(v) < 4).sort(([, a], [, b]) => Number(a) - Number(b)), actualSessionNumber + nameHash);
+    const allMid = midDoms.length === entries.length;
+    /* 같은 달 회기끼리 같은 문장이 반복되지 않도록 회기 번호로 돌려 씀 */
+    const midPlans = [
+      '다음 회기에서는 정확도와 자발 시도 빈도를 함께 점검하며 촉구를 점진적으로 줄여 갈 예정입니다',
+      '다음 회기에서는 안내의 양을 조금씩 줄이고 스스로 시작하는 순간을 바로 강화할 예정입니다',
+      '다음 회기에서는 같은 활동을 다른 자료와 순서로 제시해 스스로 해 보는 기회를 늘릴 예정입니다',
+    ];
+    const midHomes = [
+      '가정에서는 익숙해진 활동을 다른 방·다른 시간대·다른 가족과도 시도해 보실 것을 권고드립니다',
+      '가정에서는 말로 다시 알려 주기 전에 잠시 기다려 스스로 시작할 기회를 주실 것을 권고드립니다',
+      '가정에서는 스스로 해낸 작은 순간을 바로 짚어 칭찬해 주실 것을 권고드립니다',
+    ];
     if (allMid) {
-      phrases.push('전 영역에서 안내가 있으면 수행하는 수준이 확인되어, 자발 수행을 늘려 가는 단계입니다.');
-      phrases.push('다음 회기에서는 정확도와 자발 시도 빈도를 함께 점검하며 촉구를 점진적으로 줄여 갈 예정입니다.');
-      phrases.push('가정에서는 익숙해진 활동을 다른 방·다른 시간대·다른 가족과도 시도해 보실 것을 권고드립니다.');
+      phrases.push(pickStable(midPlans, actualSessionNumber) + '.');
+      phrases.push(pickStable(midHomes, actualSessionNumber + nameHash) + '.');
       return phrases.join(' ');
     }
-    return '';
+    const lowest = midDoms.filter(([, v]) => Number(v) === Number(midDoms[0][1])).map(([k]) => domains.find((d) => d.key === k)).filter(Boolean);
+    const l = sessionDomList(lowest, entries.length, scoredDomains);
+    const midLeads = [
+      '안내가 있으면 수행하는 단계여서, 다음 회기에서는 촉구를 점진적으로 줄이며 스스로 시도하는 기회를 늘려 갈 예정입니다',
+      '안내가 있으면 수행하는 단계로, 다음 회기에서는 안내를 조금씩 줄이고 스스로 시작한 순간을 바로 강화할 예정입니다',
+      '아직 안내가 필요한 단계여서, 다음 회기에서는 같은 활동을 반복하며 스스로 해 보는 기회를 늘려 갈 예정입니다',
+    ];
+    phrases.push(`${l.text}${l.all ? '은' : '은'} ${pickStable(midLeads, actualSessionNumber + nameHash)}.`);
+    /* 여러 영역을 함께 짚었으면 한 영역에만 맞는 가정 권고 대신 공통 권고 */
+    const homePool = l.all ? null : poolHomeGuidance(domains, midDoms[0][1])[lowest[0].key];
+    if (homePool) phrases.push(pickStable(homePool, actualSessionNumber + (lowest[0].key?.length || 0) + nameHash) + '.');
+    else phrases.push(pickStable(midHomes, actualSessionNumber + nameHash) + '.');
+    return phrases.join(' ');
   }
 
   const topChallengeKey = bottom[0][0];
   const topChallengeScore = bottom[0][1];
   const topChallengeDom = domains.find((d) => d.key === topChallengeKey);
-  const challengeBand = getScoreBand(topChallengeScore);
-  const challengePool = poolDescriptions(domains)[topChallengeKey]?.[challengeBand];
-  const challengeSeed = (sessionIdx * 5) + (topChallengeKey?.length || 0) + nameHash;
-  const challengeDesc = challengePool ? pickStable(challengePool, challengeSeed) : '';
+  const challengePool = poolDescriptions(domains)[topChallengeKey]?.[getScoreBand(topChallengeScore)];
+  const challengeDesc = challengePool ? pickStable(challengePool, actualSessionNumber + (topChallengeKey?.length || 0) + nameHash) : '';
 
-  /* 잘한점 유무 추정: top 점수가 3 이상인 항목 존재 여부 */
   const hasStrengths = entries.some(([, v]) => Number(v) >= 3);
-  /* 잘한점이 있을 때만 transition word(한편/반면/다만) 사용, 없을 때는 직접 시작 */
+  /* 첫 문장(회기 번호·평균)은 잘한 점 칸에 항상 있으므로 '한편/다만'으로 이어도 자연스러움 */
   const challengeIntros = hasStrengths
     ? ['한편 ', '다만 ', '아직 학습이 필요한 부분으로, ', '한편으로 ', '반면 ']
     : ['아직 학습이 필요한 부분으로, ', '', '이번 회기에는 ', '본 회기에서는 '];
-  const intro = pickStable(challengeIntros, sessionIdx + nameHash);
+  /* 낮아진 문장 바로 뒤에는 대조어(한편·반면)를 쓰지 않음 */
+  const intro = downs.length > 0 ? '또한 ' : pickStable(challengeIntros, actualSessionNumber + nameHash);
+  const mergeDown = downs.length === 1 && downKeys.has(topChallengeKey);
 
-  if (topChallengeDom && challengeDesc) {
-    phrases.push(`${intro}'${topChallengeDom.label}' 영역에서 ${challengeDesc}.`);
+  if (mergeDown && topChallengeDom && challengeDesc) {
+    /* 낮아진 영역과 짚는 영역이 같으면 한 문장으로 (같은 영역 이름을 연달아 쓰지 않음) */
+    phrases.push(`${downTxt.replace(/낮아졌습니다\.$/, '낮아졌으며,')} ${challengeDesc}.`);
+  } else {
+    if (downTxt) phrases.push(downTxt);
+    if (topChallengeDom && challengeDesc) {
+      phrases.push(`${intro}'${topChallengeDom.label}' 영역${domainParticle(challengeDesc, false)} ${challengeDesc}.`);
+    }
   }
 
   if (bottom.length >= 2 && Number(bottom[1][1]) <= 2.5) {
     const secondKey = bottom[1][0];
-    const secondScore = bottom[1][1];
     const secondDom = domains.find((d) => d.key === secondKey);
-    const secondBand = getScoreBand(secondScore);
-    const secondPool = poolDescriptions(domains)[secondKey]?.[secondBand];
-    const secondSeed = (sessionIdx * 13) + (secondKey?.length || 0) + nameHash;
-    const secondDesc = secondPool ? pickStable(secondPool, secondSeed) : '';
+    const secondPool = poolDescriptions(domains)[secondKey]?.[getScoreBand(bottom[1][1])];
+    const secondDesc = secondPool ? pickStable(secondPool, actualSessionNumber * 3 + (secondKey?.length || 0) + nameHash) : '';
     if (secondDom && secondDesc) {
-      const wConnectors = ['또한 ', '더불어 ', '아울러 ', ''];
-      const wConn = pickStable(wConnectors, sessionIdx + nameHash + 3);
-      phrases.push(`${wConn}'${secondDom.label}' 영역에서도 ${secondDesc}.`);
+      const wConnectors = intro === '또한 ' ? ['더불어 ', '아울러 ', ''] : ['또한 ', '더불어 ', '아울러 ', ''];
+      const wConn = pickStable(wConnectors, actualSessionNumber + nameHash + 3);
+      phrases.push(`${wConn}'${secondDom.label}' 영역${domainParticle(secondDesc, true)} ${secondDesc}.`);
     }
   }
 
   const procPool = poolNextProcedures(domains)[topChallengeKey];
-  if (procPool) {
-    const seed = (sessionIdx * 17) + (topChallengeKey?.length || 0) + nameHash;
-    const proc = pickStable(procPool, seed);
-    phrases.push(`다음 회기에서는 ${proc}.`);
+  let procIdx = 0;
+  if (procPool && procPool.length > 0) {
+    procIdx = Math.abs(actualSessionNumber + (topChallengeKey?.length || 0) + nameHash) % procPool.length;
+    phrases.push(`다음 회기에서는 ${procPool[procIdx]}.`);
   }
 
   const homePool = poolHomeGuidance(domains, topChallengeScore)[topChallengeKey];
-  if (homePool) {
-    const seed = (sessionIdx * 23) + (topChallengeKey?.length || 0) + nameHash;
-    const guidance = pickStable(homePool, seed);
-    phrases.push(guidance + '.');
+  if (homePool && homePool.length > 0) {
+    const pairMap = (isAdvancedDomains(domains) ? HOME_PAIR_ADVANCED : HOME_PAIR_BASIC)[topChallengeKey];
+    const hIdx = pairMap && pairMap[procIdx] != null ? pairMap[procIdx] % homePool.length : procIdx % homePool.length;
+    phrases.push(homePool[hIdx] + '.');
   }
 
   /* 평균 점수가 매우 낮을 때(≤1.5) 격려·시선 전환 어구를 마지막에 한 줄 추가.
@@ -4864,7 +4949,7 @@ const ABA_DOMAIN_STATEMENTS = {
     low: '활동 참여와 주의 유지에 교사의 도움이 많이 필요합니다',
   },
   followInstruction: {
-    high: '한두 단계 지시를 스스로 잘 따라 합니다',
+    high: '한두 단계 지시를 스스로 잘 따릅니다',
     mid: '다시 안내하거나 시각 단서를 주면 지시를 따라 수행합니다',
     low: '한 단계 지시 수행에도 시각 단서나 시범 같은 도움이 필요합니다',
   },
@@ -5012,7 +5097,7 @@ const ReportPrintText = ({ text }) => {
   });
 };
 
-const listLabels = (items, max = 5) => {
+const listLabels = (items, max = 8) => {
   const labels = items.map((x) => x.dom ? x.dom.label : x.label);
   if (labels.length <= max) return labels.join(', ');
   return `${labels.slice(0, max).join(', ')} 등 ${labels.length}개`;
@@ -5030,9 +5115,10 @@ const changeToAbaPhrase = (rawDiff) => {
   if (diff > -0.2) return { tag: '수행 수준 유지', detail: '평균 점수 변동 0.2점 미만', key: 'stable' };
   /* 하락도 폭에 따라 세분화 (향상이 3단계로 나뉘는 것과 대칭).
      본문 '함께 살펴볼 영역'과 톤을 맞춰 큰 하락은 순화하지 않음 */
-  if (diff <= -1.0) return { tag: '뚜렷한 하락', detail: `평균 점수 ${diff.toFixed(1)} 하락`, key: 'declining' };
-  if (diff <= -0.5) return { tag: '수행 하락', detail: `평균 점수 ${diff.toFixed(1)} 하락`, key: 'declining' };
-  return { tag: '수행 변동', detail: `평균 점수 ${diff.toFixed(1)} 변동`, key: 'declining' };
+  /* 향상과 같은 기준으로 맞춤 (원장님 결정): -1.0↓ 현저한 하락 / -0.5↓ 뚜렷한 하락 / 그 외 소폭 하락 */
+  if (diff <= -1.0) return { tag: '현저한 하락', detail: `평균 점수 ${diff.toFixed(1)} 하락`, key: 'declining' };
+  if (diff <= -0.5) return { tag: '뚜렷한 하락', detail: `평균 점수 ${diff.toFixed(1)} 하락`, key: 'declining' };
+  return { tag: '소폭 하락', detail: `평균 점수 ${diff.toFixed(1)} 하락`, key: 'declining' };
 };
 
 /* 중간보고서 - 분기 총평 자동 생성 (ABA 임상 표현) */
@@ -5076,6 +5162,17 @@ const toPresentTense = (text) => {
     .replace(/이었다/g, '입니다');
 };
 
+/* 점수가 낮아진 영역 묶음의 표현 — 모두 마지막 달에 0.5점 이상 떨어졌을 때만 '최근', 아니면 '기간 동안'
+   (9월부터 꾸준히 떨어진 영역을 '최근 점수가 낮아져'라고 쓰던 문제) */
+const dropWhen = (group) => (group.length > 0 && group.every((r) => {
+  const v = r.vals || [];
+  const n = v.length;
+  if (n < 2) return false;
+  const lastStep = v[n - 2] - v[n - 1];
+  const prevStep = n >= 3 ? v[n - 3] - v[n - 2] : 0;
+  /* 마지막 달에 떨어졌고, 그 전에는 떨어지지 않았을 때만 '최근' (꾸준히 떨어졌으면 '기간 동안') */
+  return lastStep >= 0.5 && prevStep < 0.25;
+}) ? '최근' : '기간 동안');
 const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) => {
   /* monthlyData: { months: [...], data: { domainKey: { 'YYYY-MM': value } } }
      구 구조 { domainKey: { jan, feb, mar } }도 자동 변환 처리 */
@@ -5117,18 +5214,21 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
   const changes = results
     .map((r) => ({ ...r, phrase: changeToAbaPhrase(r.diff) }))
     .filter((r) => r.phrase);
-  const major = changes.filter((c) => c.phrase.key === 'major');
+  /* 향상 폭이 큰 순서로 (같으면 영역 순서) — 가장 크게 오른 영역이 '이 밖에도'로 밀려나지 않게 */
+  const domOrder = (k) => domains.findIndex((d) => d.key === k);
+  const major = changes.filter((c) => c.phrase.key === 'major').sort((x, y) => (y.diff - x.diff) || (domOrder(x.dom.key) - domOrder(y.dom.key)));
   const meaningful = changes.filter((c) => c.phrase.key === 'meaningful');
   const small = changes.filter((c) => c.phrase.key === 'small');
   /* 0.5점 미만의 작은 하락(예: 3.25→3.0)은 '하락·지원 필요'로 쓰지 않고 비슷한 수준으로 봄 */
   const stable = changes.filter((c) => c.phrase.key === 'stable' || (c.phrase.key === 'declining' && c.diff > -0.5));
   const declining = changes.filter((c) => c.phrase.key === 'declining' && c.diff <= -0.5);
 
-  const lowDomains = results.filter((r) => r.avg < 2.5);
-  const midDomains = results.filter((r) => r.avg >= 2.5 && r.avg < 4.0);
-  /* highDomains는 last도 함께 봐서 평균만 높고 현재는 낮은 케이스 배제
-     (예: 5→4→2 평균 3.67이지만 현재는 2점 → "안정적 수행"이라 부르면 어색) */
-  const highDomains = results.filter((r) => r.avg >= 4.0 && r.last >= 4.0);
+  /* 단계는 '지금 점수(last)'로 나눔 — 아래 중재 방향·소견·목표와 같은 기준 (예전엔 석 달 평균이라 2.25→4→2.25가 '중간 수준 안정'으로 나왔음) */
+  const growthKeySet = new Set([...major, ...meaningful].map((c) => c.dom.key));
+  const lowDomains = results.filter((r) => r.last < 2.5);
+  const midDomains = results.filter((r) => r.last >= 2.5 && r.last < 4.0);
+  /* 성장한 영역은 아래 성장 문장에서 다루므로 '안정적 수행' 쪽에 넣지 않음 */
+  const highDomains = results.filter((r) => r.last >= 4.0 && !growthKeySet.has(r.dom.key));
 
   /* 1. 전반 요약 (한 단락 자연스러운 흐름) */
   const overallParts = [];
@@ -5142,10 +5242,10 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
     const fluctHigh = highDomains.filter((d) => Math.min(...d.vals) < 3.0 || d.diff <= -0.5);
     /* 고르게 높은 영역 → "안정적인 수행" */
     if (evenHigh.length > 0) {
-      /* '전반 영역'은 정말 모든 영역이 높을 때만 (일부만 높은데 '전반'이라 쓰면 뒤의 '집중 지원'과 모순) */
+      /* '전 영역'은 정말 모든 영역이 높을 때만 (일부만 높은데 '전반'이라 쓰면 뒤의 '집중 지원'과 모순) */
       evenHigh.forEach((d) => usedKeys.add(d.dom.key));
       if (evenHigh.length === results.length) {
-        overallParts.push(`전반 영역에서 안정적인 수행을 보이고 있습니다`);
+        overallParts.push(`전 영역에서 안정적인 수행을 보이고 있습니다`);
       } else {
         overallParts.push(`${listLabels(evenHigh)} 영역에서 안정적인 수행을 보이고 있습니다`);
       }
@@ -5153,7 +5253,7 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
     /* 평균은 높으나 월별 변동이 있는 영역 → 정직하게 변동 명시 */
     if (fluctHigh.length > 0) {
       fluctHigh.forEach((d) => usedKeys.add(d.dom.key));
-      overallParts.push(`${listLabels(fluctHigh)} 영역은 기간 평균이 높은 편이나 월별 수행에 변동이 있어 흐름을 함께 지켜보고 있습니다`);
+      overallParts.push(`${listLabels(fluctHigh)} 영역은 지금은 높은 수준이나 기간 중 점수에 변동이 있어 흐름을 함께 지켜보고 있습니다`);
     }
   }
   if (major.length > 0 || meaningful.length > 0) {
@@ -5163,7 +5263,7 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
       /* 성장 영역이 많을 때(6개 이상)는 "전반 영역" 표현, 적으면 영역명 나열 */
       growthAll.forEach((c) => usedKeys.add(c.dom.key));
       if (growthAll.length === results.length) {
-        overallParts.push(`전반 영역에서 의미 있는 성장이 관찰되었습니다`);
+        overallParts.push(`전 영역에서 의미 있는 성장이 관찰되었습니다`);
       } else if (growthAll.length >= 6) {
         overallParts.push(`대부분의 영역에서 의미 있는 성장이 관찰되었습니다`);
       } else {
@@ -5179,12 +5279,13 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
     /* 6개 이상이면 "전반 영역" 표현 */
     const smallMidCount = small.filter((s) => midKeySet.has(s.dom.key)).length;
     const labelStr = midDomains.length === results.length
-      ? '전반 영역'
+      ? '전 영역'
       : midDomains.length >= 6 ? '대부분의 영역' : `${listLabels(midDomains)} 영역`;
 
     if (decliningMidCount > stableMidCount && decliningMidCount >= midDomains.length / 2) {
-      /* 하락 영역이 다수면 "수행 변동" — 5→3→1 같은 케이스 */
-      overallParts.push(`${labelStr}에서 수행 변동이 관찰되어 점검이 필요한 시점입니다`);
+      /* 하락 영역이 다수 — 이 문장에서 다룬 영역은 아래 '낮아진 영역' 문장에서 다시 쓰지 않음 */
+      declining.filter((d) => midKeySet.has(d.dom.key)).forEach((d) => usedKeys.add(d.dom.key));
+      overallParts.push(`${labelStr}에서 점수가 낮아져 점검이 필요한 시점입니다`);
     } else if (stableMidCount >= midDomains.length / 2) {
       /* stable이 다수면 "중간 수준 안정" — 3→3→3 같은 케이스 */
       overallParts.push(`${labelStr}에서 중간 수준의 수행이 안정적으로 관찰되고 있습니다`);
@@ -5203,9 +5304,12 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
     const lowNow = lowDomains.filter((d) => !usedKeys.has(d.dom.key));
     lowNow.forEach((d) => usedKeys.add(d.dom.key));
     if (droppedNow.length > 0) {
-      overallParts.push(`${listLabels(droppedNow)} 영역은 최근 점수가 낮아져 흐름을 다시 살펴볼 필요가 있습니다`);
+      overallParts.push(`${listLabels(droppedNow)} 영역은 ${dropWhen(droppedNow)} 점수가 낮아져 흐름을 다시 살펴볼 필요가 있습니다`);
     }
-    if (lowNow.length >= 5) {
+    if (lowDomains.length === results.length && results.length > 1) {
+      /* 지금 점수가 모든 영역에서 2.5점 미만 — 일부 영역만 '아직'이라 쓰면 나머지는 괜찮은 것처럼 읽힘 */
+      overallParts.push(`다만 현재 전 영역이 아직 교사의 도움이 많이 필요한 단계로, 목표를 작게 나누어 꾸준히 지원할 계획입니다`);
+    } else if (lowNow.length >= 5) {
       overallParts.push(`그 밖의 여러 영역에서는 아직 지속적인 지원이 필요하며, 단계적으로 도와 갈 예정입니다`);
     } else if (lowNow.length > 0) {
       overallParts.push(`${listLabels(lowNow)} 영역은 아직 지원이 필요한 단계로, 꾸준히 함께 다져 갈 계획입니다`);
@@ -5213,12 +5317,12 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
   }
   /* declining만 있는 경우 (모든 영역 하락) 도입 누락 방지 */
   if (overallParts.length === 0 && declining.length > 0) {
-    const decLabel = declining.length === results.length ? '전반 영역' : `${listLabels(declining)} 영역`;
+    const decLabel = declining.length === results.length ? '전 영역' : `${listLabels(declining)} 영역`;
     overallParts.push(`${decLabel}에서 점수가 낮아져 지속적인 점검이 필요한 시점입니다`);
   }
   /* lowDomains만 있고 stable한 경우 (모든 영역 낮은 점수로 정체) 도입 누락 방지 */
   if (overallParts.length === 0 && lowDomains.length > 0) {
-    const lowLabel = lowDomains.length === results.length ? '전반 영역' : `${listLabels(lowDomains)} 영역`;
+    const lowLabel = lowDomains.length === results.length ? '전 영역' : `${listLabels(lowDomains)} 영역`;
     overallParts.push(`${lowLabel}에서 지속적인 지원이 필요한 시점이며, 단계적 접근을 이어 갈 예정입니다`);
   }
   if (overallParts.length > 0) {
@@ -5300,14 +5404,14 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
          변화의 '정도'를 말로 표현 → 점수 나열 느낌 해소, 표와 역할 분담 */
       let growthVerb;
       const rd = Math.round(diff * 10) / 10;
-      if (rd >= 2.0) growthVerb = ['크게 향상되었습니다', '눈에 띄게 성장하였습니다', '큰 폭으로 나아졌습니다'][gi % 3];
-      else if (rd >= 1.0) growthVerb = ['뚜렷하게 향상되었습니다', '분명한 성장을 보였습니다', '확연히 나아졌습니다'][gi % 3];
+      /* 종결보고서 표와 같은 말: 1.0점 이상 '현저한 향상' (예전엔 '뚜렷하게'라고 써서 종결의 0.5점 단계 말과 겹쳤음) */
+      if (rd >= 1.0) growthVerb = ['현저하게 향상되었습니다', '현저한 향상을 보였습니다', '현저하게 나아졌습니다'][gi % 3];
       else growthVerb = ['꾸준히 향상되었습니다', '점차 나아지고 있습니다', '조금씩 성장하고 있습니다'][gi % 3];
       /* '현재는 [묘사]' 조합 시 묘사가 '~시간은/~행동은'처럼 은/는을 포함한 구로
          시작하면 '현재는 주의 집중 시간은'처럼 조사가 겹쳐 어색 → 앞 12자 안에 은/는
          조사가 있으면 접두어를 '현재 '로 바꿔 충돌 완화 */
       growthLines.push(levelNow
-        ? `${dom.label} 영역이 ${growthVerb}. 현재 ${levelNow.replace(/\.$/, '')}`
+        ? `${dom.label} 영역이 ${growthVerb}. ${['현재 ', '지금은 ', '이제는 '][gi % 3]}${levelNow.replace(/\.$/, '')}`
         : `${dom.label} 영역이 ${growthVerb}. ${closing}`);
     });
     /* 다중 영역 묘사 시 "또한" 반복 단조로움 해결 — 회기별로 다른 connector */
@@ -5317,7 +5421,7 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
       joinedGrowth += growthConnectors[(i - 1) % growthConnectors.length] + growthLines[i];
     }
     lines.push(`특히 ${joinedGrowth}.`);
-    if (major.length > 3) lines.push(`이 밖에도 ${listLabels(major.slice(3))} 영역이 크게 향상되었습니다.`);
+    if (major.length > 3) lines.push(`이 밖에도 ${listLabels(major.slice(3))} 영역에서 현저한 향상이 나타났습니다.`);
     lines.push('');
   }
 
@@ -5362,7 +5466,8 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
     const skipStable = allLowAndStable || allMidAndStable || allHighAndStable || isPolarized;
     if (!skipStable) {
       /* 2.5점 미만 영역은 위 종합 요약에서 '지원이 필요'로 다루므로 여기서 '유지'로 쓰지 않음 */
-      const stableShow = stable.filter((x) => x.avg >= 2.5);
+      /* 중간에 크게 낮아졌던 영역(예: 4.5→2.75→4.5)은 '유지'라고 쓰지 않음 — 위 종합 요약에서 변동으로 다룸 */
+      const stableShow = stable.filter((x) => x.last >= 2.5 && !(x.vals && Math.min(...x.vals) <= Math.min(x.first, x.last) - 1.0));
       if (stableShow.length > 0) {
         lines.push('비슷한 수준을 유지한 영역');
         if (stableShow.length === results.length) {
@@ -5392,14 +5497,14 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
     const focusMid = others.filter((d) => d.last >= 2.5 && d.last < 4.0 && d.diff > -0.5);
     const focusMidDrop = others.filter((d) => d.last >= 2.5 && d.last < 4.0 && d.diff <= -0.5);
     if (growthRest.length > 0) {
-      const planLabel = growthRest.length === results.length ? '성장세를 보인 모든 영역은' : `성장세를 보인 ${listLabels(growthRest)} 영역은`;
-      lines.push(`다음 기간에는 ${planLabel} 안내를 받아 수행하는 모습이 늘어난 만큼 그동안 제공해 온 시각적·언어적 촉구를 조금씩 줄여 스스로 시작하고 이어 가는 힘을 키우는 데 중점을 둡니다.`);
+      const planLabel = growthRest.length === results.length ? '전 영역에서' : `성장세를 보인 ${listLabels(growthRest)} 영역에서`;
+      lines.push(`다음 기간에는 ${planLabel} 안내를 받아 수행하는 모습이 늘어난 만큼, 그동안 제공해 온 시각적·언어적 촉구를 조금씩 줄여 스스로 시작하고 이어 가는 힘을 키우는 데 중점을 둡니다.`);
       printedPlan = true;
     }
     const genHigh = [...growthHigh, ...stableHigh];
     if (genHigh.length > 0 && genHigh.length < results.length) {
       const lead = printedPlan ? '또한 ' : '다음 기간에는 ';
-      lines.push(`${lead}이미 스스로 잘 수행하는 ${listLabels(genHigh)} 영역은 다양한 장소와 상황에서도 같은 모습이 유지되도록 일반화에 중점을 둡니다.`);
+      lines.push(`${lead}이미 스스로 잘 수행하는 ${listLabels(genHigh)} 영역에서는 다양한 장소와 상황에서도 같은 모습이 유지되도록 일반화에 중점을 둡니다.`);
       printedPlan = true;
     }
     const extraLeads = ['아울러 ', '또한 ', '더불어 '];
@@ -5410,27 +5515,32 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
       const coreLine = (focusLow.length >= 3 && !lowAllEqual)
         ? ` 특히 ${[...focusLow].sort((x, y) => x.last - y.last).slice(0, 2).map((d) => d.dom.label).join(', ')} 영역을 핵심 목표로 두고 있습니다.`
         : '';
-      const focusPhrase = focusLow.length === results.length ? '아직 도움이 많이 필요한 전반 영역에서' : `집중 지원이 필요한 ${listLabels(focusLow)} 영역은`;
+      const focusPhrase = focusLow.length === results.length ? '아직 도움이 많이 필요한 전 영역에서' : `집중 지원이 필요한 ${listLabels(focusLow)} 영역에서`;
       lines.push(`${lead}${focusPhrase} 단계적 촉구와 시각적 구조화(일과표·시각 단서 등)를 바탕으로 학교 적응의 기초를 다져 갈 계획입니다.${coreLine}`);
       printedPlan = true;
     }
     if (focusHighDip.length > 0) {
-      const lead = printedPlan ? extraLeads[extraIdx++ % 3] : '다음 기간에는 ';
-      lines.push(`${lead}${listLabels(focusHighDip)} 영역은 높은 수준이나 최근 점수가 내려가, 흐름을 함께 살펴보며 안정적으로 이어지도록 돕겠습니다.`);
+      const lead = printedPlan ? extraLeads[extraIdx++ % 3] : '';
+      lines.push(`${lead}${listLabels(focusHighDip)} 영역은 높은 수준이나 ${dropWhen(focusHighDip)} 점수가 내려가, 다음 기간에는 흐름을 함께 살펴보며 안정적으로 이어지도록 돕겠습니다.`);
       printedPlan = true;
     }
     if (focusMid.length > 0) {
-      const lead = printedPlan ? ((focusLow.length > 0 || focusHighDip.length > 0) ? extraLeads[extraIdx++ % 3] : '한편 ') : '다음 기간에는 ';
-      lines.push(`${lead}안내가 있으면 수행하는 ${focusMid.length === results.length ? '전 영역은' : listLabels(focusMid) + ' 영역은'} 도움을 조금씩 줄여 가며 스스로 하는 빈도를 늘려 갈 계획입니다.`);
+      if (growthRest.length > 0 && focusLow.length === 0 && focusHighDip.length === 0) {
+        /* 성장 영역과 같은 단계(안내 시 수행)에 머문 영역 — '한편'으로 갈라 같은 말을 되풀이하지 않고 변화 폭이 작았던 점을 짚음 */
+        lines.push(`아울러 변화 폭이 작았던 ${listLabels(focusMid)} 영역은 안내가 있을 때의 수행이 스스로 하는 모습으로 이어지는지 더 세심하게 살피겠습니다.`);
+      } else {
+        const lead = printedPlan ? ((focusLow.length > 0 || focusHighDip.length > 0) ? extraLeads[extraIdx++ % 3] : '한편 ') : '다음 기간에는 ';
+        lines.push(`${lead}안내가 있으면 수행하는 ${focusMid.length === results.length ? '전 영역에서' : listLabels(focusMid) + ' 영역에서'} 도움을 조금씩 줄여 가며 스스로 하는 빈도를 늘려 갈 계획입니다.`);
+      }
       printedPlan = true;
     }
     if (focusMidDrop.length > 0) {
       const lead = printedPlan ? extraLeads[extraIdx++ % 3] : '다음 기간에는 ';
-      lines.push(`${lead}최근 점수가 낮아진 ${listLabels(focusMidDrop)} 영역은 어떤 상황에서 어려웠는지 살피며 안내를 다시 촘촘히 제공하겠습니다.`);
+      lines.push(`${lead}${dropWhen(focusMidDrop) === '최근' ? '최근 ' : ''}점수가 낮아진 ${focusMidDrop.length === results.length ? '전 영역에서' : listLabels(focusMidDrop) + ' 영역에서'} 어떤 상황이 어려웠는지 살피며 안내를 다시 촘촘히 제공하겠습니다.`);
       printedPlan = true;
     }
     if (!printedPlan) {
-      lines.push(`다음 기간에는 전반 영역의 일반화에 중점을 두며, 또래 및 다양한 환경에서 자연스럽게 적용할 기회를 넓혀 갈 예정입니다.`);
+      lines.push(`다음 기간에는 전 영역의 일반화에 중점을 두며, 또래 및 다양한 환경에서 자연스럽게 적용할 기회를 넓혀 갈 예정입니다.`);
     }
     lines.push('');
   }
@@ -5464,7 +5574,7 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
     participation: '"같이 끝까지 해 봤구나, 멋지다!"',
     followInstruction: '"말한 대로 해 봤구나, 잘했어!"',
     ruleUnderstanding: '"약속을 기억했구나, 잘했어!"',
-    selfRegulation: '"속상했는데 같이 진정했구나, 잘했어!"',
+    selfRegulation: '"같이 마음을 가라앉혔구나, 잘했어!"',
     waiting: '"조금 기다려 줬네, 고마워!"',
     spontaneousGreeting: '"손 흔들어 인사했네, 반가워!"',
     taskCompletion: '"마지막까지 해냈네, 잘했어!"',
@@ -5488,12 +5598,16 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
     .slice(0, 3);
   if (focusForHome.length > 0) {
     lines.push('가정에서 함께해 주시면 좋은 부분');
-    lines.push('센터에서의 변화가 가정에서도 일관되게 이어질 때 일반화가 촉진됩니다. 아래 내용을 일상에서 자연스럽게 적용해 주시기를 권합니다.');
+    /* 전체적으로 점수가 낮아진 아동에게 '변화가 이어질 때'라고 쓰지 않음 */
+    const homeIntroDrop = results.reduce((a, r) => a + (r.last - r.first), 0) / results.length <= -0.3;
+    lines.push(homeIntroDrop
+      ? '센터와 가정이 같은 방법으로 도울 때 효과가 커집니다. 아래 내용을 일상에서 자연스럽게 적용해 주시기를 권합니다.'
+      : '센터에서의 변화가 가정에서도 일관되게 이어질 때 일반화가 촉진됩니다. 아래 내용을 일상에서 자연스럽게 적용해 주시기를 권합니다.');
     /* 칭찬 멘트 연결 표현을 항목마다 다르게 → 반복되는 'AI 티' 완화 */
     const praiseLeads = [
-      (p) => `잘 해냈을 때 ${p}처럼 구체적으로 짚어 칭찬해 주세요.`,
-      (p) => `아이가 해냈을 때 ${p} 하고 바로 알아봐 주시면 큰 힘이 됩니다.`,
-      (p) => `해낸 순간을 놓치지 말고 ${p}라고 말해 주세요.`,
+      (p) => `잘 해냈을 때 ${p}처럼 구체적으로 칭찬해 주시면 좋습니다.`,
+      (p) => `해냈을 때 ${p} 하고 바로 알아봐 주시면 큰 힘이 됩니다.`,
+      (p) => `해낸 순간을 놓치지 말고 ${p}라고 말해 주시면 좋습니다.`,
     ];
     focusForHome.forEach(({ dom, last }, idx) => {
       const homePool = poolHomeGuidance(domains, last)[dom.key];
@@ -5504,7 +5618,9 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
       if (praiseSet[dom.key] && !/칭찬|강화|인정/.test(tip)) {
         /* '~권고드리며'가 매번 반복되지 않게 어미를 바꿔 씀 */
         const altEnd = ['권고드리며', '권해 드리며', '추천드리며'][idx % 3];
+        /* 권고 문장과 부모님께 드리는 부탁을 한 문장에 섞지 않도록 '~하시고, … 칭찬해 주시면 좋습니다'로 이음 */
         const tipBase = tip
+          .replace(/(\S+)실 것을 권고드립니다$/, '$1시고')
           .replace(/하실 것을 권고드립니다$/, '해 주시고')
           .replace(/권고드립니다$/, altEnd)
           .replace(/해 주세요$/, '해 주시고')
@@ -5539,7 +5655,6 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
   {
     const overallAvg = results.reduce((a, r) => a + r.avg, 0) / results.length;
     const byAvgDesc = [...results].sort((x, y) => y.avg - x.avg);
-    const byAvgAsc = [...results].sort((x, y) => x.avg - y.avg);
     const grownAll = [...major, ...meaningful].sort((x, y) => y.diff - x.diff);
     /* '시도하는 모습이 나타나기 시작'은 아직 4.0점 미만인 영역에 맞는 말이라 그런 영역을 먼저 고름 */
     const grown = [...grownAll.filter((r) => r.last < 4.0), ...grownAll.filter((r) => r.last >= 4.0)];
@@ -5560,41 +5675,147 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
       const topName = byAvgDesc[0].dom.label;
       lines.push(`이번 기간 동안 아동은 정해진 일과에 익숙해지면서, 활동을 스스로 시작하고 마무리하는 모습이 뚜렷해졌습니다. 특히 ${topName} 영역에서 보인 자발적인 수행은 아동이 지시를 따르는 단계를 넘어 '스스로 해 보려는 힘'을 키워 가고 있음을 보여 줍니다. 다음 기간에는 이 힘이 초등학교 교실에서도 이어지도록 단체 지시 수행, 차례 기다리기, 도움 요청하기를 실제 수업과 비슷한 상황에서 연습하며 도움을 조금씩 줄여 가겠습니다. 지금처럼 센터와 가정이 같은 방향으로 함께해 주시면 새로운 환경에서도 지금의 모습을 이어 가는 데 큰 힘이 됩니다.`);
     } else if (overallAvg >= 2.5) {
-      /* 짚는 영역의 설명은 '지금 점수(last)'로 고름 */
-      const byLastDesc = [...results].sort((x, y) => y.last - x.last);
-      const top = byLastDesc[0];
-      const growPart = (grown.length > 0 && grown[0].last < 4.0)
-        ? `${grown[0].dom.label} 영역에서 안내를 받아 수행하는 모습이 늘어난 점은 의미 있는 변화입니다.`
-        : top.last >= 4.0
-          ? `${top.dom.label} 영역에서는 스스로 해내는 모습이 자리 잡아 가고 있습니다.`
-          : top.last >= 2.5
-            ? `${top.dom.label} 영역에서는 안내가 있으면 수행하는 모습이 관찰되고 있습니다.`
-            : `최근에는 여러 영역에서 교사의 도움이 더 필요해졌습니다.`;
-      const usedKey = (grown.length > 0 && grown[0].last < 4.0) ? grown[0].dom.key : top.dom.key;
-      const lowItem = byAvgAsc.find((r) => r.dom.key !== usedKey);
-      /* 낮은 영역이 따로 없거나(영역 1개·모두 같은 점수) 같은 점수면 특정 영역을 짚지 않음 */
-      const allEqual = byAvgDesc[0].avg === byAvgAsc[0].avg;
-      const lowPart = (lowItem && lowItem.avg < 4.0 && !allEqual)
-        ? `한편 ${lowItem.dom.label} 영역은 아직 교사의 안내가 필요한 순간이 많아, 다음 기간에는 시각 단서와 단계적인 안내로 이 부분을 집중해서 도와 가겠습니다.`
-        : `다음 기간에는 시각 단서와 단계적인 안내로 전 영역을 고르게 도와 가겠습니다.`;
-      const openMid = overallChange >= 0.3
-        ? '이번 기간 동안 아동은 정해진 일과를 조금씩 받아들이며 수업의 흐름을 따라오는 모습이 늘었습니다.'
-        : '이번 기간 동안 아동은 정해진 일과 안에서 안내를 받아 수업의 흐름을 따라가고 있습니다.';
-      lines.push(`${openMid} ${growPart} ${lowPart} 센터와 가정이 같은 방법으로 꾸준히 도와주시면 지금의 모습이 학교생활의 든든한 바탕이 될 수 있습니다.`);
+      /* 짚는 영역은 위 '다음 기간 중재 방향'과 같은 무리 나눔(지금 점수 last·변화 diff)으로 고르고, 같은 방향의 말을 씀.
+         점수와 변화가 똑같은 영역이 여럿이면 하나만 고르지 않고 함께 적음 */
+      const grownKeysO = new Set([...major, ...meaningful].map((r) => r.dom.key));
+      const isDrop = (r) => r.diff <= -0.5;
+      const tiedHead = (arr) => (arr.length === 0 ? [] : arr.filter((r) => r.last === arr[0].last && r.diff === arr[0].diff));
+      const lowSort = (x, y) => (x.last - y.last) || (x.diff - y.diff);
+      const highSort = (x, y) => (y.last - x.last) || (y.diff - x.diff);
+      /* 앞 문장: 안내를 받아 수행하는 수준(2.5~3.9)으로 성장한 영역 → 없으면 낮아지지 않고 월별 변동도 없는 영역 중 지금 점수가 가장 높은 영역 */
+      /* 성장해 안내 시 수행 단계에 이른 영역은 모두 적음 (중재 방향의 '성장세를 보인 영역'과 같은 묶음) */
+      const growMidG = grown.filter((r) => r.last >= 2.5 && r.last < 4.0).sort((x, y) => domains.findIndex((d) => d.key === x.dom.key) - domains.findIndex((d) => d.key === y.dom.key));
+      const topG = tiedHead(results.filter((r) => !isDrop(r) && !(r.last >= 4.0 && Math.min(...r.vals) < 3.0)).sort(highSort));
+      let growPart = '';
+      let usedG = [];
+      if (growMidG.length > 0) {
+        growPart = `${listLabels(growMidG)} 영역에서 안내를 받아 해내는 횟수가 많아진 점은 의미 있는 변화입니다.`;
+        usedG = growMidG;
+      } else if (topG.length > 0 && topG.length < results.length && topG[0].last >= 4.0) {
+        growPart = `${listLabels(topG)} 영역에서는 스스로 해내는 모습이 자리 잡아 가고 있습니다.`;
+        usedG = topG;
+      } else if (topG.length > 0 && topG.length < results.length && topG[0].last >= 2.5) {
+        growPart = `${listLabels(topG)} 영역에서는 안내가 있으면 수행하는 모습이 관찰되고 있습니다.`;
+        usedG = topG;
+      }
+      /* 성장 문장 뒤에, 스스로 해내는 단계(4점 이상·낮아지지 않음·변동 없음)의 영역도 함께 짚음 */
+      if (growMidG.length > 0) {
+        const highNow = results.filter((r) => r.last >= 4.0 && !isDrop(r) && !(Math.min(...r.vals) <= Math.min(r.first, r.last) - 1.0));
+        if (highNow.length > 0) {
+          growPart += ` 또한 ${highNow.length === results.length - growMidG.length && results.length - growMidG.length > 3 ? '그 밖의 영역' : `${listLabels(highNow)} 영역`}에서는 스스로 해내는 모습이 자리 잡아 가고 있습니다.`;
+          usedG = [...usedG, ...highNow];
+        }
+      }
+      const usedKeys = new Set(usedG.map((r) => r.dom.key));
+      const topMid = usedG.length > 0 && !growMidG.length && usedG[0].last < 4.0;
+      /* 뒤 문장 우선순위: 도움이 많이 필요한 영역(2.5 미만) → 최근 낮아진 영역(2.5~3.9) → 높은 수준이나 내려간 영역 → 안내가 있으면 수행하는 영역 */
+      const han = growPart ? '한편 ' : '';
+      const cand = results.filter((r) => !usedKeys.has(r.dom.key));
+      const lowAllO = cand.filter((r) => r.last < 2.5).sort(lowSort);
+      /* 낮은 영역이 모두 같은 단계(낮아짐 여부)면 모두 적음 */
+      const lowG = lowAllO.length > 0 ? lowAllO.filter((r) => isDrop(r) === isDrop(lowAllO[0])) : [];
+      const dropG = tiedHead(cand.filter((r) => !grownKeysO.has(r.dom.key) && r.last >= 2.5 && r.last < 4.0 && isDrop(r)).sort(lowSort));
+      /* 낮아진 영역은 동점 여부와 관계없이 모두 적음 (두 영역이 낮아졌는데 하나만 나오던 문제) */
+      const dropAllM = cand.filter((r) => !grownKeysO.has(r.dom.key) && r.last >= 2.5 && r.last < 4.0 && isDrop(r)).sort(lowSort);
+      const dipG = tiedHead(cand.filter((r) => !grownKeysO.has(r.dom.key) && r.last >= 4.0 && isDrop(r)).sort(lowSort));
+      const midG = cand.filter((r) => !grownKeysO.has(r.dom.key) && r.last >= 2.5 && r.last < 4.0 && !isDrop(r)).sort(lowSort);
+      const nameOf = (g) => (g.length === results.length ? '전반' : listLabels(g));
+      let lowPart;
+      if (lowG.length > 0) {
+        lowPart = isDrop(lowG[0])
+          ? `${han}${nameOf(lowG)} 영역은 ${dropWhen(lowG)} 점수가 낮아져 교사의 도움이 많이 필요해진 상태여서, 다음 기간에는 시각 단서와 단계적인 안내로 이 부분을 다시 집중해서 도와 가겠습니다.`
+          : `${han}${nameOf(lowG)} 영역은 아직 교사의 도움이 많이 필요한 단계여서, 다음 기간에는 시각 단서와 단계적인 안내로 이 부분을 집중해서 도와 가겠습니다.`;
+      } else if (dropG.length > 0) {
+        lowPart = `${han}${nameOf(dropAllM)} 영역은 ${dropWhen(dropAllM)} 점수가 낮아져, 다음 기간에는 시각 단서와 단계적인 안내로 이 부분을 다시 집중해서 도와 가겠습니다.`;
+      } else if (dipG.length > 0) {
+        lowPart = `${han}${nameOf(dipG)} 영역은 최근 점수가 다소 내려가, 다음 기간에는 어떤 상황에서 달라졌는지 함께 살피겠습니다.`;
+      } else if (midG.length > 0 && growPart && !topMid) {
+        /* 앞 문장이 '안내를 받아 해내는 횟수가 많아진' 영역이면 같은 단계이므로 '변화 폭이 작아'로 구분 */
+        lowPart = growMidG.length > 0
+          ? `${han}${listLabels(midG)} 영역은 변화 폭이 작아, 다음 기간에는 스스로 시작해 볼 기회를 조금씩 넓혀 가겠습니다.`
+          : `${han}${listLabels(midG)} 영역은 안내가 있으면 수행하는 단계여서, 다음 기간에는 스스로 시작해 볼 기회를 조금씩 넓혀 가겠습니다.`;
+      } else if (results.some((r) => !grownKeysO.has(r.dom.key) && r.last >= 2.5 && r.last < 4.0)) {
+        lowPart = '다음 기간에는 스스로 시작해 볼 기회를 조금씩 넓혀 가겠습니다.';
+      } else if (results.some((r) => grownKeysO.has(r.dom.key) && r.last >= 2.5 && r.last < 4.0)) {
+        lowPart = '다음 기간에는 안내를 받아 해내게 된 모습이 스스로 하는 힘으로 이어지도록 촉구를 조금씩 줄여 가겠습니다.';
+      } else if (results.some((r) => r.last < 4.0)) {
+        lowPart = '다음 기간에는 스스로 시작해 볼 기회를 조금씩 넓혀 가겠습니다.';
+      } else {
+        lowPart = '다음 기간에는 지금의 모습이 다양한 장소와 상황에서도 이어지도록 도움을 조금씩 줄여 가겠습니다.';
+      }
+      /* 첫 문장은 아동의 지금 수준에 맞춤 — 절반 이상 영역이 4점 이상이면 '대부분 스스로' (예전엔 7개 영역이 4점 이상인 아동에게도 '안내를 받아 따라가고'라고 썼음) */
+      const highShare = results.filter((r) => r.last >= 4.0).length / results.length;
+      const openMid = highShare >= 0.5
+        ? (overallChange >= 0.3
+          ? '이번 기간 동안 아동은 정해진 일과 안에서 활동을 스스로 시작하고 마무리하는 모습이 뚜렷해졌습니다.'
+          : '이번 기간 동안 아동은 정해진 일과 안에서 수업의 흐름을 대부분 스스로 따라가고 있습니다.')
+        : overallChange >= 0.3
+          ? '이번 기간 동안 아동은 정해진 일과를 조금씩 받아들이며 수업의 흐름을 따라오는 모습이 늘었습니다.'
+          : '이번 기간 동안 아동은 정해진 일과 안에서 안내를 받아 수업의 흐름을 따라가고 있습니다.';
+      lines.push(`${openMid} ${growPart ? growPart + ' ' : ''}${lowPart} 센터와 가정이 같은 방법으로 꾸준히 도우면 지금의 모습이 학교생활의 든든한 바탕이 될 수 있습니다.`);
     } else {
-      const bigGrow = grownAny.length > 0 && [...major, ...meaningful].includes(grownAny[0]);
-      const growPart = grownAny.length > 0
-        ? ` ${grownAny[0].dom.label} 영역에서 보인 ${bigGrow ? '변화' : '작은 변화'}는 앞으로 더 키워 갈 수 있는 출발점입니다.`
-        : '';
-      const usedKey = grownAny.length > 0 ? grownAny[0].dom.key : null;
-      const allSameL = byAvgAsc[0].avg === byAvgAsc[byAvgAsc.length - 1].avg;
-      const lowItemL = allSameL ? null : byAvgAsc.find((r) => r.dom.key !== usedKey && r.avg < 2.5);
-      const lowPartL = lowItemL ? ` 다만 ${lowItemL.dom.label} 영역은 아직 교사의 도움이 많이 필요한 단계여서,` : ' 아직 교사의 도움이 많이 필요한 영역이 있어,';
-      lines.push(`이번 기간 동안 아동은 그룹 수업과 규칙 속에서 자기만의 속도로 일과에 익숙해지고 있습니다.${growPart}${lowPartL} 다음 기간에는 목표를 작게 나누어 성공 경험을 자주 쌓을 수 있도록 지원하겠습니다. 입학 후 학교에서도 비슷한 도움을 받을 수 있도록 필요한 지원을 미리 함께 준비해 가면 좋겠습니다. 가정에서도 같은 방법으로 함께해 주시면 큰 힘이 됩니다.`);
+      const isDropL = (r) => r.diff <= -0.5;
+      const tiedHeadL = (arr) => (arr.length === 0 ? [] : arr.filter((r) => r.last === arr[0].last && r.diff === arr[0].diff));
+      /* 변화 문장: 뚜렷하게 성장해 안내를 받아 수행하는 수준(2.5 이상)에 이른 영역 → 뚜렷하게 성장한 영역 → 작은 변화 순으로 짚음 */
+      const bigKeysL = new Set([...major, ...meaningful].map((c) => c.dom.key));
+      const growAnyG = tiedHeadL([
+        ...grownAny.filter((r) => bigKeysL.has(r.dom.key) && r.last >= 2.5),
+        ...grownAny.filter((r) => bigKeysL.has(r.dom.key) && r.last < 2.5),
+        ...grownAny.filter((r) => !bigKeysL.has(r.dom.key)),
+      ]);
+      const bigGrow = growAnyG.length > 0 && [...major, ...meaningful].includes(growAnyG[0]);
+      const growPart = (growAnyG.length > 0 && growAnyG.length < results.length)
+        ? ` ${listLabels(growAnyG)} 영역에서 보인 ${bigGrow ? '변화' : '작은 변화'}는 앞으로 더 키워 갈 수 있는 출발점입니다.`
+        : (growAnyG.length > 0 ? ` 전반 영역에서 보인 ${bigGrow ? '변화' : '작은 변화'}는 앞으로 더 키워 갈 수 있는 출발점입니다.` : '');
+      const usedKeysL = new Set(growAnyG.map((r) => r.dom.key));
+      const lowSortL = (x, y) => (x.last - y.last) || (x.diff - y.diff);
+      const lowAll = results.filter((r) => r.last < 2.5);
+      const lowCG = tiedHeadL(lowAll.filter((r) => !usedKeysL.has(r.dom.key)).sort(lowSortL));
+      let middle;
+      if (lowAll.length === 0) {
+        /* 평균은 낮았지만 지금 점수는 모두 2.5 이상 — 도움이 많이 필요한 영역이 있다고 쓰지 않음. 낮아진 영역이 있으면 그 영역을 먼저 짚음 */
+        const dropMG = tiedHeadL(results.filter((r) => !usedKeysL.has(r.dom.key) && r.last < 4.0 && isDropL(r)).sort(lowSortL));
+        const dipHG = tiedHeadL(results.filter((r) => !usedKeysL.has(r.dom.key) && r.last >= 4.0 && isDropL(r)).sort(lowSortL));
+        if (dropMG.length > 0) {
+          middle = ` 다만 ${listLabels(dropMG)} 영역은 ${dropWhen(dropMG)} 점수가 낮아져, 다음 기간에는 시각 단서와 단계적인 안내로 이 부분을 다시 집중해서 도와 가겠습니다.`;
+        } else if (dipHG.length > 0) {
+          middle = ` 다만 ${listLabels(dipHG)} 영역은 최근 점수가 다소 내려가, 다음 기간에는 어떤 상황에서 달라졌는지 함께 살피겠습니다.`;
+        } else if (results.every((r) => r.last >= 4.0)) {
+          middle = ' 다음 기간에는 지금의 모습이 다양한 장소와 상황에서도 이어지도록 도움을 조금씩 줄여 가겠습니다.';
+        } else if (results.some((r) => [...major, ...meaningful].some((c) => c.dom.key === r.dom.key) && r.last < 4.0)) {
+          middle = ' 다음 기간에는 안내를 받아 해내게 된 모습이 스스로 하는 힘으로 이어지도록 촉구를 조금씩 줄여 가겠습니다.';
+        } else {
+          middle = ' 다음 기간에는 스스로 시작해 볼 기회를 조금씩 넓혀 가겠습니다.';
+        }
+      } else {
+        let lowPartL;
+        if (lowAll.length === results.length && results.length > 1) {
+          lowPartL = ' 다만 아직 전 영역에서 교사의 도움이 많이 필요한 단계여서,';
+        } else if (lowCG.length > 0) {
+          const nm = lowCG.length === results.length ? '전반' : listLabels(lowCG);
+          lowPartL = isDropL(lowCG[0])
+            ? ` 다만 ${nm} 영역은 ${dropWhen(lowCG)} 점수가 낮아져 교사의 도움이 많이 필요해진 상태여서,`
+            : ` 다만 ${nm} 영역은 아직 교사의 도움이 많이 필요한 단계여서,`;
+        } else if (lowAll.length === results.length) {
+          lowPartL = ' 다만 아직 전반 영역에서 교사의 도움이 많이 필요한 단계여서,';
+        } else {
+          /* 낮은 영역이 바로 앞 문장에서 '변화'로 짚은 영역뿐인 경우 — 같은 이름을 되풀이하지 않고 앞 문장을 이어 받음(성장한 영역이라 '아직'이 맞음) */
+          lowPartL = ' 다만 아직 교사의 도움이 많이 필요한 단계여서,';
+        }
+        middle = `${lowPartL} 다음 기간에는 목표를 작게 나누어 성공 경험을 자주 쌓을 수 있도록 지원하겠습니다.`;
+      }
+      lines.push(`이번 기간 동안 아동은 그룹 수업과 규칙 속에서 자기만의 속도로 일과에 익숙해지고 있습니다.${growPart}${middle}${lowAll.length > 0 ? ' 입학 후 학교에서도 비슷한 도움을 받을 수 있도록 필요한 지원을 미리 함께 준비해 가면 좋겠습니다.' : ''} 가정에서도 같은 방법으로 함께해 주시면 큰 힘이 됩니다.`);
     }
   }
 
-  return replaceChildPronoun(lines.join('\n'), childName);
+  /* 점수가 없는 영역이 있으면 '전 영역'이 그 영역까지 포함하는 것처럼 읽히지 않게 바꾸고, 제외했다고 알림 */
+  let outText = lines.join('\n');
+  const missingMid = domains.filter((d) => !results.some((r) => r.dom.key === d.key));
+  if (missingMid.length > 0) {
+    outText = outText.replace(/전반 영역|전 영역/g, '점수가 기록된 모든 영역');
+    outText = outText.replace(/(종합 요약\n[^\n]*)/, `$1 ${listLabels(missingMid)} 영역은 점수 기록이 없어 이번 보고에서 제외하였습니다.`);
+  }
+  return replaceChildPronoun(outText, childName);
 };
 
 /* 종결보고서 - "주요 목표 및 중재 방향 요약" 자동 생성
@@ -5614,8 +5835,12 @@ const buildFinalGoalsAndDirection = (initialScores, childName, totalSessions, in
     .map((d) => ({ dom: d, init: Number(initialScores[d.key]) }))
     .filter((x) => !isNaN(x.init))
     .sort((a, b) => b.init - a.init);
-  const initStrengths = initSorted.filter((x) => x.init >= 4.0);
-  const initChallenges = initSorted.filter((x) => x.init < 2.5).reverse();
+  /* 영역 이름은 표준 순서로 적음 (같은 점수일 때 거꾸로 나오던 문제) */
+  const dIdx = (x) => domains.findIndex((d) => d.key === x.dom.key);
+  const initStrengths = initSorted.filter((x) => x.init >= 4.0).sort((a, b) => dIdx(a) - dIdx(b));
+  const initChallenges = initSorted.filter((x) => x.init < 2.5).sort((a, b) => (a.init - b.init) || (dIdx(a) - dIdx(b)));
+  const initMidOnes = initSorted.filter((x) => x.init >= 2.5 && x.init < 4.0).sort((a, b) => dIdx(a) - dIdx(b));
+  const byOrder = (arr) => [...arr].sort((a, b) => dIdx(a) - dIdx(b));
 
   /* 중재 기간 라벨 (종결보고서와 동일 로직) */
   const getDurationLabelGoals = (start, end) => {
@@ -5628,14 +5853,14 @@ const buildFinalGoalsAndDirection = (initialScores, childName, totalSessions, in
       if (days < 14) return '짧은 중재 기간';
       if (days < 30) {
         const weeks = Math.round(days / 7);
-        return `약 ${weeks}주간의 중재 기간`;
+        return `약 ${weeks}주의 중재 기간`;
       }
       if (days < 365) {
         const months = Math.round(days / 30);
         const monthNames = ['', '한 달', '두 달', '세 달', '넉 달', '다섯 달', '여섯 달', '일곱 달', '여덟 달', '아홉 달', '열 달', '열한 달', '열두 달'];
-        return `약 ${monthNames[months] || months + '개월'}간의 중재 기간`;
+        return `약 ${monthNames[months] || months + '개월'}의 중재 기간`;
       }
-      return `약 ${Math.round(days / 30)}개월간의 중재 기간`;
+      return `약 ${Math.round(days / 30)}개월의 중재 기간`;
     } catch (e) {
       return '학교 준비반 전 과정';
     }
@@ -5649,37 +5874,53 @@ const buildFinalGoalsAndDirection = (initialScores, childName, totalSessions, in
   lines.push(`아동은 ${durationLabel} 동안${sessionLabel ? sessionLabel + '로 진행된' : ''} 검단ABA언어행동연구소 학교 준비반 프로그램에 참여하였습니다. 본 프로그램은 초등학교 진학을 앞두고 학교 환경에서 요구되는 핵심 행동을 ${domains.length}개 영역(${domainLabelList})으로 구분하여 평가·중재하는 구조화된 그룹 프로그램입니다.`);
 
   /* 2. 초기 평가 결과 */
-  let initEval = `중재 시작 시점의 영역별 평가에서 전반 평균 ${initAvg.toFixed(1)}점이 확인되었으며, `;
+  let initEval = `중재 시작 시점의 영역별 평가에서 전반 평균은 ${initAvg.toFixed(1)}점이었으며, `;
+  /* 점수가 기록된 영역 수 (점수가 없는 영역을 '8개 영역'에 넣지 않음) */
+  const scoredCount = initSorted.length;
+  const scoredLabel = scoredCount === domains.length ? `${domains.length}개 영역` : `점수가 기록된 ${scoredCount}개 영역`;
+  /* 같은 점수인 영역 중 아무거나 고르지 않도록, 짚는 영역은 모두 적음 */
+  const lowestChal = initChallenges.filter((x) => initChallenges.length > 0 && x.init === initChallenges[0].init);
   if (initStrengths.length > 0 && initChallenges.length > 0) {
-    const sNames = initStrengths.slice(0, 2).map((x) => x.dom.label).join(', ');
-    const cNames = initChallenges.slice(0, 3).map((x) => x.dom.label).join(', ');
+    const sNames = listLabels(initStrengths);
+    const cNames = listLabels(byOrder(initChallenges));
     initEval += `${sNames} 영역에서는 비교적 안정적인 수행이 관찰된 반면, ${cNames} 영역에서는 교사의 도움이 많이 필요한 수준이었습니다.`;
   } else if (initStrengths.length > 0 && initStrengths.length === initSorted.length) {
     initEval += `전 영역에서 비교적 안정적인 수행이 확인되었고, 학교 환경으로의 일반화가 주요 과제였습니다.`;
   } else if (initStrengths.length > 0) {
-    initEval += `${listLabels(initStrengths, 3)} 영역에서는 비교적 안정적인 수행이 확인되었고, 그 외 영역에서는 단계적인 지원과 일반화 점검이 권장되는 수준이었습니다.`;
+    const restTxt = initMidOnes.length <= 2 ? `${listLabels(initMidOnes)} 영역` : '그 외 영역';
+    initEval += `${listLabels(initStrengths)} 영역에서는 비교적 안정적으로 수행하였고, ${restTxt}에서는 단계적인 지원이 권장되는 수준이었습니다.`;
   } else if (initChallenges.length > 0) {
-    const cNames = initChallenges.slice(0, 3).map((x) => x.dom.label).join(', ');
     const allLow = initChallenges.length === initSorted.length;
-    initEval += allLow
-      ? `특히 ${cNames} 영역에서 교사의 도움이 많이 필요한 수준으로, ${domains.length}개 영역 전반에서 단계적 지원이 권장되는 출발점이었습니다.`
-      : `특히 ${cNames} 영역에서 교사의 도움이 많이 필요한 수준이었고, 그 외 영역도 단계적 지원이 권장되는 출발점이었습니다.`;
+    if (allLow && lowestChal.length === initChallenges.length) {
+      initEval += `${scoredLabel} 모두에서 교사의 도움이 많이 필요한 출발점이었습니다.`;
+    } else if (allLow) {
+      initEval += `특히 ${listLabels(byOrder(lowestChal))} 영역(${lowestChal[0].init.toFixed(1)}점)에서 도움이 가장 많이 필요했고, ${scoredCount === domains.length ? '나머지' : '점수가 기록된 나머지'} 영역도 교사의 도움이 많이 필요한 출발점이었습니다.`;
+    } else {
+      const restTxt = initMidOnes.length <= 2 ? `${listLabels(initMidOnes)} 영역은` : '그 외 영역은';
+      initEval += `${initChallenges.length > 3 ? '' : '특히 '}${listLabels(byOrder(initChallenges))} 영역에서 교사의 도움이 많이 필요한 수준이었고, ${restTxt} 안내가 있으면 수행하는 출발점이었습니다.`;
+    }
   } else {
-    initEval += `${domains.length}개 영역 전반에서 기초 수행은 자리 잡았으나 안정화와 일반화가 더 필요한 수준이었습니다.`;
+    initEval += `${scoredLabel} 전반에서 기초 수행은 자리 잡았으나 안정화와 일반화가 더 필요한 수준이었습니다.`;
   }
   lines.push(initEval);
   lines.push('');
 
   /* 3. 설정한 주요 목표 */
   lines.push('설정한 주요 목표');
-  lines.push(`각 영역별로 학교 환경에서의 핵심 행동을 측정 가능한 형태로 설정하였으며, 다음 사항을 우선 목표로 두었습니다.`);
+  lines.push(`영역별로 학교 환경에서의 핵심 행동을 측정 가능한 형태로 설정하였으며, 다음 사항을 우선 목표로 두었습니다.`);
   if (initChallenges.length > 0) {
-    initChallenges.slice(0, 3).forEach(({ dom }) => {
-      lines.push(`· ${dom.label} 영역의 자발 수행 빈도 증가 및 촉구 의존도 단계적 감소`);
-    });
+    /* 위 문단에서 짚은 영역과 같은 영역을 한 줄로 (예전엔 동점 영역 중 세 개를 임의로 골라 줄마다 같은 문장을 반복) */
+    const goalTargets = (initChallenges.length === initSorted.length && lowestChal.length < initChallenges.length) ? lowestChal : initChallenges;
+    lines.push(`· ${goalTargets.length === domains.length ? '전' : listLabels(byOrder(goalTargets))} 영역의 자발 수행 빈도 증가 및 촉구 의존도 단계적 감소`);
+    if (goalTargets.length < initChallenges.length) {
+      lines.push(`· 그 밖의 영역의 기초 행동 형성 및 촉구 의존도 단계적 감소`);
+    }
+    /* 안내가 있으면 수행하던 영역도 목표에 넣음 (예전엔 목표가 한 줄뿐이었음) */
+    if (initMidOnes.length > 0) {
+      lines.push(`· ${initMidOnes.length > 3 && initStrengths.length === 0 && goalTargets.length === initChallenges.length ? '그 밖의' : listLabels(initMidOnes)} 영역의 안내 시 수행 안정화 및 자발 수행 단계 진입`);
+    }
     if (initStrengths.length > 0) {
-      const sNames = initStrengths.slice(0, 2).map((x) => x.dom.label).join(', ');
-      lines.push(`· ${sNames} 영역의 일반화 (다양한 장소·사람·시간대에서 일관된 수행)`);
+      lines.push(`· ${listLabels(initStrengths)} 영역의 일반화 (다양한 장소·사람·시간대에서 일관된 수행)`);
     }
   } else if (initAvg >= 4.0) {
     /* 처음부터 높은 아이는 '독립 수행 단계 진입'이 아니라 유지·일반화가 목표 */
@@ -5687,7 +5928,7 @@ const buildFinalGoalsAndDirection = (initialScores, childName, totalSessions, in
     lines.push(`· 단체 지시 수행·차례 기다리기·도움 요청을 실제 수업과 비슷한 상황에서 연습`);
     lines.push(`· 자기 점검과 독립 수행의 유지`);
   } else {
-    lines.push(`· ${domains.length}개 영역 전반의 안정화 및 학교 환경 일반화`);
+    lines.push(`· ${scoredLabel} 전반의 안정화 및 학교 환경 일반화`);
     lines.push(`· 단체 활동 안에서의 참여와 상호작용 증가`);
     lines.push(`· 자발 시도와 독립 수행 단계 진입`);
   }
@@ -5695,7 +5936,7 @@ const buildFinalGoalsAndDirection = (initialScores, childName, totalSessions, in
 
   /* 4. 중재 방향 */
   lines.push('중재 방향');
-  lines.push(`구조화된 그룹 환경에서 또래 모델과 함께 학교 일과(등원·자리 정리·수업·대기·인사·하원)를 반복적으로 경험하도록 하였습니다. 단계적 촉구 감소, 자연적 강화로의 전환, 시각 단서(일과표·체크리스트·타이머) 활용을 통해 자발 행동 빈도를 점진적으로 늘려가는 방향으로 진행하였습니다.`);
+  lines.push(`구조화된 그룹 환경에서 또래 모델과 함께 학교 일과(등원·자리 정리·수업·대기·인사·하원)를 반복적으로 경험하도록 하였습니다. 단계적 촉구 감소, 자연적 강화로의 전환, 시각 단서(일과표·체크리스트·타이머) 활용을 통해 자발 행동 빈도를 점진적으로 늘려 가는 방향으로 진행하였습니다.`);
 
   return replaceChildPronoun(lines.join('\n'), childName);
 };
@@ -5845,17 +6086,19 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
 
   /* 1. 종결 평가 개요 - 격식 있는 도입 단락 */
   /* 전체 평균 성장폭 계산 (종합 관점 도입 문장용) */
-  const avgInitial = results.reduce((a, r) => a + r.initial, 0) / results.length;
-  const avgFinal = results.reduce((a, r) => a + r.final, 0) / results.length;
-  const avgDiff = avgFinal - avgInitial;
+  /* 평균은 표에 보이는 영역 점수로 계산하고 소수 1자리로 맞춘 뒤, 차이도 '보이는 두 숫자'의 차이로 씀
+     (예전엔 1.6점→2.4점인데 '+0.7점'처럼 글 안의 숫자가 서로 맞지 않았음) */
+  const avgInitial = Math.round((results.reduce((a, r) => a + r.initial, 0) / results.length) * 10) / 10;
+  const avgFinal = Math.round((results.reduce((a, r) => a + r.final, 0) / results.length) * 10) / 10;
+  const avgDiff = Math.round((avgFinal - avgInitial) * 10) / 10;
   const growthCount = results.filter((r) => r.diff >= 0.5).length;
 
   {
     lines.push('종합 요약');
     const sameAvg = avgInitial.toFixed(1) === avgFinal.toFixed(1);
     let leadSentence = sameAvg
-      ? `아동은 학교 준비반 프로그램에 참여하였으며, 점수가 기록된 ${results.length}개 영역의 평균 점수는 초기와 종결 모두 ${avgFinal.toFixed(1)}점으로 비슷한 수준이 유지되었습니다`
-      : `아동은 학교 준비반 프로그램에 참여하였으며, 점수가 기록된 ${results.length}개 영역의 평균 점수가 초기 ${avgInitial.toFixed(1)}점에서 종결 ${avgFinal.toFixed(1)}점으로 변화하였습니다`;
+      ? `아동은 학교 준비반 프로그램에 참여하였으며, ${results.length === domains.length ? '' : '점수가 기록된 '}${results.length}개 영역의 평균 점수는 초기와 종결 모두 ${avgFinal.toFixed(1)}점으로 비슷한 수준이 유지되었습니다`
+      : `아동은 학교 준비반 프로그램에 참여하였으며, ${results.length === domains.length ? '' : '점수가 기록된 '}${results.length}개 영역의 평균 점수가 초기 ${avgInitial.toFixed(1)}점에서 종결 ${avgFinal.toFixed(1)}점으로 변화하였습니다`;
     if (sameAvg) {
       leadSentence += '.';
     } else if (avgDiff >= 0.5) {
@@ -5863,7 +6106,7 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
     } else if (avgDiff >= 0.2) {
       leadSentence += `(평균 +${avgDiff.toFixed(1)}점).`;
     } else if (avgDiff > -0.2) {
-      leadSentence = `아동은 학교 준비반 프로그램에 참여하였으며, 점수가 기록된 ${results.length}개 영역의 평균 점수는 초기 ${avgInitial.toFixed(1)}점, 종결 ${avgFinal.toFixed(1)}점으로 전반적인 수행 수준이 비슷하게 유지되었습니다.`;
+      leadSentence = `아동은 학교 준비반 프로그램에 참여하였으며, ${results.length === domains.length ? '' : '점수가 기록된 '}${results.length}개 영역의 평균 점수는 초기 ${avgInitial.toFixed(1)}점, 종결 ${avgFinal.toFixed(1)}점으로 전반적인 수행 수준이 비슷하게 유지되었습니다.`;
     } else {
       leadSentence += `.`;
     }
@@ -5875,14 +6118,14 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
         const gradeParts = [];
         if (majorCount > 0) gradeParts.push(`${majorCount}개 영역에서 현저한 향상`);
         if (meaningfulCount > 0) gradeParts.push(`${meaningfulCount}개 영역에서 뚜렷한 향상`);
-        if (majorCount === results.length) leadSentence += ` 전체 ${results.length}개 영역 모두에서 현저한 향상이 확인되었습니다.`;
-        else if (meaningfulCount === results.length) leadSentence += ` 전체 ${results.length}개 영역 모두에서 뚜렷한 향상이 확인되었습니다.`;
-        else leadSentence += ` 전체 ${results.length}개 영역 모두에서 향상이 확인되었으며, ${gradeParts.join(', ')}이 나타났습니다.`;
+        if (majorCount === results.length) leadSentence += ` ${results.length === domains.length ? '전체' : '점수가 기록된'} ${results.length}개 영역 모두에서 현저한 향상이 확인되었습니다.`;
+        else if (meaningfulCount === results.length) leadSentence += ` ${results.length === domains.length ? '전체' : '점수가 기록된'} ${results.length}개 영역 모두에서 뚜렷한 향상이 확인되었습니다.`;
+        else leadSentence += ` ${results.length === domains.length ? '전체' : '점수가 기록된'} ${results.length}개 영역 모두에서 향상이 확인되었으며, ${gradeParts.join(', ')}이 나타났습니다.`;
       } else {
         const gradeParts = [];
         if (majorCount > 0) gradeParts.push(`${majorCount}개 영역에서 현저한 향상`);
         if (meaningfulCount > 0) gradeParts.push(`${meaningfulCount}개 영역에서 뚜렷한 향상`);
-        leadSentence += ` 전체 ${results.length}개 영역 중 ${gradeParts.join(', ')}이 확인되었습니다.`;
+        leadSentence += ` ${results.length === domains.length ? '전체' : '점수가 기록된'} ${results.length}개 영역 중 ${gradeParts.join(', ')}이 확인되었습니다.`;
       }
     }
     lines.push(leadSentence);
@@ -5896,13 +6139,13 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
   if (midDips.length > 0) {
     lines.push('중간 과정에서 살펴볼 점');
     const dipText = midDips.length === results.length
-      ? '전 영역의 점수가 준비반 중간에 크게 낮아졌다가'
+      ? '전 영역의 점수가 프로그램 중간에 크게 낮아졌다가'
       : midDips.length <= 2
         ? (midDips.length === 1
           ? `${midDips[0].label} 영역은 중간에 ${midDips[0].min.toFixed(1)}점까지 낮아졌다가`
           : `${midDips[0].label} 영역은 중간에 ${midDips[0].min.toFixed(1)}점, ${midDips[1].label} 영역은 ${midDips[1].min.toFixed(1)}점까지 낮아졌다가`)
-        : `${listLabels(midDips, 4)} 영역의 점수가 준비반 중간에 크게 낮아졌다가`;
-    lines.push(`${dipText} 종결 시점에는 다시 올랐습니다. 처음과 마지막 점수만으로는 보이지 않는 흐름이므로, 입학 후에도 비슷한 시기(새 환경 적응기 등)에 흔들릴 수 있다는 점을 함께 기억해 두시면 좋겠습니다.`);
+        : `${listLabels(midDips)} 영역의 점수가 프로그램 중간에 크게 낮아졌다가`;
+    lines.push(`${dipText} 종결 시점에는 다시 올랐습니다. 처음과 마지막 점수만으로는 보이지 않는 흐름이므로, 입학 초기에도 수행이 일시적으로 낮아지는지 함께 살펴봐 주시기 바랍니다.`);
     lines.push('');
   }
 
@@ -5921,7 +6164,7 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
 
   /* 성장 구획 소제목 — standout 또는 steady 중 하나라도 있으면 표시 */
   if (standoutGrowth.length > 0 || steadyGrowth.length > 0) {
-    lines.push(standoutGrowth.length + steadyGrowth.length === results.length ? '성장한 영역' : '특히 성장한 영역');
+    lines.push('성장한 영역');
   }
 
   /* 2. 주요 성장 영역 - 단락 글로 (점수 명시 유지 — 격식 문서 특성) */
@@ -5984,12 +6227,16 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
     lines.push('');
   } else if (stable.length > 0) {
     if (stableHigh.length > 0) {
-      lines.push(`${listLabels(stableHigh)} 영역은 처음과 끝의 점수 차이가 0.5점 미만이며, 종결 시점에 4.0점 이상의 높은 수준을 보였습니다.`);
+      const ord = (r) => domains.findIndex((d) => d.key === r.dom.key);
+      const dipKeys = new Set((info?.midDips || []).map((d) => d.key));
+      const dipped = stableHigh.filter((r) => dipKeys.has(r.dom.key));
+      lines.push(`${listLabels([...stableHigh].sort((x, y) => ord(x) - ord(y)))} 영역은 처음과 끝의 점수 차이가 0.5점 미만이며, 종결 시점에 4.0점 이상의 높은 수준을 보였습니다.${dipped.length > 0 ? ` 다만 ${listLabels(dipped)} 영역은 위에 적은 것처럼 중간에 점수가 크게 낮아진 시기가 있었습니다.` : ''}`);
       lines.push('');
     }
     if (stableMid.length > 0) {
-      lines.push('비슷한 수준을 유지한 영역');
-      lines.push(`${listLabels(stableMid)} 영역은 처음과 끝의 점수 차이가 0.5점 미만으로 비슷한 수준이며, 현재 안내가 있을 때 수행하는 단계입니다.`);
+      /* 중간에 크게 낮아졌던 영역도 여기 들어올 수 있어 '유지'라고 하지 않음 */
+      lines.push('변화 폭이 작은 영역');
+      lines.push(`${listLabels(stableMid)} 영역은 처음과 끝의 점수 차이가 0.5점 미만으로 변화 폭이 작았으며, 현재 안내가 있을 때 수행하는 단계입니다.`);
       lines.push('');
     }
   }
@@ -6050,7 +6297,7 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
         /* 큰 하락 포함 — 정직하게 */
         lines.push(
           `${declSentences.join(', ')}에서는 종결 시점 점수가 초기보다 낮아졌습니다. ` +
-          `점수가 낮아진 이유는 기록만으로 알기 어려우므로, 어떤 상황에서 어려움이 있었는지 구체적으로 살펴보고 입학 후에도 이 부분을 중심으로 지원이 이어지도록 학교와 함께 나누시길 권합니다.`
+          `점수가 낮아진 이유는 기록만으로 알기 어려우므로, 어떤 상황에서 어려움이 있었는지 구체적으로 살펴보고 입학 후에도 이 부분을 중심으로 도움이 이어지도록 지원 방향을 학교와 함께 나누시길 권합니다.`
         );
       } else {
         lines.push(
@@ -6067,15 +6314,15 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
     lines.push('앞으로 더 도움이 필요한 영역');
     const helpSentences = [];
 
-    /* 너무 길어지지 않도록 가장 낮은 영역부터 4개까지 */
-    needsHelp.slice(0, 4).forEach(({ dom, final }) => {
+    /* 도움이 필요한 영역은 모두 적음 (예전엔 4개까지만 나와 나머지가 빠졌음) */
+    needsHelp.forEach(({ dom, final }) => {
       const recPool = poolDomainRecommendations(domains)[dom.key];
       const seed = (dom.key?.length || 0) + 11 + finalNameHash;
       const recRaw = recPool && recPool.length > 0 ? pickStable(recPool, seed) : '';
       const rec = toFormal(recRaw) || '학교에서도 꾸준한 지원이 필요해 보입니다';
       helpSentences.push(`· ${dom.label}(현재 ${final.toFixed(1)}점): ${rec}.`);
     });
-    lines.push('아직 도움이 더 필요한 영역은 입학 후 학교와 가정에서 이렇게 도와주시면 좋겠습니다.');
+    lines.push('아직 도움이 더 필요한 영역은 입학 후 학교와 가정에서 다음과 같이 지원해 주시기를 권합니다.');
     helpSentences.forEach((h) => lines.push(h));
     lines.push('');
   }
@@ -6085,33 +6332,40 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
 
   const masteredKept = masteredDomains.filter((r) => !declining.includes(r));
   if (masteredKept.length > 0) {
-    const names = masteredKept.length === results.length ? '전' : listLabels(masteredKept, 4);
+    const names = masteredKept.length === results.length ? '전' : listLabels(masteredKept);
     recommendationParts.push(`${names} 영역에서 자리 잡은 자발적인 행동은 교실에서도 선생님의 칭찬을 받으며 이어질 수 있습니다`);
   }
-  const midNow = results.filter((r) => r.final >= 2.5 && r.final < 4.0);
-  if (midNow.length > 0) {
-    recommendationParts.push(`${listLabels(midNow, 4)} 영역은 안내가 있으면 수행하는 단계이므로, 교실에서도 짧은 안내와 시각 단서를 함께 주시면 도움이 됩니다`);
-  }
-  if (needsHelp.length > 0) {
-    const names = listLabels(needsHelp, 4);
-    recommendationParts.push(`${names} 영역에는 일과표나 사회적 이야기 같은 시각 자료와 단계적인 안내가 교실에서도 큰 힘이 됩니다`);
-  }
-  /* 낮아진 영역 중 이미 '도움이 필요한 영역'에 들어간 것은 위 문장에서 다뤘으므로 제외 */
+  /* 점수가 낮아진 영역은 아래에서 따로 한 문장으로 다룸 (같은 영역 이름이 두 문장 연달아 나오던 문제) */
   const helpKeys = new Set(needsHelp.map((r) => r.dom.key));
   const decliningOnly = declining.filter((r) => !helpKeys.has(r.dom.key));
-  if (decliningOnly.length > 0) {
-    if (decliningOnly.length === results.length) {
-      recommendationParts.push(`전 영역의 입학 후 변화를 가정과 학교가 함께 살펴봐 주시면 됩니다`);
-    } else {
-      const names = decliningOnly.map((r) => r.dom.label).join(', ');
-      recommendationParts.push(`${names} 영역은 입학 후 변화를 가정과 학교가 함께 살펴봐 주시면 됩니다`);
-    }
+  const declKeys = new Set(decliningOnly.map((r) => r.dom.key));
+  const midNow = results.filter((r) => r.final >= 2.5 && r.final < 4.0 && !declKeys.has(r.dom.key));
+  if (midNow.length > 0) {
+    recommendationParts.push(`${midNow.length === results.length ? '전 영역에서' : `${listLabels(midNow)} 영역은`} 안내가 있으면 수행하는 단계이므로, 교실에서도 짧은 안내와 시각 단서를 함께 주시면 도움이 됩니다`);
   }
-  recommendationParts.push(`입학 초기 한두 달은 가정과 학교가 자주 소통하며 새 환경 적응을 함께 지켜보는 시기로 삼으시길 권합니다`);
+  if (needsHelp.length > 0) {
+    const names = needsHelp.length === results.length ? '전' : listLabels(needsHelp);
+    recommendationParts.push(`${names} 영역은 일과표나 사회적 이야기 같은 시각 자료로 단계적으로 안내해 주시면 교실에서도 큰 도움이 됩니다`);
+  }
+  /* 낮아진 영역 (이미 '도움이 필요한 영역'에 들어간 것은 위에서 다뤘으므로 제외).
+     전 영역이 낮아진 경우는 위 '함께 살펴볼 영역'에서 이미 안내했으므로 되풀이하지 않음 */
+  if (decliningOnly.length > 0 && decliningOnly.length < results.length) {
+    const declMid = decliningOnly.filter((r) => r.final < 4.0);
+    const declHigh = decliningOnly.filter((r) => r.final >= 4.0);
+    if (declMid.length > 0) {
+      recommendationParts.push(`${listLabels(declMid)} 영역은 기간 중 점수가 낮아져 안내가 있으면 수행하는 단계이므로, 교실에서도 짧은 안내와 시각 단서를 함께 주시면 도움이 됩니다`);
+    }
+    if (declHigh.length > 0) {
+      recommendationParts.push(`${listLabels(declHigh)} 영역은 높은 수준이나 점수가 내려갔으므로, 입학 후 변화를 가정과 학교가 함께 살펴봐 주시기 바랍니다`);
+    }
+  } else if (decliningOnly.length > 0 && decliningOnly.every((r) => r.final >= 2.5 && r.final < 4.0)) {
+    recommendationParts.push(`전 영역에서 안내가 있으면 수행하는 단계이므로, 교실에서도 짧은 안내와 시각 단서를 함께 주시면 도움이 됩니다`);
+  }
+  recommendationParts.push(`입학 초기에는 가정과 학교가 자주 소통하며 새 환경 적응을 함께 지켜보시기를 권합니다`);
   /* 자기 조절 전략 문장은 기초반이면서 자기조절이 2.5점 이상이고 떨어지지 않은 아이에게만 */
   const selfReg = results.find((r) => r.dom.key === 'selfRegulation');
   if (!isAdvancedDomains(domains) && selfReg && selfReg.final >= 4.0 && selfReg.diff > -0.5) {
-    recommendationParts.push(`아동이 익힌 감정 조절 방법은 집과 학교에서 같은 방식으로 쓰일 때 도움이 됩니다`);
+    recommendationParts.push(`감정을 조절하도록 돕는 방식이 집과 학교에서 같을 때 도움이 됩니다`);
   }
 
   lines.push('학교생활을 위한 제언');
@@ -6123,7 +6377,7 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
   /* 가정 연계는 현재 점수가 낮은 영역부터 (4.0 미만), 없으면 점진적 향상 영역 */
   const lowFirst = [...results].filter((r) => r.final < 4.0).sort((x, y) => x.final - y.final);
   /* '앞으로 더 도움이 필요한 영역'에서 이미 방법을 안내한 영역은 같은 말이 반복되지 않게 뺌 */
-  const coveredKeys = new Set(needsHelp.slice(0, 4).map((r) => r.dom.key));
+  const coveredKeys = new Set(needsHelp.map((r) => r.dom.key));
   const lowFirstRest = lowFirst.filter((r) => !coveredKeys.has(r.dom.key));
   const homeFocus = (lowFirst.length > 0 ? lowFirstRest : steadyGrowth).slice(0, 3);
   const homeEndingTransforms = [
@@ -6161,19 +6415,27 @@ const buildFinalSummary = (changes, childName, totalSessions, initialScores, fin
   const hasBigDrop = declining.some((d) => d.diff <= -1.0);
   const tailThanks = '그동안 믿고 맡겨 주셔서 감사했고, 새 출발을 앞둔 아동을 저희도 끝까지 응원하겠습니다.';
   const tailSameWay = '이 모습이 학교에서도 이어지려면 곁에 있는 어른들이 같은 방향을 봐 주시는 것이 가장 중요합니다.';
-  if (avgFinal >= 4.0 && avgInitial >= 4.0 && avgDiff < 0.3 && avgDiff > -0.3 && declining.length === 0) {
-    lines.push(`${durationLabel} 아동은 처음부터 보여 준 안정적인 모습을 꾸준히 지켜 왔습니다. ${tailSameWay} ${tailThanks}`);
+  if (avgFinal >= 4.0 && avgInitial >= 4.0 && avgDiff < 0.5 && avgDiff > -0.3 && declining.length === 0) {
+    /* 중간에 크게 흔들린 영역이 있으면 '꾸준히 지켜 왔다'고 하지 않음 */
+    lines.push(midDips.length > 0
+      ? `${durationLabel} 아동은 중간에 흔들린 시기가 있었으나 처음의 안정적인 모습을 회복하여 마무리하였습니다. ${tailSameWay} ${tailThanks}`
+      : `${durationLabel} 아동은 처음부터 보여 준 안정적인 모습을 꾸준히 지켜 왔습니다. ${tailSameWay} ${tailThanks}`);
+  } else if (avgDiff >= 1.0 && avgFinal >= 2.5 && !hasBigDrop) {
+    lines.push(`${durationLabel} 아동은 많이 성장하였습니다. ${tailSameWay} ${tailThanks}`);
   } else if (avgDiff >= 0.5 && avgFinal >= 2.5 && !hasBigDrop) {
-    lines.push(`${durationLabel} 아동은 정말 많이 자랐습니다. ${tailSameWay} ${tailThanks}`);
+    lines.push(`${durationLabel} 아동은 여러 영역에서 향상을 보였습니다. ${tailSameWay} ${tailThanks}`);
   } else if (growthAreaCount >= 1 && avgDiff > -0.5) {
     lines.push(`${durationLabel} 아동은 ${growthAreaCount >= 2 ? '여러' : '일부'} 영역에서 변화를 보였습니다. ${tailSameWay} ${tailThanks}`);
   } else if (avgDiff > -0.5) {
     lines.push(`${durationLabel} 아동은 낯선 환경 속에서 학교 준비반 일과를 함께 경험하였습니다. 입학 후에도 곁에 있는 어른들이 같은 방향으로 도와주시는 것이 가장 중요합니다. ${tailThanks}`);
   } else {
-    lines.push(`${durationLabel} 아동에게는 쉽지 않은 시기였을지 모르지만, 가족과 함께해 온 노력은 앞으로의 지원에 소중한 바탕이 됩니다. 입학 후 지원 방향을 학교와 함께 나누시길 권합니다. ${tailThanks}`);
+    lines.push(`${durationLabel} 아동에게는 쉽지 않은 시기였을지 모르지만, 가족과 함께해 온 노력은 앞으로의 지원에 소중한 바탕이 됩니다. ${tailThanks}`);
   }
 
-  return replaceChildPronoun(lines.join('\n'), childName);
+  /* 점수가 없는 영역이 있으면 '전 영역'을 '점수가 기록된 모든 영역'으로 */
+  let outText = lines.join('\n');
+  if (results.length < domains.length) outText = outText.replace(/전반 영역|전 영역/g, '점수가 기록된 모든 영역');
+  return replaceChildPronoun(outText, childName);
 };
 
 
@@ -6197,7 +6459,7 @@ const TRANSITION_BY_DOMAIN = {
   },
   followInstruction: {
     strength: '1~2단계 지시를 안정적으로 따르고, 새로운 지시도 짧은 설명만으로 수행할 수 있습니다.',
-    support: '1단계 지시는 대체로 따르나 2단계 이상의 복합 지시에서는 일부 단계를 놓칠 수 있습니다. 핵심어를 강조하고(「먼저 ~하고, 그다음에 ~」), 시각적 단계 표시를 함께 해 주세요.',
+    support: '1단계 지시는 다시 안내하거나 시각 단서를 주면 따르나, 2단계 이상의 복합 지시에서는 일부 단계를 놓칠 수 있습니다. 핵심어를 강조하고(「먼저 ~하고, 그다음에 ~」), 시각적 단계 표시를 함께 해 주세요.',
     intensive: '한 단계 지시를 따르는 데에도 시각 단서나 시범 지원이 필요합니다. 1단계 지시와 시범을 함께 제시하는 것부터 시작하고, 점진적으로 단계를 늘려가는 접근이 도움이 됩니다.',
   },
   ruleUnderstanding: {
@@ -6207,22 +6469,22 @@ const TRANSITION_BY_DOMAIN = {
   },
   selfRegulation: {
     strength: '감정·행동 조절이 안정적이고, 좌절 상황에서도 도움 요청이나 대안 행동으로 전환할 수 있습니다.',
-    support: '안내가 있으면 진정할 수 있으나 피곤할 때·예상치 못한 변경 상황에서는 감정 표현이 두드러질 수 있습니다. 변경이 있을 때는 미리 짧게 예고해 주세요.',
+    support: '안내가 있으면 진정할 수 있으나 피곤하거나 예상치 못한 변경이 있을 때에는 감정 표현이 두드러질 수 있습니다. 변경이 있을 때는 미리 짧게 예고해 주세요.',
     intensive: '감정이 격해졌을 때 회복에 시간이 필요할 수 있습니다. 등교 직후·하교 직전 등 전환 시점에 개별 확인 시간을 두고, 잠시 진정할 수 있는 공간을 마련해 주세요.',
   },
   waiting: {
     strength: '지시 후 대기와 차례 기다리기를 자발적으로 수행할 수 있습니다.',
-    support: '대기 시간이 짧을 때는 기다릴 수 있으나, 길어지면 자리를 뜨거나 다른 자극에 주의가 흐트러질 수 있습니다. 대기 중 할 수 있는 짧은 활동(연필 정리, 그림책 등)을 제시해 주세요.',
+    support: '대기 시간이 짧고 안내가 있으면 기다릴 수 있으나, 길어지면 자리를 뜨거나 다른 자극에 주의가 흐트러질 수 있습니다. 대기 중 할 수 있는 짧은 활동(연필 정리, 그림책 등)을 제시해 주세요.',
     intensive: '기다리는 것 자체가 아직 어려울 수 있습니다. 처음에는 아주 짧은 대기부터 시작해 점진적으로 시간을 늘리고, 대기 중 즉각 강화를 자주 제공해 주세요.',
   },
   spontaneousGreeting: {
     strength: '교사·또래에게 먼저 인사를 시도할 수 있으며, 이는 학기 초 관계 형성에 도움이 될 수 있습니다.',
-    support: '익숙한 대상에게는 인사를 시도하나 새로운 대상에게는 시간이 필요할 수 있습니다. 학기 초에는 자주 만나는 사람과의 인사부터 자리 잡도록 도와주세요.',
-    intensive: '인사가 아직 스스로 나오지 않아 어른의 시범과 촉구가 필요합니다. 등·하교 시 교사가 먼저 짧고 일관된 인사("○○ 안녕")를 건네는 루틴이 도움이 됩니다.',
+    support: '익숙한 대상에게는 안내가 있으면 인사하나, 새로운 대상에게는 시간이 필요할 수 있습니다. 학기 초에는 자주 만나는 사람과의 인사부터 자리 잡도록 도와주세요.',
+    intensive: '인사가 아직 스스로 나오지 않아 어른의 시범과 촉구가 필요합니다. 등·하교 시 교사가 먼저 이름을 부르며 짧고 일관된 인사를 건네는 루틴이 도움이 됩니다.',
   },
   taskCompletion: {
     strength: '시작한 활동을 스스로 끝까지 마무리할 수 있습니다.',
-    support: '쉬운 과제는 대체로 마무리하나 난이도가 높거나 길어지면 중간에 멈출 수 있습니다. 과제를 짧은 단위로 나누어 제시하고, 단계마다 짧게 칭찬해 주세요.',
+    support: '쉬운 과제는 안내가 있으면 마무리하나 난이도가 높거나 길어지면 중간에 멈출 수 있습니다. 과제를 짧은 단위로 나누어 제시하고, 단계마다 짧게 칭찬해 주세요.',
     intensive: '활동을 끝까지 마치는 데 지속적인 안내가 필요합니다. 처음에는 끝이 분명히 보이는 짧은 과제부터 시작해 점진적으로 분량을 늘리는 접근이 도움이 됩니다.',
   },
 };
@@ -6235,7 +6497,7 @@ const TRANSITION_OVERALL = {
     /* 균형형 */
     balanced: '학교 환경의 핵심 기술은 형성되어 있으나 일부 영역은 일상적 지원이 필요합니다. 시각적 단서·짧은 사전 예고·즉각적 칭찬 같은 보편적 전략을 학급 운영에 자연스럽게 녹여 주시면 적응에 도움이 됩니다.',
     /* 집중 지원 필요 */
-    needsSupport: '입학 초기에는 보다 세심한 관찰과 개별 지원이 필요할 수 있습니다. 가능하다면 학기 초에는 좌석 배치(교사와 가까운 자리)와 간단한 시각적 안내를 마련해 주시면 적응에 도움이 됩니다.',
+    needsSupport: '입학 초기에는 보다 세심한 관찰과 개별 지원이 필요할 수 있습니다. 가능하다면 학기 초에는 교사와 가까운 곳에 좌석을 배치하고 간단한 시각적 안내를 마련해 주시면 적응에 도움이 됩니다.',
   },
   specialEducator: {
     available: '특수교사 또는 통합지원 인력과 아래 영역을 중심으로 협업하시면 도움이 됩니다. 학기 초에는 짧은 개별 또는 소그룹 시간을 두고, 일반 학급에서 어떻게 적용되는지 정기적으로 함께 점검해 주시기를 권합니다.',
@@ -6265,7 +6527,7 @@ const TRANSITION_SCHOOL_NOTICE = {
 const TRANSITION_BY_DOMAIN_ADVANCED = {
   preparation: {
     strength: '하루 일과를 스스로 확인해 준비물을 챙기고 다음 활동을 예측해 착석할 수 있습니다. 준비와 관련된 작은 역할을 맡기면 자기주도성을 키우는 데 도움이 될 수 있습니다.',
-    support: '준비 흐름은 대체로 따라가나 다음 활동 예측이나 시간 관리에는 간헐적 안내가 필요할 수 있습니다. 하루 일과를 함께 확인하는 루틴을 학급에 두시면 도움이 됩니다.',
+    support: '안내가 있으면 준비 흐름을 따라가나 다음 활동 예측이나 시간 관리에는 간헐적 안내가 필요할 수 있습니다. 하루 일과를 함께 확인하는 루틴을 학급에 두시면 도움이 됩니다.',
     intensive: '준비물 준비와 착석에 아직 교사의 도움이 많이 필요합니다. 준비물 체크리스트를 제공하고, 교사가 단계마다 함께 확인하며 지원하는 접근을 권장합니다.',
   },
   participation: {
@@ -6275,7 +6537,7 @@ const TRANSITION_BY_DOMAIN_ADVANCED = {
   },
   followInstruction: {
     strength: '다단계 지시를 이해해 과제를 스스로 시작·완료하고 결과를 점검할 수 있습니다.',
-    support: '과제 시작은 대체로 가능하나, 정해진 시간 안에 마치거나 중간 난이도 구간에서는 안내가 필요할 수 있습니다. 자기 점검 카드를 함께 제공하시면 도움이 됩니다.',
+    support: '안내가 있으면 과제를 시작할 수 있으나, 정해진 시간 안에 마치거나 중간 난이도 구간에서는 안내가 필요할 수 있습니다. 자기 점검 카드를 함께 제공하시면 도움이 됩니다.',
     intensive: '다단계 과제의 독립 수행이 아직 형성 중입니다. 과제를 하위 단계로 나누어 시각화하고, 교사와 함께 시작하는 것부터 점진적으로 도움을 줄여 가는 접근이 도움이 됩니다.',
   },
   ruleUnderstanding: {
@@ -6285,22 +6547,22 @@ const TRANSITION_BY_DOMAIN_ADVANCED = {
   },
   selfRegulation: {
     strength: '일정 변경에 유연하게 반응하고 좌절 상황에서 스스로 조절해 재시도할 수 있습니다.',
-    support: '대체로 유연하나 예상치 못한 변경 상황에서는 짧은 적응 시간이 필요할 수 있습니다. 변경을 미리 예고하시고 자기 진정 방법을 선택하도록 도와주세요.',
+    support: '일정이 바뀌거나 예상치 못한 변경이 있을 때에는 적응에 교사의 안내가 필요할 수 있습니다. 변경을 미리 예고하시고 자기 진정 방법을 선택하도록 도와주세요.',
     intensive: '변화에 대한 유연한 적응과 독립적 회복이 아직 형성 중입니다. 일정 변경 예고 카드를 활용하고, 「심호흡 → 재시도」 루틴을 함께 모델링해 주시면 도움이 됩니다.',
   },
   waiting: {
     strength: '대기·지연 상황에서 적절한 대체행동을 스스로 선택하고 시간을 관리할 수 있습니다.',
-    support: '짧은 대기는 대체로 견디나 긴 지연에서는 안내가 필요할 수 있습니다. 대기 중 할 수 있는 대체행동 메뉴를 함께 정해 두시면 도움이 됩니다.',
+    support: '짧은 대기에서는 안내가 있으면 대체행동을 고를 수 있으나, 대기가 길어지면 교사의 안내가 더 필요할 수 있습니다. 대기 중 할 수 있는 대체행동 메뉴를 함께 정해 두시면 도움이 됩니다.',
     intensive: '대체행동의 자발적 선택이 아직 형성 중입니다. 교사가 대체행동을 함께 해 보이며 기다리는 경험을 쌓고, 해낸 순간을 바로 칭찬하는 접근이 도움이 됩니다.',
   },
   spontaneousGreeting: {
-    strength: '또래 상호작용을 자발적으로 개시·유지하고 협동 상황에서 배려·조율할 수 있습니다.',
-    support: '상호작용 개시는 가능하나 유지·조율이나 적절한 거절 표현에는 안내가 필요할 수 있습니다. 사회적 스크립트를 함께 연습해 주세요.',
+    strength: '또래와의 상호작용을 스스로 시작하고 이어 가며 협동 상황에서 배려·조율할 수 있습니다.',
+    support: '안내가 있으면 상호작용을 시작하나 유지·조율이나 적절한 거절 표현에는 안내가 필요할 수 있습니다. 사회적 스크립트를 함께 연습해 주세요.',
     intensive: '또래 상호작용 개시와 유지가 아직 형성 중입니다. 개시-유지-마무리의 사회적 스크립트를 연습하고, 협동 과제에서 차례 지키기부터 모델링해 주시면 도움이 됩니다.',
   },
   taskCompletion: {
     strength: '활동 전환을 독립 수행하고 과제 완료 후 스스로 점검·평가하며 마무리할 수 있습니다.',
-    support: '과제 마무리는 대체로 가능하나 자기 점검·평가나 다음 활동 계획에는 안내가 필요할 수 있습니다. 자기 점검 체크리스트를 함께 활용해 주세요.',
+    support: '안내가 있으면 과제를 마무리하나 자기 점검·평가나 다음 활동 계획에는 안내가 필요할 수 있습니다. 자기 점검 체크리스트를 함께 활용해 주세요.',
     intensive: '전환-마무리-자기평가의 독립 수행이 아직 형성 중입니다. 다음 활동으로 넘어갈 때 교사가 먼저 순서를 알려 주고, 마무리 점검도 단계마다 함께 하며 지원하는 접근이 도움이 됩니다.',
   },
 };
@@ -6346,6 +6608,11 @@ const buildTransitionReport = (scores, childName, opts = {}, domains = EVAL_DOMA
   if (classified.strength.length > 0) introParts.push('강점');
   if (classified.support.length + classified.intensive.length > 0) introParts.push('지원이 필요한 부분');
   lines.push(`본 평가는 아동의 ${gradeLabel} 진학을 앞두고 학교 환경에서 예상되는 적응 양상을 정리하기 위한 자료입니다. 학교 준비반에서 누적된 관찰 자료를 바탕으로 영역별 ${introParts.join('과 ')}${introParts.length > 1 ? '을 구분하여' : '을'} 안내드립니다.`);
+  /* 점수가 없는 영역은 평가하지 않았다고 알림 (원장님 결정) */
+  const unscored = domains.filter((dom) => { const v = scores?.[dom.key]; return v == null || v === '' || isNaN(Number(v)); });
+  if (unscored.length > 0 && unscored.length < domains.length) {
+    lines.push(`※ ${listLabels(unscored)} 영역은 점수 기록이 없어 이번 평가에서 다루지 않았습니다.`);
+  }
   lines.push('');
 
   /* 2. 학교 적응 강점 영역 */
@@ -6390,16 +6657,17 @@ const buildTransitionReport = (scores, childName, opts = {}, domains = EVAL_DOMA
        "종결 단계 변동"이라는 맥락 정보 추가. 큰 변동(-1.0 이상)만 골라 부담 줄임 */
     /* 이미 '입학 초기 집중 지원' 영역으로 안내한 영역은 다시 쓰지 않음 */
     const intensiveKeys = new Set(classified.intensive.map(({ dom }) => dom.key));
-    const significant = decliningDomains.filter(d => d.diff <= -1.0 && !intensiveKeys.has(d.key));
+    /* 0.5점 이상 낮아진 영역은 모두 안내 (종결보고서 '함께 살펴볼 영역'과 같은 기준) */
+    const significant = decliningDomains.filter(d => d.diff <= -0.5 && !intensiveKeys.has(d.key));
     if (significant.length > 0) {
       lines.push('추가 관찰 권장 영역');
       if (significant.length >= 6) {
         /* 6+개 → "전 영역" 표현 (종결 5→1 같은 큰 하락 케이스 부담 완화) */
         const avgDiff = significant.reduce((a, b) => a + b.diff, 0) / significant.length;
-        lines.push(`${listLabels(significant, 4)} 영역은 처음 기록보다 마지막 기록의 점수가 평균 ${Math.abs(avgDiff).toFixed(1)}점 낮아졌습니다. 영역 분류와 별개로, 입학 초기에는 이 영역들의 적응 양상을 더 세심하게 살펴봐 주시면 도움이 됩니다.`);
+        lines.push(`${significant.length === domains.length ? '전' : listLabels(significant)} 영역은 처음 기록보다 마지막 기록의 점수가 평균 ${Math.abs(avgDiff).toFixed(1)}점 낮아졌습니다. 입학 초기에는 이 영역들의 적응 양상을 더 세심하게 살펴봐 주시면 도움이 됩니다.`);
       } else {
         const names = significant.map(d => `${d.label}(${d.diff.toFixed(1)}점)`).join(', ');
-        lines.push(`${names} 영역은 처음 기록보다 마지막 기록의 점수가 낮아졌습니다. 영역 분류와 별개로, 입학 초기에는 이 영역의 적응 양상을 한 번 더 살펴봐 주시면 도움이 됩니다.`);
+        lines.push(`${names} 영역은 처음 기록보다 마지막 기록의 점수가 낮아졌습니다. 입학 초기에는 이 영역의 적응 양상을 한 번 더 살펴봐 주시면 도움이 됩니다.`);
       }
       lines.push('');
     }
@@ -6416,7 +6684,8 @@ const buildTransitionReport = (scores, childName, opts = {}, domains = EVAL_DOMA
   const scoredCount = classified.strength.length + classified.support.length + classified.intensive.length;
   const strongHalf = classified.strength.length >= scoredCount / 2;
   if (homeroomKey === 'balanced' && !strongHalf && intensiveCount === 0) {
-    lines.push('대부분의 영역에서 안내가 있으면 수행하는 단계이므로, 시각적 단서·짧은 사전 예고·즉각적 칭찬 같은 보편적 전략을 학급 운영에 함께 적용해 주시면 적응에 도움이 됩니다.');
+    const allSupport = classified.support.length === scoredCount;
+    lines.push(`${allSupport ? (scoredCount === domains.length ? '전 영역에서' : '점수가 기록된 모든 영역에서') : '대부분의 영역에서'} 안내가 있으면 수행하는 단계이므로, 시각적 단서·짧은 사전 예고·즉각적 칭찬 같은 보편적 전략을 학급 운영에 함께 적용해 주시면 적응에 도움이 됩니다.`);
   } else if (homeroomKey === 'balanced' && intensiveCount > 0) {
     /* 집중 지원 영역이 1~2개 있으면 '충분히 적응 가능'만으로 끝내지 않고 그 영역을 짚음 */
     lines.push(`${strongHalf ? '학교 환경의 핵심 기술은 상당 부분 형성되어 있으나' : '여러 영역에서 안내가 있으면 수행하는 단계이나'}, ${classified.intensive.map(({ dom }) => dom.label).join(', ')} 영역은 입학 초기에 개별 지원이 필요합니다. 해당 영역은 위에 안내한 방법으로 도와주시고, 나머지 영역은 시각적 단서·즉각적 칭찬 같은 보편적 전략으로 도울 수 있습니다.`);
@@ -6428,19 +6697,22 @@ const buildTransitionReport = (scores, childName, opts = {}, domains = EVAL_DOMA
   }
   lines.push('');
 
-  /* 6. 특수교사 / 지원인력 권장사항 */
-  lines.push('특수교사·지원인력 협업 권장');
+  /* 6. 특수교사 / 지원인력 권장사항 — 점수 단계에 따라 다르게 (원장님 결정).
+     전 영역이 4점 이상이면 이 항목을 넣지 않음 */
   const hasFocus = (classified.support.length + classified.intensive.length) > 0;
-  if (hasSpecialEducator) {
-    lines.push(hasFocus ? TRANSITION_OVERALL.specialEducator.available : '특수교사 또는 통합지원 인력과는 입학 초기 적응 상황을 정기적으로 함께 확인해 주시면 도움이 됩니다.');
-  } else {
-    lines.push(TRANSITION_OVERALL.specialEducator.notAvailable);
+  if (hasFocus) {
+    lines.push('특수교사·지원인력 협업 권장');
+    if (hasSpecialEducator) {
+      lines.push(TRANSITION_OVERALL.specialEducator.available);
+      const focusAreas = listLabels([...classified.intensive, ...classified.support].map(({ dom }) => ({ dom })));
+      if (focusAreas) lines.push(`· 협업 우선 영역: ${focusAreas}`);
+    } else if (classified.intensive.length >= 3) {
+      lines.push(`${TRANSITION_OVERALL.specialEducator.notAvailable} 도움이 많이 필요한 영역이 여럿이므로, 입학 전에 학교와 지원 인력 배치 여부를 상의해 보시기를 권합니다.`);
+    } else {
+      lines.push(TRANSITION_OVERALL.specialEducator.notAvailable);
+    }
+    lines.push('');
   }
-  if (hasSpecialEducator && hasFocus) {
-    const focusAreas = [...classified.intensive, ...classified.support].slice(0, 4).map(({ dom }) => dom.label).join(', ');
-    if (focusAreas) lines.push(`· 협업 우선 영역: ${focusAreas}`);
-  }
-  lines.push('');
 
   /* 7. (보호자용 '가정 입학 전 준비'는 학교 인계용 보고서에서 뺌 — 원장님 결정) */
 
@@ -6450,6 +6722,19 @@ const buildTransitionReport = (scores, childName, opts = {}, domains = EVAL_DOMA
   const noticeItems = [...classified.support]
     .map(({ dom }) => poolTransitionSchoolNotice(domains)[dom.key])
     .filter(Boolean);
+  /* 도움이 많이 필요한 영역이 있으면 학교에 알릴 기본 사항을 더함 (예전엔 그런 아동에게 이 항목이 아예 없었음) */
+  if (classified.intensive.length > 0) {
+    /* 아동의 2.5점 미만 영역에 맞춰 고름 (지시 따르기를 잘하는 아동에게 지시 안내가 가지 않게) */
+    const intensiveKeys2 = new Set(classified.intensive.map(({ dom }) => dom.key));
+    const lowNotice = {
+      selfRegulation: '감정이 격해질 때 잠시 진정할 수 있는 공간을 마련해 주시고, 처음에는 어른이 곁에서 진정을 도와주시면 도움이 됩니다.',
+      followInstruction: '지시는 한 번에 한 가지씩 짧게 주시고, 해냈을 때 바로 칭찬해 주시면 도움이 됩니다.',
+      waiting: '기다려야 하는 시간이 얼마나 남았는지 그림이나 손짓으로 알려 주시면 도움이 됩니다.',
+      spontaneousGreeting: '교사가 먼저 이름을 불러 인사해 주시고, 손 흔들기 같은 몸짓 인사도 인사로 받아 주시면 좋습니다.',
+    };
+    noticeItems.push('하루 일과와 활동 순서를 그림이나 사진으로 미리 보여 주시면 새 환경 적응에 도움이 됩니다.');
+    Object.keys(lowNotice).forEach((k) => { if (intensiveKeys2.has(k)) noticeItems.push(lowNotice[k]); });
+  }
   if (noticeItems.length > 0) {
     lines.push('학교에 미리 알려 드리는 사항');
     noticeItems.slice(0, 5).forEach((item) => lines.push(`· ${item}`));
@@ -8768,7 +9053,7 @@ function App() {
 
     /* 변화 요약 셀 문장 생성: 태그 한 단어가 아니라 점수차 + 변화 맥락을 담은 짧은 진술 */
     const buildChangeSummary = (key, i, f, phrase) => {
-      if (i == null || f == null) return '-';
+      if (i == null || f == null) return '평가 제외';
       const diff = Math.round((f - i) * 10) / 10; /* 부동소수점 오차 방지 */
       const sign = diff > 0 ? `+${diff.toFixed(1)}점` : diff < 0 ? `${diff.toFixed(1)}점` : '±0.0점';
       const tag = phrase ? phrase.tag : '수행 수준 유지';
@@ -8777,7 +9062,7 @@ function App() {
       let levelNote = '';
       const declined = diff <= -0.2;
       if (declined) {
-        levelNote = f >= 4.0 ? ', 여전히 높은 수준' : ', 지속 지원 권고';
+        levelNote = f >= 4.0 ? ', 여전히 높은 수준' : f >= 2.5 ? ', 안내 시 수행' : ', 지속 지원 권고';
       } else if (f >= 4.0) {
         levelNote = ', 자발 수행 안정화';
       } else if (f >= 2.5) {
@@ -8798,8 +9083,9 @@ function App() {
       const initialStmt = i != null ? abaLevelToStatement(d.key, i, getDomains(child)) : '';
       const finalStmt = f != null ? abaLevelToStatement(d.key, f, getDomains(child)) : '';
       newFinal[d.key] = {
-        initial: i != null ? `${i.toFixed(1)}점 · ${initialStmt}` : '-',
-        final: f != null ? `${f.toFixed(1)}점 · ${finalStmt}` : '-',
+        /* 점수가 없는 영역은 '- → -' 대신 평가하지 않았다고 씀 (원장님 결정) */
+        initial: i != null ? `${i.toFixed(1)}점 · ${initialStmt}` : '점수 기록 없음',
+        final: f != null ? `${f.toFixed(1)}점 · ${finalStmt}` : '평가하지 않음',
         summary: buildChangeSummary(d.key, i, f, phrase),
       };
     });
@@ -8886,32 +9172,41 @@ function App() {
   const autoGenerateSession = () => {
     const target = activeChild || info.childName;
 
-    /* 이전 회기 점수 계산: 현재 활성 아동의 이전 회기 기록 중 가장 최근 회기 평균 */
-    let prevScoresAvg = null;
+    /* 직전 회기 점수: 바로 앞 회기의 실제 점수(정수)를 씀.
+       첫 칸은 저장된 기록 중 이번 평가서 첫 회기보다 번호가 앞선 회기 가운데 가장 마지막 회기.
+       (예전엔 가장 최근 저장 기록의 '평균'을 '직전 회기'라고 써서 3.3점→4.0점처럼 나왔고, 같은 달 기록과 비교되기도 했음) */
+    const countsScore = (st) => { const def = SESSION_STATUS[st || 'normal']; return !!(def && def.includesInAvg); };
+    const slotScores = (scoreMap, idx) => {
+      const out = {};
+      getDomains(activeChild).forEach((d) => {
+        const v = scoreMap?.[d.key]?.[idx];
+        if (v != null && v !== '' && !isNaN(Number(v))) out[d.key] = Number(v);
+      });
+      return Object.keys(out).length > 0 ? out : null;
+    };
+    let prevFromRecords = null;
     if (activeChildId) {
-      const prevRecs = childRecords.filter((r) => r.childId === activeChildId);
-      if (prevRecs.length > 0) {
-        /* 시간순 정렬 후 가장 최근 1개 */
-        const sorted = [...prevRecs].sort((a, b) => (b.evalEnd || '').localeCompare(a.evalEnd || ''));
-        const recent = sorted[0];
-        prevScoresAvg = {};
-        getDomains(activeChild).forEach((d) => {
-          const scores = recent.sessionScores?.[d.key] || [];
-          const statuses = recent.sessionStatus || ['normal', 'normal', 'normal', 'normal'];
-          const valid = [];
-          scores.forEach((s, idx) => {
-            const status = statuses[idx] || 'normal';
-            const def = SESSION_STATUS[status];
-            if (!def || !def.includesInAvg) return;
-            if (s == null || s === '' || isNaN(Number(s))) return;
-            valid.push(Number(s));
-          });
-          if (valid.length > 0) {
-            prevScoresAvg[d.key] = valid.reduce((a, b) => a + b, 0) / valid.length;
-          }
+      const firstNo = Number(sessionNumbers?.[0]) || null;
+      let best = null;
+      childRecords.filter((r) => r.childId === activeChildId).forEach((r) => {
+        (r.sessionNumbers || []).forEach((no, i) => {
+          const n = Number(no);
+          if (!n || (firstNo && n >= firstNo)) return;
+          if (!countsScore((r.sessionStatus || [])[i])) return;
+          const sc = slotScores(r.sessionScores, i);
+          if (sc && (!best || n > best.n)) best = { n, sc };
         });
-      }
+      });
+      prevFromRecords = best ? best.sc : null;
     }
+    const prevForSlot = (idx) => {
+      for (let k = idx - 1; k >= 0; k--) {
+        if (!countsScore(sessionStatus?.[k])) continue;
+        const sc = slotScores(sessionScores, k);
+        if (sc) return sc;
+      }
+      return prevFromRecords;
+    };
 
     const cmtCount = (sessionNumbers && sessionNumbers.length) || 4;
     /* 아동 이름(또는 호칭)으로 표현 다양성 확보 — 같은 점수 패턴이라도 아동마다 다른 문장 */
@@ -8924,11 +9219,10 @@ function App() {
         const v = sessionScores[d.key]?.[idx];
         if (v != null && v !== '') scores[d.key] = v;
       });
-      /* 첫 회기(idx=0)에만 이전 회기 비교 추가 (반복 노출 방지) */
-      const prevForThisSlot = idx === 0 ? prevScoresAvg : null;
+      const prevForThisSlot = prevForSlot(idx);
       return {
         good: replaceChildPronoun(buildSessionStrengths(scores, idx, prevForThisSlot, nameForVariety, sessionNumbers[idx], getDomains(activeChild)), target),
-        improve: replaceChildPronoun(buildSessionWeaknesses(scores, idx, nameForVariety, getDomains(activeChild)), target),
+        improve: replaceChildPronoun(buildSessionWeaknesses(scores, idx, nameForVariety, getDomains(activeChild), prevForThisSlot, sessionNumbers[idx]), target),
       };
     });
     setSessionComments(newComments);
@@ -8967,8 +9261,8 @@ function App() {
         refScores[d.key] = vals[vals.length - 1];
       }
     });
-    /* 준비반 기간 중에는 아직 학교에 다니지 않으므로 '가정·학교' → '가정·기관' */
-    const goalsText = buildNextGoals(refScores, '다음 기간', displayName, getDomains(activeChild)).replace(/가정·학교/g, '가정·기관');
+    /* 준비반 기간 중에는 아직 학교에 다니지 않으므로 '가정·학교' → '가정·센터' */
+    const goalsText = buildNextGoals(refScores, '다음 기간', displayName, getDomains(activeChild)).replace(/가정·학교/g, '가정·센터');
     const finalTxt = goalsText ? `${txt}\n\n${goalsText}` : txt;
 
     setMidComment(finalTxt);
