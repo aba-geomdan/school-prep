@@ -5622,6 +5622,7 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
       (p) => `해냈을 때 ${p} 하고 바로 알아봐 주시면 큰 힘이 됩니다.`,
       (p) => `해낸 순간을 놓치지 말고 ${p}라고 말해 주시면 좋습니다.`,
     ];
+    const homeItems = [];
     focusForHome.forEach(({ dom, last }, idx) => {
       const homePool = poolHomeGuidance(domains, last)[dom.key];
       /* seed 기반 다양성 - 아동·영역마다 다른 표현 선택 (homePool[0]만 사용하던 단조로움 해결) */
@@ -5646,11 +5647,21 @@ const buildMidQuarterComment = (monthlyData, childName, domains = EVAL_DOMAINS) 
           .replace(/(\S+)드립니다$/, '$1드리며')
           .replace(/(\S+)됩니다$/, '$1되며');
         const lead = praiseLeads[idx % praiseLeads.length];
-        lines.push(`${idx + 1}. [${dom.label}] ${tipBase}, ${lead(praiseSet[dom.key])}`);
+        homeItems.push(`${idx + 1}. [${dom.label}] ${tipBase}, ${lead(praiseSet[dom.key])}`);
       } else {
-        lines.push(`${idx + 1}. [${dom.label}] ${tip}.`);
+        homeItems.push(`${idx + 1}. [${dom.label}] ${tip}.`);
       }
     });
+    /* 바로 앞 항목과 끝맺음이 같으면 다른 끝맺음으로 바꿈 (세 줄이 모두 '…좋습니다.'로 끝나던 문제) */
+    const endOf = (t) => (t.match(/(좋습니다|도움이 됩니다|큰 힘이 됩니다)\.$/) || [])[1] || '';
+    homeItems.forEach((t, i) => {
+      if (i === 0 || !/시면 좋습니다\.$/.test(t)) return;
+      const used = [endOf(homeItems[i - 1]), i >= 2 ? endOf(homeItems[i - 2]) : ''];
+      if (!used.includes('좋습니다')) return;
+      const alt = ['도움이 됩니다', '큰 힘이 됩니다'].find((e) => !used.includes(e));
+      if (alt) homeItems[i] = t.replace(/시면 좋습니다\.$/, `시면 ${alt}.`);
+    });
+    homeItems.forEach((t) => lines.push(t));
     lines.push('');
   } else {
     lines.push('가정에서 함께해 주시면 좋은 부분');
